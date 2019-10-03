@@ -773,7 +773,7 @@ export class ABTreeSet {
         }
 
 
-        // verify the size attribute of each node.
+        // verify the "size" attribute of each node.
 
 		{
 			function get_size_and_verify_subtree(node) {

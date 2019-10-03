@@ -700,7 +700,7 @@ export class AVLTreeSet {
 
 
     debug_verify_integrity() {
-		// verify the bias attribute of each node.
+		// verify the "bias" attribute of each node.
 
 		{
             function get_height_and_verify_subtree(node) {
@@ -728,7 +728,7 @@ export class AVLTreeSet {
 		}
 
 
-		// verify the size attribute of each node.
+		// verify the "size" attribute of each node.
 
 		{
 			function get_size_and_verify_subtree(node) {

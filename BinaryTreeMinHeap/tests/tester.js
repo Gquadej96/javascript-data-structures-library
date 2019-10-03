@@ -74,6 +74,10 @@ function assert_error(func, message) {
 	assert_truth(heap.get_size() == 4, "unexpected size of the heap.");
 
 
+	heap = heap.clone();
+	heap.debug_verify_integrity();
+	
+
 	assert_truth(heap.dequeue() == 1, "unexpected item dequeued from heap.");
 	heap.debug_verify_integrity();
 

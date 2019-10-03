@@ -265,49 +265,6 @@ export class BinaryTreeMinHeap {
 
 
     debug_verify_integrity() {
-        // verify the heap tree property.
-
-        {
-            let stack = new Array();
-            let p = this._root;
-            let prev = null;
-
-            if (p != null) {
-                stack.push(p);
-
-                prev = p;
-                p = p.left;
-            }
-
-            while (p != null) {
-                stack.push(p);
-
-                if (!(this._comparator.compare(p.item, prev.item) >= 0)) {
-                    throw new Error("the heap tree property is not satisfied.");
-                }
-
-                prev = p;
-                p = p.left;
-            }
-
-            while (stack.length > 0) {
-                prev = stack.pop();
-                p = prev.right;
-
-                while (p != null) {
-                    stack.push(p);
-
-                    if (!(this._comparator.compare(p.item, prev.item) >= 0)) {
-                        throw new Error("the heap tree property is not satisfied.");
-                    }
-
-                    prev = p;
-                    p = p.left;
-                }
-			}
-        }
-
-
         // verify the shape of the tree.
 
         {
@@ -441,6 +398,49 @@ export class BinaryTreeMinHeap {
             if (this._size != size) {
                 throw new Error("the \"size\" field of the structure is incorrect.");
             }
+        }
+
+
+        // verify the heap tree property.
+
+        {
+            let stack = new Array();
+            let p = this._root;
+            let prev = null;
+
+            if (p != null) {
+                stack.push(p);
+
+                prev = p;
+                p = p.left;
+            }
+
+            while (p != null) {
+                stack.push(p);
+
+                if (!(this._comparator.compare(p.item, prev.item) >= 0)) {
+                    throw new Error("the heap tree property is not satisfied.");
+                }
+
+                prev = p;
+                p = p.left;
+            }
+
+            while (stack.length > 0) {
+                prev = stack.pop();
+                p = prev.right;
+
+                while (p != null) {
+                    stack.push(p);
+
+                    if (!(this._comparator.compare(p.item, prev.item) >= 0)) {
+                        throw new Error("the heap tree property is not satisfied.");
+                    }
+
+                    prev = p;
+                    p = p.left;
+                }
+			}
         }
     }
 }

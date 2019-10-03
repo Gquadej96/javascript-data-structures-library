@@ -1,5 +1,5 @@
 
-import {BinaryTreeMaxHeap} from "../BinaryTreeMaxHeap.js";
+import {BinomialTreeMaxHeap} from "../BinomialTreeMaxHeap.js";
 import * as array_tools from "../../array_tools/array_tools.js";
 import * as comparators from "../../comparators/comparators.js";
 
@@ -25,7 +25,7 @@ function assert_error(func, message) {
 // test set #1.
 
 {
-	let heap = new BinaryTreeMaxHeap();
+	let heap = new BinomialTreeMaxHeap();
 
 	heap.debug_verify_integrity();
 	assert_truth(heap.get_size() == 0, "unexpected size of the heap.");
@@ -113,7 +113,7 @@ function assert_error(func, message) {
 {
 	let size_of_tests = 1000;
 
-	let heap = new BinaryTreeMaxHeap();
+	let heap = new BinomialTreeMaxHeap();
 	let ref = new Array(size_of_tests);
 
 	for (let i = 0; 
