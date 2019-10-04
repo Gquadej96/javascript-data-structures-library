@@ -297,7 +297,7 @@ export class BinomialTreeMinHeap {
                 p = stack.pop();
 
                 if (p.size != 1) {
-                    throw new Error("the size attribute of a node does not match the size of its subtree.");
+                    throw new Error("the \"size\" attribute of a node does not match the size of its subtree.");
                 }
 
                 p = p.next;

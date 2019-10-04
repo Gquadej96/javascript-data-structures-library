@@ -102,9 +102,10 @@ function assert_error(func, message) {
 	assert_truth(heap.dequeue() == 4, "unexpected item dequeued from heap.");
 	heap.debug_verify_integrity();
 
+	assert_truth(heap.get_size() == 0, "unexpected size of the heap.");
+
 	assert_error(heap.dequeue.bind(heap), "no error thrown when attempting to dequeue from an empty heap.");
 	assert_error(heap.peek.bind(heap), "no error thrown when attempting to peek an empty heap.");
-	assert_truth(heap.get_size() == 0, "unexpected size of the heap.");
 }
 
 

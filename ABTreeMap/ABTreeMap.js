@@ -13,6 +13,9 @@ export class ABTreeMap {
 		key_comparator = key_comparator || this._key_comparator;
 		this._key_comparator = key_comparator;
 
+		A = A || 2;
+		B = B || 3;
+
 		this._entries = new ABTreeSet(A, B, new class {
 			compare(a, b) {
 				return key_comparator.compare(a.key, b.key);
