@@ -78,6 +78,7 @@ export class RBTreeSet {
 			item: item, 
 			size: 1
 		};
+		//this._update_local_fields(p.value);
 		
 
 		while (true) {
@@ -579,6 +580,7 @@ export class RBTreeSet {
 				item: null, 
 				size: 1
 			};
+			//this._update_local_fields(p.value);
 		}
 
 
