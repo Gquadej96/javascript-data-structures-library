@@ -2,14 +2,13 @@
 import * as comparators from "../comparators/comparators.js";
 
 
-export class RBTreeSet {
+export class RBTreeList {
 
 	_root = {value: null};
-	_comparator = new comparators.UniversalComparator();
 
 
-	constructor(comparator) {
-		this._comparator = comparator || this._comparator;
+	constructor() {
+		
 	}
 
 
@@ -46,28 +45,49 @@ export class RBTreeSet {
 	}
 
 
-	add(item) {
-		let stack = new Array();
-		let p = this._root;
+	insert(index, item) {
+        let size = this.get_size();
 
-		while (p.value != null) {
-			stack.push(p);
-
+        if (index < 0 
+			|| index > size) {
 			
-			let res = this._comparator.compare(item, p.value.item);
-
-			if (res == 0) {
-				//throw new Error("the item already exists in the set.");
-				return;
-			} 
-			else if (res < 0) {
-				p = p.value.left;
-			} 
-			else { // res > 0
-				p = p.value.right;
-			}
+			throw new Error("the index is out of bounds in the list.");
 		}
 
+
+        let stack = new Array();
+        let p = this._root;
+
+        if (index < size) {
+            while (true) {
+                stack.push(p);
+
+
+                let left_size = 0;
+
+                if (p.value.left.value != null) {
+                    left_size = p.value.left.value.size;
+                }
+
+                if (index == left_size) {
+                    break;
+                } 
+                else if (index < left_size) {
+                    p = p.value.left;
+                } 
+                else { // index > left_size
+                    index = index - left_size - 1;
+                    p = p.value.right;
+                }
+            }
+
+            p = p.value.left;
+        }
+
+        while (p.value != null) {
+            stack.push(p);
+            p = p.value.right;
+        }
 
 		p.value = {
 			left: {value: null}, 
@@ -164,32 +184,39 @@ export class RBTreeSet {
 	}
 
 
-	remove(item) {
+	remove(index) {
+        if (index < 0 
+			|| index >= this.get_size()) {
+			
+			throw new Error("the index is out of bounds in the list.");
+        }
+        
+
 		let stack = new Array();
-		let p = this._root;
+        let p = this._root;
 
-		while (p.value != null) {
-			stack.push(p);
+        while (true) {
+            stack.push(p);
 
 
-			let res = this._comparator.compare(item, p.value.item);
+            let left_size = 0;
 
-			if (res == 0) {
-				break;
-			} 
-			else if (res < 0) {
-				p = p.value.left;
-			} 
-			else { // res > 0
-				p = p.value.right;
-			}
-		}
+            if (p.value.left.value != null) {
+                left_size = p.value.left.value.size;
+            }
 
-		if (p.value == null) {
-			//throw new Error("the item does not exist in the set.");
-			return;
-		}
-
+            if (index == left_size) {
+                break;
+            } 
+            else if (index < left_size) {
+                p = p.value.left;
+            } 
+            else { // index > left_size
+                index = index - left_size - 1;
+                p = p.value.right;
+            }
+        }
+        
 
 		let target;
 
@@ -203,8 +230,7 @@ export class RBTreeSet {
 				do {
 					stack.push(p);
 					p = p.value.right;
-				} 
-				while (p.value != null);
+				} while (p.value != null);
 
 				p = stack.pop();
 
@@ -386,75 +412,14 @@ export class RBTreeSet {
 		if (p.value != null) {
 			p.value.color = "BLACK";
 		}
-	}
+    }
+    
 
-
-	has(item) {
-		let p = this._root.value;
-
-		while (p != null) {
-			let res = this._comparator.compare(item, p.item);
-
-			if (res == 0) {
-				return true;
-			} 
-			else if (res < 0) {
-				p = p.left.value;
-			} 
-			else {
-				p = p.right.value;
-			}
-		}
-
-		return false;
-	}
-
-
-	get_size() {
-		if (this._root.value != null) {
-			return this._root.value.size;
-		} 
-		else {
-			return 0;
-		}
-	}
-
-
-	get_rank_of_item(item) {
-		let p = this._root.value;
-		let rank = 0;
-
-		while (p != null) {
-			let res = this._comparator.compare(item, p.item);
-			let left_size = 0;
-
-			if (p.left.value != null) {
-				left_size = p.left.value.size;
-			}
-
-			if (res == 0) {
-				rank = rank + left_size;
-				return rank;
-			} 
-			else if (res < 0) {
-				p = p.left.value;
-			} 
-			else { // res > 0
-				rank = rank + left_size + 1;
-				p = p.right.value;
-			}
-		}
-
-		//throw new Error("the item does not exist in the set.");
-		return rank;
-	}
-
-
-	get_item_by_rank(rank) {
-		if (rank < 0 
-			|| rank >= this.get_size()) {
+    get(index) {
+		if (index < 0 
+			|| index >= this.get_size()) {
 			
-			throw new Error("there is no item of this rank in the set.");
+            throw new Error("the index is out of bounds in the list.");
 		}
 
 
@@ -467,67 +432,63 @@ export class RBTreeSet {
 				left_size = p.left.value.size;
 			}
 
-			if (rank == left_size) {
+			if (index == left_size) {
 				return p.item;
 			} 
-			else if (rank < left_size) {
+			else if (index < left_size) {
 				p = p.left.value;
 			} 
-			else { // rank > left_size
-				rank = rank - left_size - 1;
+			else { // index > left_size
+				index = index - left_size - 1;
 				p = p.right.value;
 			}
 		}
 
 		// not reachable.
-	}
+    }
+    
+
+    set(index, item) {
+        if (index < 0 
+			|| index >= this.get_size()) {
+			
+            throw new Error("the index is out of bounds in the list.");
+		}
 
 
-	get_LUB(item) {
 		let p = this._root.value;
-		let upper_bound = null;
 
-		while (p != null) {
-			let res = this._comparator.compare(item, p.item);
+		while (true) {
+			let left_size = 0;
 
-			if (res == 0) {
-				upper_bound = p.item;
-				return upper_bound;
+			if (p.left.value != null) {
+				left_size = p.left.value.size;
+			}
+
+			if (index == left_size) {
+                p.item = item;
+                return;
 			} 
-			else if (res < 0) {
-				upper_bound = p.item;
+			else if (index < left_size) {
 				p = p.left.value;
 			} 
-			else { // res > 0
+			else { // index > left_size
+				index = index - left_size - 1;
 				p = p.right.value;
 			}
 		}
 
-		return upper_bound;
-	}
+		// not reachable.
+    }
 
 
-	get_GLB(item) {
-		let p = this._root.value;
-		let lower_bound = null;
-
-		while (p != null) {
-			let res = this._comparator.compare(item, p.item);
-
-			if (res == 0) {
-				lower_bound = p.item;
-				return lower_bound;
-			} 
-			else if (res < 0) {
-				p = p.left.value;
-			} 
-			else { // res > 0
-				lower_bound = p.item;
-				p = p.right.value;
-			}
+	get_size() {
+		if (this._root.value != null) {
+			return this._root.value.size;
+		} 
+		else {
+			return 0;
 		}
-
-		return lower_bound;
 	}
 
 
@@ -649,7 +610,7 @@ export class RBTreeSet {
 		}
 
 
-		let inst = new RBTreeSet(this._comparator);
+		let inst = new RBTreeList();
 
         inst._root = clone_subtree(this._root);
 
@@ -756,80 +717,11 @@ export class RBTreeSet {
 
 			get_size_and_verify_subtree(this._root.value);
 		}
-
-
-		// verify the search tree property.
-
-		{
-			let stack = new Array();
-			let prev = null;
-			let p = this._root.value;
-
-			if (p != null) {
-				let q = p;
-
-				while (q.right.value != null) {
-					q = q.right.value;
-				}
-
-				stack.push({p: p, upper_bound: q.item});
-
-				prev = p;
-				p = p.left.value;
-			}
-
-			while (p != null) {
-				stack.push({p: p, upper_bound: prev.item});
-
-				if (!(this._comparator.compare(p.item, prev.item) <= 0)) {
-					throw new Error("the search tree property is not satisfied.");
-				}
-
-				prev = p;
-				p = p.left.value;
-			}
-
-			while (stack.length > 0) {
-				let info = stack.pop();
-
-				prev = null;
-				p = info.p.right.value;
-
-				if (p != null) {
-					stack.push({p: p, upper_bound: info.upper_bound});
-
-					prev = p;
-					p = p.left.value;
-				} 
-				else {
-					if (!(this._comparator.compare(info.p.item, info.upper_bound) <= 0)) {
-						throw new Error("the search tree property is not satisfied.");
-					}
-
-					break;
-				}
-
-				while (p != null) {
-					stack.push({p: p, upper_bound: prev.item});
-
-					if (!(this._comparator.compare(p.item, prev.item) <= 0)) {
-						throw new Error("the search tree property is not satisfied.");
-					}
-
-					prev = p;
-					p = p.left.value;
-				}
-
-				if (!(this._comparator.compare(info.p.item, prev.item) <= 0)) {
-					throw new Error("the search tree property is not satisfied.");
-				}
-			}
-		}
 	}
 
 
 	debug_describe_items() {
-		let string = "{";
+		let string = "(";
 
 		this.do_for_each_item_in_order(
 		(item) => {
@@ -840,7 +732,7 @@ export class RBTreeSet {
 			string = string.substring(0, string.length - ", ".length);
 		}
 
-		string = string + "}";
+		string = string + ")";
 
 		return string;
 	}
