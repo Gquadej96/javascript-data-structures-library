@@ -1,3 +1,8 @@
+/*
+Author: Quade Jones
+Email: Gquadej96@live.com
+*/
+
 
 import {AVLTreeMap} from "../AVLTreeMap.js";
 

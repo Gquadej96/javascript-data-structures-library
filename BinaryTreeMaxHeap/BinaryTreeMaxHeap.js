@@ -1,3 +1,8 @@
+/*
+Author: Quade Jones
+Email: Gquadej96@live.com
+*/
+
 
 import {BinaryTreeMinHeap} from "../BinaryTreeMinHeap/BinaryTreeMinHeap.js";
 import * as comparators from "../comparators/comparators.js";

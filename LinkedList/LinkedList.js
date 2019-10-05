@@ -4,7 +4,7 @@ Email: Gquadej96@live.com
 */
 
 
-export class LinkedListStack {
+export class LinkedList {
 
     _first = null;
     _size = 0;
@@ -15,19 +15,34 @@ export class LinkedListStack {
     }
 
 
-    push(item) {
-        if (this._first == null) {
-            this._first = {
-                item: item, 
+    insert(index, item) {
+        if (index < 0 
+            || index > this._size) {
+            
+            throw new Error("the index is out of bounds in the list.");
+        }
 
-                next: null
-            };
-        } 
-        else {
+        if (index == 0) {
             this._first = {
                 item: item, 
 
                 next: this._first
+            };
+        } 
+        else {
+            let p = this._first;
+
+            for (let i = 1; 
+                i < index; 
+                ++i) {
+                
+                p = p.next;
+            }
+
+            p.next = {
+                item: item, 
+
+                next: p.next
             };
         }
 
@@ -35,33 +50,92 @@ export class LinkedListStack {
     }
 
 
-    pop() {
-        if (this._first == null) {
-            throw new Error("the stack is empty.");
+    remove(index) {
+        if (index < 0 
+            || index >= this._size) {
+            
+            throw new Error("the index is out of bounds in the list.");
         }
 
+        if (index == 0) {
+            this._first = this._first.next;
+        } 
+        else {
+            let p = this._first;
 
-        let item = this._first.item;
+            for (let i = 1; 
+                i < index; 
+                ++i) {
+                
+                p = p.next;
+            }
 
-        this._first = this._first.next;
+            p.next = p.next.next;
+        }
 
         this._size = this._size - 1;
-
-        return item;
     }
 
 
-    peek() {
-        if (this._first == null) {
-            throw new Error("the stack is empty.");
+    get(index) {
+        if (index < 0 
+            || index >= this._size) {
+            
+            throw new Error("the index is out of bounds in the list.");
         }
 
-        return this._first.item;
+
+        let p = this._first;
+
+        for (let i = 0; 
+            i < index; 
+            ++i) {
+            
+            p = p.next;
+        }
+
+        return p.item;
+    }
+
+
+    set(index, item) {
+        if (index < 0 
+            || index >= this._size) {
+            
+            throw new Error("the index is out of bounds in the list.");
+        }
+
+
+        let p = this._first;
+
+        for (let i = 0; 
+            i < index; 
+            ++i) {
+            
+            p = p.next;
+        }
+
+        p.item = item;
     }
 
 
     get_size() {
         return this._size;
+    }
+
+
+    do_for_each_item_in_order(consumer) {
+        let p = this._first;
+
+        while (p != null) {
+            consumer(p.item);
+            p = p.next;
+        }
+    }
+
+
+    rebalance() {
+        // nothing to do (only here to satisfy interface).
     }
 
 
@@ -107,7 +181,7 @@ export class LinkedListStack {
         }
 
 
-        let inst = new LinkedListStack();
+        let inst = new LinkedList();
 
         inst._first = first;
         inst._size = this._size;
@@ -121,10 +195,8 @@ export class LinkedListStack {
 
         {
             let p = this._first;
-            let prev = null;
 
             if (p != null) {
-                prev = p;
                 p = p.next;
             }
 
@@ -133,7 +205,6 @@ export class LinkedListStack {
                     throw new Error("there is a cycle in the linked-list fields of the structure.");
                 }
 
-                prev = p;
                 p = p.next;
             }
         }
@@ -158,19 +229,16 @@ export class LinkedListStack {
 
 
     debug_describe_items() {
-        let p = this._first;
-
         let string = "(";
 
-        if (p != null) {
-            string = string + "[" + p.item + "]";
-            p = p.next;
-        }
+		this.do_for_each_item_in_order(
+		(item) => {
+			string = string + "[" + item + "], ";
+		});
 
-        while (p != null) {
-            string = string + ", [" + p.item + "]";
-            p = p.next;
-        }
+		if (this.get_size() > 0) {
+			string = string.substring(0, string.length - ", ".length);
+		}
 
 		string = string + ")";
 

@@ -1,3 +1,7 @@
+/*
+Author: Quade Jones
+Email: Gquadej96@live.com
+*/
 
 
 export class LinkedListQueue {

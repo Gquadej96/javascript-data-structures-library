@@ -4,7 +4,7 @@ Email: Gquadej96@live.com
 */
 
 
-import {RBTreeList} from "../RBTreeList.js";
+import {LinkedList} from "../LinkedList.js";
 
 
 function assert_truth(condition, message) {
@@ -28,7 +28,7 @@ function assert_error(func, message) {
 // test list #1.
 
 {
-	let list = new RBTreeList();
+	let list = new LinkedList();
 
 
 	list.debug_verify_integrity();
@@ -290,7 +290,7 @@ function assert_error(func, message) {
 {
 	let size_of_tests = 1000;
 
-	let list = new RBTreeList();
+	let list = new LinkedList();
 
 	for (let i = 0; 
 		i < size_of_tests; 
@@ -339,7 +339,7 @@ function assert_error(func, message) {
 {
 	let size_of_tests = 1000;
 
-	let list = new RBTreeList();
+	let list = new LinkedList();
 	let ref = new Array();
 
 	for (let i = 0; 
