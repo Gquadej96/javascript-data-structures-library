@@ -100,4 +100,28 @@ export class AVLTreeMap {
 
 		return inst;
 	}
+
+
+	debug_verify_integrity() {
+        this._entries.debug_verify_integrity();
+    }
+
+
+    debug_describe_items() {
+		let string = "{";
+
+		this.do_for_each_item_in_order(
+		(key, value) => {
+			string = string + "([" + key + "] = [" + value + "]), ";
+		});
+
+		if (this.get_size() > 0) {
+			string = string.substring(0, string.length - ", ".length);
+		}
+
+		string = string + "}";
+
+		return string;
+	}
 }
+

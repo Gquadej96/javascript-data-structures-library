@@ -657,7 +657,8 @@ export class AVLTreeSet {
                     p.value.left.value.bias = (p.value.bias + p.value.left.value.bias) % 2 * -1;
                     p.value.bias = bias;
 					p = p.value.right;
-                } while (p.value != null 
+                } 
+                while (p.value != null 
 					/*&& p.value.right.value != null*/);
 
 				p = this._root;

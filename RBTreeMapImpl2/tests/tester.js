@@ -4,7 +4,7 @@ Email: Gquadej96@live.com
 */
 
 
-import {RBTreeMap} from "../RBTreeMap.js";
+import {RBTreeMapImpl2} from "../RBTreeMapImpl2.js";
 
 
 function assert_truth(condition, message) {
@@ -17,7 +17,7 @@ function assert_truth(condition, message) {
 // test set #1.
 
 {
-	let map = new RBTreeMap();
+	let map = new RBTreeMapImpl2();
 
 	assert_truth(map.get_size() == 0, "unexpected size of the map.");
 
@@ -54,7 +54,7 @@ function assert_truth(condition, message) {
 {
 	let size_of_tests = 1000;
 
-	let map = new RBTreeMap();
+	let map = new RBTreeMapImpl2();
 
 	for (let i = 0; 
 		i < size_of_tests; 

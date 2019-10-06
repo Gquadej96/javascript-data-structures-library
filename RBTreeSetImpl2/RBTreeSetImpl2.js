@@ -1,0 +1,1081 @@
+
+/*
+Author: Quade Jones
+Email: Gquadej96@live.com
+*/
+
+
+import * as comparators from "../comparators/comparators.js";
+
+
+export class RBTreeSetImpl2 {
+
+    _root = null;
+    _comparator = new comparators.UniversalComparator();
+
+
+    constructor(comparator) {
+        this._comparator = comparator || this._comparator;
+    }
+
+
+    _update_local_fields(node) {
+        let size = 1;
+
+        if (node.left != null) {
+            size = size + node.left.size;
+        }
+
+        if (node.right != null) {
+            size = size + node.right.size;
+        }
+
+        node.size = size;
+    }
+
+
+    _rotate_subtree_left(node) {
+        let root = node.left;
+
+        node.left = root.right;
+        root.right = node;
+
+        if (node.left != null) {
+            node.left.parent = node;
+        }
+
+        root.parent = node.parent;
+        node.parent = root;
+
+        return root;
+    }
+
+
+    _rotate_subtree_right(node) {
+        let root = node.right;
+
+        node.right = root.left;
+        root.left = node;
+
+        if (node.right != null) {
+            node.right.parent = node;
+        }
+
+        root.parent = node.parent;
+        node.parent = root;
+
+        return root;
+    }
+
+
+    add(item) {
+        let p = this._root;
+        let prev = {parent: null, res: 0};
+
+        while (p != null) {
+            let res = this._comparator.compare(item, p.item);
+
+            prev = {parent: p, res: res};
+
+            if (res == 0) {
+                //throw new Error("the item already exists in the set.");
+                return;
+            } 
+            else if (res < 0) {
+                p = p.left;
+            } 
+            else { // res > 0
+                p = p.right;
+            }
+        }
+
+        p = {
+            left: null, 
+            right: null, 
+            parent: prev.parent, 
+
+            color: "RED", 
+
+            item: item, 
+            size: 1
+        };
+        //this._update_local_fields(p);
+
+        if (prev.parent != null) {
+            let parent = prev.parent;
+
+            if (prev.res < 0) {
+                parent.left = p;
+            } 
+            else { // prev.res > 0
+                parent.right = p;
+            }
+        }
+
+        while (p.parent != null 
+            && p.parent.parent != null) {
+            
+            let parent = p.parent;
+            let grandparent = parent.parent;
+
+            if (grandparent.left != null 
+                && grandparent.left.color == "RED" 
+                && grandparent.right != null 
+                && grandparent.right.color == "RED") {
+                
+                grandparent.color = "RED";
+                grandparent.left.color = "BLACK";
+                grandparent.right.color = "BLACK";
+
+                this._update_local_fields(parent);
+                this._update_local_fields(grandparent);
+
+                p = grandparent;
+                continue;
+            }
+
+            break;
+        }
+
+        if (p.parent != null 
+            && p.parent.color == "RED") { // p.parent.parent != null
+            
+            let parent = p.parent;
+            let grandparent = parent.parent;
+
+            let prev_grandparent = grandparent;
+
+            if (parent == grandparent.left) {
+                if (p == parent.right) {
+                    parent = this._rotate_subtree_right(parent);
+                    grandparent.left = parent;
+
+                    this._update_local_fields(parent.left);
+                }
+
+                grandparent = this._rotate_subtree_left(grandparent);
+                grandparent.color = "BLACK";
+                grandparent.right.color = "RED";
+
+                this._update_local_fields(grandparent.right);
+                this._update_local_fields(grandparent);
+            } 
+            else { // parent == grandparent.right
+                if (p == parent.left) {
+                    parent = this._rotate_subtree_left(parent);
+                    grandparent.right = parent;
+
+                    this._update_local_fields(parent.right);
+                }
+
+                grandparent = this._rotate_subtree_right(grandparent);
+                grandparent.color = "BLACK";
+                grandparent.left.color = "RED";
+
+                this._update_local_fields(grandparent.left);
+                this._update_local_fields(grandparent);
+            }
+
+            if (grandparent.parent != null) {
+                let great_grandparent = grandparent.parent;
+
+                if (prev_grandparent == great_grandparent.left) {
+                    great_grandparent.left = grandparent;
+                } 
+                else { // prev_grandparent == great_grandparent.right
+                    great_grandparent.right = grandparent;
+                }
+            }
+
+            p = grandparent;
+        }
+
+        while (p.parent != null) {
+            p = p.parent;
+            this._update_local_fields(p);
+        }
+
+        this._root = p;
+        this._root.color = "BLACK";
+    }
+
+
+    remove(item) {
+        let p = this._root;
+
+        while (true) {
+            if (p == null) {
+                //throw new Error("the item does not exist in the set.");
+                return;
+            }
+
+
+            let res = this._comparator.compare(item, p.item);
+
+            if (res == 0) {
+                break;
+            } 
+            else if (res < 0) {
+                p = p.left;
+            } 
+            else { // res > 0
+                p = p.right;
+            }
+        }
+
+
+        let prev = p;
+        let target;
+        let parent;
+
+        if (p.left != null) {
+            p = p.left;
+
+            if (p.right != null) {
+                do {
+                    p = p.right;
+                } 
+                while (p.right != null);
+
+                prev.item = p.item;
+
+                parent = p.parent;
+                parent.right = p.left;
+
+                target = p;
+                p = p.left;
+            } 
+            else {
+                prev.item = p.item;
+
+                parent = p.parent;
+                parent.left = p.left;
+
+                target = p;
+                p = p.left;
+            }
+        } 
+        else {
+            parent = p.parent;
+
+            if (parent != null) {
+                if (p == parent.left) {
+                    parent.left = p.right;
+                } 
+                else { // p == parent.right
+                    parent.right = p.right;
+                }
+            }
+
+            target = p;
+            p = p.right;
+        }
+
+        if (p != null) {
+            p.parent = parent;
+        }
+
+        if (target.color == "BLACK") {
+            while ((p == null 
+                || p.color == "BLACK") 
+                && parent != null) {
+                
+                let sibling;
+
+                // parent.left != null || parent.right != null
+                if (p == parent.left) {
+                    sibling = parent.right;
+                } 
+                else { // p == parent.right
+                    sibling = parent.left;
+                }
+
+                if (sibling.color == "BLACK" 
+                    && (sibling.left == null 
+                    || sibling.left.color == "BLACK") 
+                    && (sibling.right == null 
+                    || sibling.right.color == "BLACK")) {
+                    
+                    sibling.color = "RED";
+
+                    this._update_local_fields(parent);
+
+                    p = parent;
+                    parent = parent.parent;
+                    continue;
+                }
+
+                break;
+            }
+
+            if (p != null 
+                && p.color == "RED") {
+                
+                p.color = "BLACK";
+            } 
+            else if (parent != null) {
+                if (p == parent.left) {
+                    let sibling = parent.right;
+
+                    if (sibling.color == "RED") {
+                        let prev_parent = parent;
+                        
+                        parent = this._rotate_subtree_right(parent);
+
+                        parent.color = "BLACK";
+                        parent.left.color = "RED";
+
+                        if (parent.parent != null) {
+                            let grandparent = parent.parent;
+        
+                            if (prev_parent == grandparent.left) {
+                                grandparent.left = parent;
+                            } 
+                            else { // prev_parent == grandparent.right
+                                grandparent.right = parent;
+                            }
+                        }
+
+                        parent = parent.left;
+                        sibling = parent.right;
+                    }
+
+                    if (sibling.right != null 
+                        && sibling.right.color == "RED") {
+
+                        let prev_parent = parent;
+
+                        parent = this._rotate_subtree_right(parent);
+
+                        parent.color = parent.left.color;
+                        parent.left.color = "BLACK";
+                        parent.right.color = "BLACK";
+
+                        if (parent.parent != null) {
+                            let grandparent = parent.parent;
+        
+                            if (prev_parent == grandparent.left) {
+                                grandparent.left = parent;
+                            } 
+                            else { // prev_parent == grandparent.right
+                                grandparent.right = parent;
+                            }
+                        }
+
+                        this._update_local_fields(parent.left);
+                        this._update_local_fields(parent);
+
+                        p = parent;
+                        parent = parent.parent;
+                    } 
+                    else if (sibling.left != null 
+                        && sibling.left.color == "RED") {
+
+                        let prev_parent = parent;
+                        
+                        sibling = this._rotate_subtree_left(sibling);
+                        parent.right = sibling;
+                        parent = this._rotate_subtree_right(parent);
+
+                        parent.color = parent.left.color;
+                        parent.left.color = "BLACK";
+
+                        if (parent.parent != null) {
+                            let grandparent = parent.parent;
+        
+                            if (prev_parent == grandparent.left) {
+                                grandparent.left = parent;
+                            } 
+                            else { // prev_parent == grandparent.right
+                                grandparent.right = parent;
+                            }
+                        }
+
+                        this._update_local_fields(parent.left);
+                        this._update_local_fields(parent.right);
+                        this._update_local_fields(parent);
+
+                        p = parent;
+                        parent = parent.parent;
+                    } 
+                    else { /*
+                        (sibling.left == null 
+                        || sibling.left.color == "BLACK") 
+                        && (sibling.right == null 
+                        || sibling.right.color == "BLACK")
+                        */
+
+                        sibling.color = "RED";
+                        parent.color = "BLACK";
+
+                        this._update_local_fields(parent);
+
+                        p = parent;
+                        parent = parent.parent;
+                    }
+                } 
+                else { // p == parent.right
+                    let sibling = parent.left;
+
+                    if (sibling.color == "RED") {
+                        let prev_parent = parent;
+
+                        parent = this._rotate_subtree_left(parent);
+
+                        parent.color = "BLACK";
+                        parent.right.color = "RED";
+
+                        if (parent.parent != null) {
+                            let grandparent = parent.parent;
+        
+                            if (prev_parent == grandparent.left) {
+                                grandparent.left = parent;
+                            } 
+                            else { // prev_parent == grandparent.right
+                                grandparent.right = parent;
+                            }
+                        }
+
+                        parent = parent.right;
+                        sibling = parent.left;
+                    }
+
+                    if (sibling.left != null 
+                        && sibling.left.color == "RED") {
+
+                        let prev_parent = parent;
+
+                        parent = this._rotate_subtree_left(parent);
+
+                        parent.color = parent.right.color;
+                        parent.left.color = "BLACK";
+                        parent.right.color = "BLACK";
+
+                        if (parent.parent != null) {
+                            let grandparent = parent.parent;
+        
+                            if (prev_parent == grandparent.left) {
+                                grandparent.left = parent;
+                            } 
+                            else { // prev_parent == grandparent.right
+                                grandparent.right = parent;
+                            }
+                        }
+
+                        this._update_local_fields(parent.right);
+                        this._update_local_fields(parent);
+
+                        p = parent;
+                        parent = parent.parent;
+                    } 
+                    else if (sibling.right != null 
+                        && sibling.right.color == "RED") {
+                        
+                        let prev_parent = parent;
+
+                        sibling = this._rotate_subtree_right(sibling);
+                        parent.left = sibling;
+                        parent = this._rotate_subtree_left(parent);
+
+                        parent.color = parent.right.color;
+                        parent.right.color = "BLACK";
+
+                        if (parent.parent != null) {
+                            let grandparent = parent.parent;
+        
+                            if (prev_parent == grandparent.left) {
+                                grandparent.left = parent;
+                            } 
+                            else { // prev_parent == grandparent.right
+                                grandparent.right = parent;
+                            }
+                        }
+
+                        this._update_local_fields(parent.left);
+                        this._update_local_fields(parent.right);
+                        this._update_local_fields(parent);
+
+                        p = parent;
+                        parent = parent.parent;
+                    } 
+                    else { /*
+                        (sibling.left == null 
+                        || sibling.left.color == "BLACK") 
+                        && (sibling.right == null 
+                        || sibling.right.color == "BLACK")
+                        */
+
+                        sibling.color = "RED";
+                        parent.color = "BLACK";
+
+                        this._update_local_fields(parent);
+
+                        p = parent;
+                        parent = parent.parent;
+                    }
+                }
+            }
+        }
+
+        while (parent != null) {
+            this._update_local_fields(parent);
+            p = parent;
+            parent = parent.parent;
+        }
+
+        this._root = p;
+    }
+
+
+    has(item) {
+		let p = this._root;
+
+		while (p != null) {
+			let res = this._comparator.compare(item, p.item);
+
+			if (res == 0) {
+				return true;
+			} 
+			else if (res < 0) {
+				p = p.left;
+			} 
+			else {
+				p = p.right;
+			}
+		}
+
+		return false;
+	}
+
+
+    get_size() {
+		if (this._root != null) {
+			return this._root.size;
+		} 
+		else {
+			return 0;
+		}
+    }
+
+
+    get_rank_of_item(item) {
+		let p = this._root;
+		let rank = 0;
+
+		while (p != null) {
+			let res = this._comparator.compare(item, p.item);
+			let left_size = 0;
+
+			if (p.left != null) {
+				left_size = p.left.size;
+			}
+
+			if (res == 0) {
+				rank = rank + left_size;
+				return rank;
+			} 
+			else if (res < 0) {
+				p = p.left;
+			} 
+			else { // res > 0
+				rank = rank + left_size + 1;
+				p = p.right;
+			}
+		}
+
+		//throw new Error("the item does not exist in the set.");
+		return rank;
+    }
+    
+
+    get_item_by_rank(rank) {
+		if (rank < 0 
+			|| rank >= this.get_size()) {
+			
+			throw new Error("there is no item of this rank in the set.");
+		}
+
+
+		let p = this._root;
+
+		while (true) {
+			let left_size = 0;
+
+			if (p.left != null) {
+				left_size = p.left.size;
+			}
+
+			if (rank == left_size) {
+				return p.item;
+			} 
+			else if (rank < left_size) {
+				p = p.left;
+			} 
+			else { // rank > left_size
+				rank = rank - left_size - 1;
+				p = p.right;
+			}
+		}
+
+		// not reachable.
+    }
+    
+
+    get_LUB(item) {
+		let p = this._root;
+		let upper_bound = null;
+
+		while (p != null) {
+			let res = this._comparator.compare(item, p.item);
+
+			if (res == 0) {
+				upper_bound = p.item;
+				return upper_bound;
+			} 
+			else if (res < 0) {
+				upper_bound = p.item;
+				p = p.left;
+			} 
+			else { // res > 0
+				p = p.right;
+			}
+		}
+
+		return upper_bound;
+	}
+
+
+	get_GLB(item) {
+		let p = this._root;
+		let lower_bound = null;
+
+		while (p != null) {
+			let res = this._comparator.compare(item, p.item);
+
+			if (res == 0) {
+				lower_bound = p.item;
+				return lower_bound;
+			} 
+			else if (res < 0) {
+				p = p.left;
+			} 
+			else { // res > 0
+				lower_bound = p.item;
+				p = p.right;
+			}
+		}
+
+		return lower_bound;
+    }
+    
+
+    do_for_each_item_in_order(consumer) {
+        let p = this._root;
+
+        if (p != null) {
+            while (p.left != null) {
+                p = p.left;
+            }
+
+
+            let prev = null;
+
+            while (true) {
+                if (prev == p.left) {
+                    consumer(p.item);
+    
+                    if (p.right != null) {
+                        p = p.right;
+        
+                        while (p.left != null) {
+                            p = p.left;
+                        }
+        
+                        prev = null;
+                        continue;
+                    }
+                }
+    
+                prev = p;
+                p = p.parent;
+
+                if (p == null) {
+                    break;
+                }
+            }
+        }
+	}
+
+
+	rebalance() {
+        if (this._root == null) {
+            return;
+        }
+
+
+		let size = this.get_size();
+
+		{
+			let p = this._root; // p != null
+
+            while (p.left != null) {
+                p = this._rotate_subtree_left(p);
+            }
+
+
+            let prev = p;
+
+            this._root = p;
+            p = p.right;
+
+			while (p != null) {
+				while (p.left != null) {
+                    p = this._rotate_subtree_left(p);
+                }
+                
+                p.parent.right = p;
+
+                prev = p;
+                p = p.right;
+			}
+
+			prev.right = { // a dummy node.
+				left: null, 
+				right: null, 
+
+				color: "BLACK", 
+
+				item: null, 
+				size: 1
+			};
+			//this._update_local_fields(p.value);
+		}
+
+
+		{
+			let num_of_leaves = size + 1 - 2 ** Math.floor(Math.log2(size + 1));
+            let p = this._root;
+            
+            if (num_of_leaves >= 1) {
+                p = this._rotate_subtree_right(p);
+                this._root = p;
+
+                this._update_local_fields(p.left);
+
+                p.left.color = "RED";
+                p = p.right;
+            }
+
+			for (let i = 1; 
+				i < num_of_leaves; 
+				++i) {
+				
+                p = this._rotate_subtree_right(p);
+                p.parent.right = p;
+
+				this._update_local_fields(p.left);
+
+				p.left.color = "RED";
+				p = p.right;
+			}
+		}
+
+		{
+			let p = this._root; // p != null
+
+			while (p.right != null) {
+                p = this._rotate_subtree_right(p);
+                this._root = p;
+
+                this._update_local_fields(p.left);
+
+                p.left.color = "BLACK";
+                p = p.right;
+
+                while (p != null 
+                    /*&& p.right != null*/) {
+                    
+                    p = this._rotate_subtree_right(p);
+                    p.parent.right = p;
+
+					this._update_local_fields(p.left);
+
+					p.left.color = "BLACK";
+					p = p.right;
+                }
+
+				p = this._root;
+			}
+		}
+
+        this._root = this._root.left;
+        this._root.parent = null;
+    }
+    
+
+    to_array() {
+		let array = new Array();
+
+		this.do_for_each_item_in_order((item) => array.push(item));
+
+		return array;
+	}
+
+
+	clone() {
+		function clone_subtree(node, parent) {
+			if (node != null) {
+				let new_node = {
+                    left: null, 
+                    right: null, 
+                    parent: parent, 
+
+                    color: node.color, 
+
+                    item: node.item, 
+                    size: node.size
+                };
+
+                new_node.left = clone_subtree(node.left, new_node);
+                new_node.right = clone_subtree(node.right, new_node);
+
+                return new_node;
+			} 
+			else {
+				return null;
+			}
+		}
+
+
+		let inst = new RBTreeSetImpl2(this._comparator);
+
+        inst._root = clone_subtree(this._root, null);
+
+        return inst;
+	}
+    
+
+    debug_verify_integrity() {
+		// verify that the root is black.
+
+		if (this._root != null 
+			&& this._root.color == "RED") {
+			
+			throw new Error("the root is not black.");
+		}
+
+
+		// verify that all paths from the root to a leaf have the same black-length.
+
+		{
+			let stack = new Array();
+			let p = this._root;
+			let depth = 0;
+
+			while (p != null) {
+				if (p.color == "BLACK") {
+					depth = depth + 1;
+				}
+
+				stack.push({p: p, depth: depth});
+
+				p = p.left;
+			}
+
+			while (stack.length > 0) {
+				let info = stack.pop();
+				let path_depth = info.depth;
+
+				p = info.p.right;
+
+				while (p != null) {
+					if (p.color == "BLACK") {
+						path_depth = path_depth + 1;
+					}
+
+					stack.push({p: p, depth: path_depth});
+
+					p = p.left;
+				}
+
+				if (path_depth != depth) {
+					throw new Error("there are two paths from the root to a leaf which have different black-lengths.");
+				}
+			}
+		}
+
+
+		// verify that no paths have consecutive red nodes.
+
+		{
+			let stack = new Array();
+			
+			stack.push(this._root);
+
+			while (stack.length > 0) {
+				let node = stack.pop();
+
+				if (node == null) {
+					continue;
+				}
+
+				stack.push(node.left);
+				stack.push(node.right);
+
+				if (node.color == "RED" 
+					&& ((node.left != null 
+					&& node.right.color == "RED") 
+					|| (node.right != null 
+					&& node.right.color == "RED"))) {
+
+					throw new Error("there is a pair of consecutive reds within the tree.");
+				}
+			}
+        }
+        
+
+        // verify the "parent" attribute of each node.
+
+		{
+            if (this._root != null 
+                && this._root.parent != null) {
+                
+                throw new Error("the parent attribute of the root is not null.");
+            }
+
+
+			let stack = new Array();
+			
+			stack.push(this._root);
+
+			while (stack.length > 0) {
+				let node = stack.pop();
+
+				if (node == null) {
+					continue;
+				}
+
+				stack.push(node.left);
+				stack.push(node.right);
+
+                if ((node.left != null 
+                    && node.left.parent != node) 
+                    || (node.right != null 
+                    && node.right.parent != node)) {
+
+					throw new Error("the parent attribute of a node does not match the parent of its subtree.");
+				}
+			}
+		}
+
+
+		// verify the "size" attribute of each node.
+
+		{
+			function get_size_and_verify_subtree(node) {
+				if (node == null) {
+					return 0;
+				}
+
+				
+				let size = get_size_and_verify_subtree(node.left) + get_size_and_verify_subtree(node.right) + 1;
+
+				if (size != node.size) {
+					throw new Error("the size attribute of a node does not match the size of its subtree.");
+				}
+
+				return size;
+			};
+
+			get_size_and_verify_subtree(this._root);
+        }
+
+
+		// verify the search tree property.
+
+		{
+			let stack = new Array();
+			let prev = null;
+			let p = this._root;
+
+			if (p != null) {
+				let q = p;
+
+				while (q.right != null) {
+					q = q.right;
+				}
+
+				stack.push({p: p, upper_bound: q.item});
+
+				prev = p;
+				p = p.left;
+			}
+
+			while (p != null) {
+				stack.push({p: p, upper_bound: prev.item});
+
+				if (!(this._comparator.compare(p.item, prev.item) <= 0)) {
+					throw new Error("the search tree property is not satisfied.");
+				}
+
+				prev = p;
+				p = p.left;
+			}
+
+			while (stack.length > 0) {
+				let info = stack.pop();
+
+				prev = null;
+				p = info.p.right;
+
+				if (p != null) {
+					stack.push({p: p, upper_bound: info.upper_bound});
+
+					prev = p;
+					p = p.left;
+				} 
+				else {
+					if (!(this._comparator.compare(info.p.item, info.upper_bound) <= 0)) {
+						throw new Error("the search tree property is not satisfied.");
+					}
+
+					break;
+				}
+
+				while (p != null) {
+					stack.push({p: p, upper_bound: prev.item});
+
+					if (!(this._comparator.compare(p.item, prev.item) <= 0)) {
+						throw new Error("the search tree property is not satisfied.");
+					}
+
+					prev = p;
+					p = p.left;
+				}
+
+				if (!(this._comparator.compare(info.p.item, prev.item) <= 0)) {
+					throw new Error("the search tree property is not satisfied.");
+				}
+			}
+		}
+    }
+    
+
+    debug_describe_items() {
+		let string = "{";
+
+		this.do_for_each_item_in_order(
+		(item) => {
+			string = string + "[" + item + "], ";
+		});
+
+		if (this.get_size() > 0) {
+			string = string.substring(0, string.length - ", ".length);
+		}
+
+		string = string + "}";
+
+		return string;
+	}
+}
+

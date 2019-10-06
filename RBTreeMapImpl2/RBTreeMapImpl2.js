@@ -4,24 +4,21 @@ Email: Gquadej96@live.com
 */
 
 
-import {ABTreeSet} from "../ABTreeSet/ABTreeSet.js";
+import {RBTreeSetImpl2} from "../RBTreeSetImpl2/RBTreeSetImpl2.js";
 import * as comparators from "../comparators/comparators.js";
 
 
-export class ABTreeMap {
+export class RBTreeMapImpl2 {
 
 	_entries = null;
 	_key_comparator = new comparators.UniversalComparator();
 
 
-	constructor(A, B, key_comparator) {
+	constructor(key_comparator) {
 		key_comparator = key_comparator || this._key_comparator;
 		this._key_comparator = key_comparator;
 
-		A = A || 2;
-		B = B || 3;
-
-		this._entries = new ABTreeSet(A, B, new class {
+		this._entries = new RBTreeSetImpl2(new class {
 			compare(a, b) {
 				return key_comparator.compare(a.key, b.key);
 			}
@@ -97,15 +94,15 @@ export class ABTreeMap {
 
 
 	clone() {
-		let inst = new ABTreeMap(this._A, this._B, this._key_comparator);
+		let inst = new RBTreeMapImpl2(this._key_comparator);
 
 		inst._entries = this._entries.clone();
 
 		return inst;
-	}
+    }
+    
 
-
-	debug_verify_integrity() {
+    debug_verify_integrity() {
         this._entries.debug_verify_integrity();
     }
 
@@ -127,3 +124,4 @@ export class ABTreeMap {
 		return string;
 	}
 }
+
