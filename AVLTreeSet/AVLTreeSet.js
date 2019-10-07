@@ -230,7 +230,12 @@ export class AVLTreeSet {
         let stack = new Array();
         let p = this._root;
 
-        while (p.value != null) {
+        while (true) {
+            if (p.value == null) {
+                //throw new Error("the item does not exist in the set.");
+                return;
+            }
+
             stack.push(p);
 
 
@@ -265,7 +270,8 @@ export class AVLTreeSet {
 				do {
 					stack.push(p);
 					p = p.value.right;
-				} while (p.value != null);
+                } 
+                while (p.value != null);
 
 				p = stack.pop();
 
