@@ -25,13 +25,13 @@ export class ObjectReferenceComparator {
 
 	
 	_get_object_reference(object) {
-		let ref = this.refs.get(object);
+		let ref = this._refs.get(object);
 
 		if (ref == null) {
 			ref = this._next_ref;
 
 			this._next_ref = this._next_ref + 1;
-			refs.set(object, ref);
+			this._refs.set(object, ref);
 		}
 
 		return ref;
