@@ -39,7 +39,7 @@ export class ObjectReferenceComparator {
 
 
 	compare(a, b) {
-		return get_object_ref(a) - get_object_ref(b);
+		return this._get_object_reference(a) - this._get_object_reference(b);
 	}
 }
 
