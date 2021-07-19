@@ -14,7 +14,7 @@ export class AVLTreeList {
     }
 
 
-    _update_local_fields(node) {
+    _updateLocalFields(node) {
         let size = 1;
 
         if (node.left.value != null) {
@@ -29,7 +29,7 @@ export class AVLTreeList {
     }
 
 
-    _rotate_subtree_left(ref) {
+    _rotateSubtreeLeft(ref) {
         let root = ref.value;
 
         ref.value = root.left.value;
@@ -38,7 +38,7 @@ export class AVLTreeList {
     }
 
 
-    _rotate_subtree_right(ref) {
+    _rotateSubtreeRight(ref) {
         let root = ref.value;
 
         ref.value = root.right.value;
@@ -47,12 +47,10 @@ export class AVLTreeList {
     }
 
 
-    insert(index, item) {
-        let size = this.get_size();
+    add(index, item) {
+        let size = this.getSize();
 
-        if (index < 0 
-            || index > size) {
-            
+        if (index < 0 || index > size) {
             throw new Error("the index is out of bounds in the list.");
         }
 
@@ -64,21 +62,18 @@ export class AVLTreeList {
             while (true) {
                 stack.push(p);
 
-
-                let left_size = 0;
+                let leftSize = 0;
 
                 if (p.value.left.value != null) {
-                    left_size = p.value.left.value.size;
+                    leftSize = p.value.left.value.size;
                 }
 
-                if (index == left_size) {
+                if (index == leftSize) {
                     break;
-                } 
-                else if (index < left_size) {
+                } else if (index < leftSize) {
                     p = p.value.left;
-                } 
-                else { // index > left_size
-                    index = index - left_size - 1;
+                } else { // index > leftSize
+                    index = index - leftSize - 1;
                     p = p.value.right;
                 }
             }
@@ -94,14 +89,11 @@ export class AVLTreeList {
         p.value = {
             left: {value: null}, 
             right: {value: null}, 
-
             bias: 0, 
-
             item: item, 
             size: 1
         };
-        //this._update_local_fields(p.value);
-
+        //this._updateLocalFields(p.value);
 
         while (stack.length > 0) {
             let parent = stack.pop();
@@ -110,123 +102,110 @@ export class AVLTreeList {
                 if (parent.value.bias == 0) {
                     parent.value.bias = -1;
 
-                    this._update_local_fields(parent.value);
+                    this._updateLocalFields(parent.value);
                     p = parent;
-                } 
-                else if (parent.value.bias < 0) {
+                } else if (parent.value.bias < 0) {
                     if (p.value.bias == 0) { // should never happen.
-                        this._rotate_subtree_left(parent);
+                        this._rotateSubtreeLeft(parent);
 
                         parent.value.right.value.bias = -1;
                         parent.value.bias = 1;
 
-                        this._update_local_fields(parent.value.right.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.right.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
-                    } 
-                    else if (p.value.bias < 0) {
-                        this._rotate_subtree_left(parent);
+                    } else if (p.value.bias < 0) {
+                        this._rotateSubtreeLeft(parent);
 
                         parent.value.right.value.bias = 0;
                         parent.value.bias = 0;
 
-                        this._update_local_fields(parent.value.right.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.right.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
                         break;
-                    } 
-                    else { // p.value.bias > 0
-                        this._rotate_subtree_right(p);
-                        this._rotate_subtree_left(parent);
+                    } else { // p.value.bias > 0
+                        this._rotateSubtreeRight(p);
+                        this._rotateSubtreeLeft(parent);
 
                         if (parent.value.bias == 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 0;
-                        } 
-                        else if (parent.value.bias < 0) {
+                        } else if (parent.value.bias < 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 1;
-                        } 
-                        else { // parent.value.bias > 0
+                        } else { // parent.value.bias > 0
                             parent.value.left.value.bias = -1;
                             parent.value.right.value.bias = 0;
                         }
 
                         parent.value.bias = 0;
 
-                        this._update_local_fields(parent.value.left.value);
-                        this._update_local_fields(parent.value.right.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.left.value);
+                        this._updateLocalFields(parent.value.right.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
                         break;
                     }
-                } 
-                else { // parent.value.bias > 0
+                } else { // parent.value.bias > 0
                     parent.value.bias = 0;
 
-                    this._update_local_fields(parent.value);
+                    this._updateLocalFields(parent.value);
                     p = parent;
                     break;
                 }
-            } 
-            else { // p == parent.value.right
+            } else { // p == parent.value.right
                 if (parent.value.bias == 0) {
                     parent.value.bias = 1;
 
-                    this._update_local_fields(parent.value);
+                    this._updateLocalFields(parent.value);
                     p = parent;
-                } 
-                else if (parent.value.bias < 0) {
+                } else if (parent.value.bias < 0) {
                     parent.value.bias = 0;
 
-                    this._update_local_fields(parent.value);
+                    this._updateLocalFields(parent.value);
                     p = parent;
                     break;
-                } 
-                else { // parent.value.bias > 0
+                } else { // parent.value.bias > 0
                     if (p.value.bias == 0) { // should never happen.
-                        this._rotate_subtree_right(parent);
+                        this._rotateSubtreeRight(parent);
 
                         parent.value.left.value.bias = 1;
                         parent.value.bias = -1;
 
-                        this._update_local_fields(parent.value.left.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.left.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
-                    } 
-                    else if (p.value.bias < 0) {
-                        this._rotate_subtree_left(p);
-                        this._rotate_subtree_right(parent);
+                    } else if (p.value.bias < 0) {
+                        this._rotateSubtreeLeft(p);
+                        this._rotateSubtreeRight(parent);
 
                         if (parent.value.bias == 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 0;
-                        } 
-                        else if (parent.value.bias < 0) {
+                        } else if (parent.value.bias < 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 1;
-                        } 
-                        else { // parent.value.bias > 0
+                        } else { // parent.value.bias > 0
                             parent.value.left.value.bias = -1;
                             parent.value.right.value.bias = 0;
                         }
 
                         parent.value.bias = 0;
 
-                        this._update_local_fields(parent.value.left.value);
-                        this._update_local_fields(parent.value.right.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.left.value);
+                        this._updateLocalFields(parent.value.right.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
                         break;
-                    } 
-                    else { // p.value.bias > 0
-                        this._rotate_subtree_right(parent);
+                    } else { // p.value.bias > 0
+                        this._rotateSubtreeRight(parent);
 
                         parent.value.left.value.bias = 0;
                         parent.value.bias = 0;
 
-                        this._update_local_fields(parent.value.left.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.left.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
                         break;
                     }
@@ -238,40 +217,34 @@ export class AVLTreeList {
         while (stack.length > 0) {
             p = stack.pop();
 
-            this._update_local_fields(p.value);
+            this._updateLocalFields(p.value);
         }
     }
 
 
     remove(index) {
-        if (index < 0 
-            || index >= this.get_size()) {
-            
+        if (index < 0 || index >= this.getSize()) {
             throw new Error("the index is out of bounds in the list.");
         }
         
-
         let stack = new Array();
         let p = this._root;
 
         while (true) {
             stack.push(p);
 
-
-            let left_size = 0;
+            let leftSize = 0;
 
             if (p.value.left.value != null) {
-                left_size = p.value.left.value.size;
+                leftSize = p.value.left.value.size;
             }
 
-            if (index == left_size) {
+            if (index == leftSize) {
                 break;
-            } 
-            else if (index < left_size) {
+            } else if (index < leftSize) {
                 p = p.value.left;
-            } 
-            else { // index > left_size
-                index = index - left_size - 1;
+            } else { // index > leftSize
+                index = index - leftSize - 1;
                 p = p.value.right;
             }
         }
@@ -294,8 +267,7 @@ export class AVLTreeList {
                 p = stack.pop();
 
                 replacement = p.value.left.value;
-            } 
-            else {
+            } else {
                 p = stack.pop(); // p = p
                 replacement = p.value.right.value;
             }
@@ -314,125 +286,114 @@ export class AVLTreeList {
                 if (parent.value.bias == 0) {
                     parent.value.bias = 1;
 
-                    this._update_local_fields(parent.value);
+                    this._updateLocalFields(parent.value);
                     p = parent;
                     break;
-                } 
-                else if (parent.value.bias < 0) {
+                } else if (parent.value.bias < 0) {
                     parent.value.bias = 0;
 
-                    this._update_local_fields(parent.value);
+                    this._updateLocalFields(parent.value);
                     p = parent;
                 } else { // parent.value.bias > 0
                     p = parent.value.right;
 
                     if (p.value.bias == 0) {
-                        this._rotate_subtree_right(parent);
+                        this._rotateSubtreeRight(parent);
 
                         parent.value.left.value.bias = 1;
                         parent.value.bias = -1;
 
-                        this._update_local_fields(parent.value.left.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.left.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
                         break;
-                    } 
-                    else if (p.value.bias < 0) {
-                        this._rotate_subtree_left(p);
-                        this._rotate_subtree_right(parent);
+                    } else if (p.value.bias < 0) {
+                        this._rotateSubtreeLeft(p);
+                        this._rotateSubtreeRight(parent);
 
                         if (parent.value.bias == 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 0;
-                        } 
-                        else if (parent.value.bias < 0) {
+                        } else if (parent.value.bias < 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 1;
-                        } 
-                        else { // parent.value.bias > 0
+                        } else { // parent.value.bias > 0
                             parent.value.left.value.bias = -1;
                             parent.value.right.value.bias = 0;
                         }
 
                         parent.value.bias = 0;
 
-                        this._update_local_fields(parent.value.left.value);
-                        this._update_local_fields(parent.value.right.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.left.value);
+                        this._updateLocalFields(parent.value.right.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
-                    } 
-                    else { // p.value.bias > 0
-                        this._rotate_subtree_right(parent);
+                    } else { // p.value.bias > 0
+                        this._rotateSubtreeRight(parent);
 
                         parent.value.left.value.bias = 0;
                         parent.value.bias = 0;
 
-                        this._update_local_fields(parent.value.left.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.left.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
                     }
                 }
-            } 
-            else { // p == parent.value.right;
+            } else { // p == parent.value.right;
                 if (parent.value.bias == 0) {
                     parent.value.bias = -1;
 
-                    this._update_local_fields(parent.value);
+                    this._updateLocalFields(parent.value);
                     p = parent;
                     break;
-                } 
-                else if (parent.value.bias < 0) {
+                } else if (parent.value.bias < 0) {
                     p = parent.value.left;
 
                     if (p.value.bias == 0) {
-                        this._rotate_subtree_left(parent);
+                        this._rotateSubtreeLeft(parent);
 
                         parent.value.right.value.bias = -1;
                         parent.value.bias = 1;
 
-                        this._update_local_fields(parent.value.right.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.right.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
                         break;
-                    } 
-                    else if (p.value.bias < 0) {
-                        this._rotate_subtree_left(parent);
+                    } else if (p.value.bias < 0) {
+                        this._rotateSubtreeLeft(parent);
 
                         parent.value.right.value.bias = 0;
                         parent.value.bias = 0;
 
-                        this._update_local_fields(parent.value.right.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.right.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
-                    } 
-                    else { // p.value.bias > 0
-                        this._rotate_subtree_right(p);
-                        this._rotate_subtree_left(parent);
+                    } else { // p.value.bias > 0
+                        this._rotateSubtreeRight(p);
+                        this._rotateSubtreeLeft(parent);
 
                         if (parent.value.bias == 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 0;
-                        } 
-                        else if (parent.value.bias < 0) {
+                        } else if (parent.value.bias < 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 1;
-                        } 
-                        else { // parent.value.bias > 0
+                        } else { // parent.value.bias > 0
                             parent.value.left.value.bias = -1;
                             parent.value.right.value.bias = 0;
                         }
 
                         parent.value.bias = 0;
 
-                        this._update_local_fields(parent.value.left.value);
-                        this._update_local_fields(parent.value.right.value);
-                        this._update_local_fields(parent.value);
+                        this._updateLocalFields(parent.value.left.value);
+                        this._updateLocalFields(parent.value.right.value);
+                        this._updateLocalFields(parent.value);
                         p = parent;
                     }
                 } else { // parent.value.bias > 0
                     parent.value.bias = 0;
 
-                    this._update_local_fields(parent.value);
+                    this._updateLocalFields(parent.value);
                     p = parent;
                 }
             }
@@ -442,14 +403,14 @@ export class AVLTreeList {
         while (stack.length > 0) {
             p = stack.pop();
 
-            this._update_local_fields(p.value);
+            this._updateLocalFields(p.value);
         }
     }
 
 
     get(index) {
         if (index < 0 
-            || index >= this.get_size()) {
+            || index >= this.getSize()) {
             
             throw new Error("the index is out of bounds in the list.");
         }
@@ -458,20 +419,18 @@ export class AVLTreeList {
         let p = this._root.value;
 
         while (true) {
-            let left_size = 0;
+            let leftSize = 0;
 
             if (p.left.value != null) {
-                left_size = p.left.value.size;
+                leftSize = p.left.value.size;
             }
 
-            if (index == left_size) {
+            if (index == leftSize) {
                 return p.item;
-            } 
-            else if (index < left_size) {
+            } else if (index < leftSize) {
                 p = p.left.value;
-            } 
-            else { // index > left_size
-                index = index - left_size - 1;
+            } else { // index > leftSize
+                index = index - leftSize - 1;
                 p = p.right.value;
             }
         }
@@ -482,7 +441,7 @@ export class AVLTreeList {
 
     set(index, item) {
         if (index < 0 
-            || index >= this.get_size()) {
+            || index >= this.getSize()) {
             
             throw new Error("the index is out of bounds in the list.");
         }
@@ -491,21 +450,19 @@ export class AVLTreeList {
         let p = this._root.value;
 
         while (true) {
-            let left_size = 0;
+            let leftSize = 0;
 
             if (p.left.value != null) {
-                left_size = p.left.value.size;
+                leftSize = p.left.value.size;
             }
 
-            if (index == left_size) {
+            if (index == leftSize) {
                 p.item = item;
                 return;
-            } 
-            else if (index < left_size) {
+            } else if (index < leftSize) {
                 p = p.left.value;
-            } 
-            else { // index > left_size
-                index = index - left_size - 1;
+            } else { // index > leftSize
+                index = index - leftSize - 1;
                 p = p.right.value;
             }
         }
@@ -514,17 +471,16 @@ export class AVLTreeList {
     }
 
 
-    get_size() {
+    getSize() {
         if (this._root.value != null) {
             return this._root.value.size;
-        } 
-        else {
+        } else {
             return 0;
         }
     }
 
 
-    do_for_each_item_in_order(consumer) {
+    doForEachItemInOrder(consumer) {
         let stack = new Array();
         let p = this._root.value;
 
@@ -549,16 +505,15 @@ export class AVLTreeList {
     
     
     rebalance() {
-        let size = this.get_size();
+        let size = this.getSize();
 
         {
             let p = this._root;
 
             while (p.value != null) {
                 if (p.value.left.value != null) {
-                    this._rotate_subtree_left(p);
-                } 
-                else {
+                    this._rotateSubtreeLeft(p);
+                } else {
                     p = p.value.right;
                 }
             }
@@ -566,13 +521,11 @@ export class AVLTreeList {
             p.value = { // a dummy node.
                 left: {value: null}, 
                 right: {value: null}, 
-
                 bias: 0, 
-
                 item: null, 
                 size: 1
             };
-            //this._update_local_fields(p.value);
+            //this._updateLocalFields(p.value);
         }
 
 
@@ -587,15 +540,12 @@ export class AVLTreeList {
 
 
         {
-            let num_of_leaves = size + 1 - 2 ** Math.floor(Math.log2(size + 1));
+            let numOfLeaves = size + 1 - 2 ** Math.floor(Math.log2(size + 1));
             let p = this._root;
 
-            for (let i = 0; 
-                i < num_of_leaves; 
-                ++i) {
-                
-                this._rotate_subtree_right(p);
-                this._update_local_fields(p.value.left.value);
+            for (let i = 0; i < numOfLeaves; ++i) {
+                this._rotateSubtreeRight(p);
+                this._updateLocalFields(p.value.left.value);
 
                 p.value.bias = 1;
                 p = p.value.right;
@@ -607,9 +557,8 @@ export class AVLTreeList {
 
             while (p.value.right.value != null) {
                 do {
-                    this._rotate_subtree_right(p);
-                    this._update_local_fields(p.value.left.value);
-
+                    this._rotateSubtreeRight(p);
+                    this._updateLocalFields(p.value.left.value);
 
                     let bias = p.value.left.value.bias;
 
@@ -617,8 +566,7 @@ export class AVLTreeList {
                     p.value.bias = bias;
                     p = p.value.right;
                 } 
-                while (p.value != null 
-                    /*&& p.value.right.value != null*/);
+                while (p.value != null /*&& p.value.right.value != null*/);
 
                 p = this._root;
             }
@@ -628,31 +576,28 @@ export class AVLTreeList {
     }
 
 
-    to_array() {
+    toArray() {
         let array = new Array();
 
-        this.do_for_each_item_in_order((item) => array.push(item));
+        this.doForEachItemInOrder((item) => array.push(item));
 
         return array;
     }
     
 
     clone() {
-        function clone_subtree(ref) {
+        function cloneSubtree(ref) {
             if (ref.value != null) {
                 return {
                     value: {
-                        left: clone_subtree(ref.value.left), 
-                        right: clone_subtree(ref.value.right), 
-        
+                        left: cloneSubtree(ref.value.left), 
+                        right: cloneSubtree(ref.value.right), 
                         bias: ref.value.bias, 
-                        
                         item: ref.value.item, 
                         size: ref.value.size
                     }
                 };
-            } 
-            else {
+            } else {
                 return {value: null};
             }
         }
@@ -660,51 +605,49 @@ export class AVLTreeList {
 
         let inst = new AVLTreeList();
 
-        inst._root = clone_subtree(this._root);
+        inst._root = cloneSubtree(this._root);
 
         return inst;
     }
 
 
-    debug_verify_integrity() {
+    debugVerifyIntegrity() {
         // verify the "bias" attribute of each node.
 
         {
-            function get_height_and_verify_subtree(node) {
+            function getHeightAndVerifySubtree(node) {
                 if (node == null) {
                     return 0;
                 }
 
 
-                let left_height = get_height_and_verify_subtree(node.left.value);
-                let right_height = get_height_and_verify_subtree(node.right.value);
+                let leftHeight = getHeightAndVerifySubtree(node.left.value);
+                let rightHeight = getHeightAndVerifySubtree(node.right.value);
 
-                let bias = right_height - left_height;
+                let bias = rightHeight - leftHeight;
 
                 if (bias != node.bias) {
                     throw new Error("the bias attribute of a node does not match the bias implied by the height of its subtrees.");
                 }
 
-
-                let height = Math.max(left_height, right_height);
+                let height = Math.max(leftHeight, rightHeight);
 
                 return height + 1;
             };
 
-            get_height_and_verify_subtree(this._root.value);
+            getHeightAndVerifySubtree(this._root.value);
         }
 
 
         // verify the "size" attribute of each node.
 
         {
-            function get_size_and_verify_subtree(node) {
+            function getSizeAndVerifySubtree(node) {
                 if (node == null) {
                     return 0;
                 }
 
-                
-                let size = get_size_and_verify_subtree(node.left.value) + get_size_and_verify_subtree(node.right.value) + 1;
+                let size = getSizeAndVerifySubtree(node.left.value) + getSizeAndVerifySubtree(node.right.value) + 1;
 
                 if (size != node.size) {
                     throw new Error("the size attribute of a node does not match the size of its subtree.");
@@ -713,25 +656,23 @@ export class AVLTreeList {
                 return size;
             };
 
-            get_size_and_verify_subtree(this._root.value);
+            getSizeAndVerifySubtree(this._root.value);
         }
     }
 
 
-    debug_describe_items() {
+    debugDescribeItems() {
         let string = "(";
 
-        this.do_for_each_item_in_order(
-        (item) => {
+        this.doForEachItemInOrder(item => {
             string = string + "[" + item + "], ";
         });
 
-        if (this.get_size() > 0) {
+        if (this.getSize() > 0) {
             string = string.substring(0, string.length - ", ".length);
         }
 
         string = string + ")";
-
         return string;
     }
 }
