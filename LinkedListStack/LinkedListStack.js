@@ -19,14 +19,11 @@ export class LinkedListStack {
         if (this._first == null) {
             this._first = {
                 item: item, 
-
                 next: null
             };
-        } 
-        else {
+        } else {
             this._first = {
                 item: item, 
-
                 next: this._first
             };
         }
@@ -44,9 +41,7 @@ export class LinkedListStack {
         let item = this._first.item;
 
         this._first = this._first.next;
-
         this._size = this._size - 1;
-
         return item;
     }
 
@@ -60,12 +55,12 @@ export class LinkedListStack {
     }
 
 
-    get_size() {
+    getSize() {
         return this._size;
     }
 
 
-    to_array() {
+    toArray() {
         let p = this._first;
         let array = new Array();
 
@@ -87,22 +82,18 @@ export class LinkedListStack {
         if (p != null) {
             first = {
                 item: p.item, 
-
                 next: null
             };
             end = first;
-
             p = p.next;
         }
 
         while (p != null) {
             end.next = {
                 item: p.item, 
-
                 next: null
             };
             end = end.next;
-
             p = p.next;
         }
 
@@ -111,12 +102,11 @@ export class LinkedListStack {
 
         inst._first = first;
         inst._size = this._size;
-
         return inst;
     }
 
 
-    debug_verify_integrity() {
+    debugVerifyIntegrity() {
         // verify the linked-list fields of the structure.
 
         {
@@ -157,9 +147,8 @@ export class LinkedListStack {
     }
 
 
-    debug_describe_items() {
+    debugDescribeItems() {
         let p = this._first;
-
         let string = "(";
 
         if (p != null) {
@@ -173,7 +162,6 @@ export class LinkedListStack {
         }
 
         string = string + ")";
-
         return string;
     }
 }
