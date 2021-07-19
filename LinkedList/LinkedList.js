@@ -15,7 +15,7 @@ export class LinkedList {
     }
 
 
-    insert(index, item) {
+    add(index, item) {
         if (index < 0 || index > this._size) {
             throw new Error("the index is out of bounds in the list.");
         }

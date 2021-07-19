@@ -20,15 +20,12 @@ export class LinkedListQueue {
         if (this._end == null) {
             this._first = {
                 item: item, 
-
                 next: null
             };
             this._end = this._first;
-        } 
-        else {
+        } else {
             this._end.next = {
                 item: item, 
-
                 next: null
             };
             this._end = this._end.next;
@@ -43,7 +40,6 @@ export class LinkedListQueue {
             throw new Error("the queue is empty.");
         }
 
-        
         let item = this._first.item;
 
         this._first = this._first.next;
@@ -53,7 +49,6 @@ export class LinkedListQueue {
         }
 
         this._size = this._size - 1;
-
         return item;
     }
 
@@ -67,12 +62,12 @@ export class LinkedListQueue {
     }
 
 
-    get_size() {
+    getSize() {
         return this._size;
     }
 
 
-    to_array() {
+    toArray() {
         let p = this._first;
         let array = new Array();
 
@@ -94,22 +89,18 @@ export class LinkedListQueue {
         if (p != null) {
             first = {
                 item: p.item, 
-
                 next: null
             };
             end = first;
-
             p = p.next;
         }
 
         while (p != null) {
             end.next = {
                 item: p.item, 
-
                 next: null
             };
             end = end.next;
-
             p = p.next;
         }
 
@@ -119,12 +110,11 @@ export class LinkedListQueue {
         inst._first = first;
         inst._end = end;
         inst._size = this._size;
-
         return inst;
     }
 
 
-    debug_verify_integrity() {
+    debugVerifyIntegrity() {
         // verify the linked-list fields of the structure.
 
         {
@@ -169,9 +159,8 @@ export class LinkedListQueue {
     }
 
 
-    debug_describe_items() {
+    debugDescribeItems() {
         let p = this._first;
-
         let string = "(";
 
         if (p != null) {
@@ -185,7 +174,6 @@ export class LinkedListQueue {
         }
 
         string = string + ")";
-
         return string;
     }
 }

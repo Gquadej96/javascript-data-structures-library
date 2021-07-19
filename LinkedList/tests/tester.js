@@ -38,7 +38,7 @@ function assertError(func, message) {
     list.debugVerifyIntegrity();
 
 
-    list.insert(0, 1);
+    list.add(0, 1);
     list.debugVerifyIntegrity();
 
     assertTruth(list.getSize() == 1, "unexpected size of the list.");
@@ -48,7 +48,7 @@ function assertError(func, message) {
     assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
     assertError(list.get.bind(list, 1), "there is no error when retrieving an item which is out-of-bounds in the list.");
 
-    list.insert(1, 2);
+    list.add(1, 2);
     list.debugVerifyIntegrity();
 
     assertTruth(list.getSize() == 2, "unexpected size of the list.");
@@ -60,7 +60,7 @@ function assertError(func, message) {
     assertError(list.get.bind(list, 2), "there is no error when retrieving an item which is out-of-bounds in the list.");
 
 
-    list.insert(1, 3);
+    list.add(1, 3);
     list.debugVerifyIntegrity();
 
     assertTruth(list.getSize() == 3, "unexpected size of the list.");
@@ -73,7 +73,7 @@ function assertError(func, message) {
     assertError(list.get.bind(list, 3), "there is no error when retrieving an item which is out-of-bounds in the list.");
 
 
-    list.insert(0, 4);
+    list.add(0, 4);
     list.debugVerifyIntegrity();
 
     assertTruth(list.getSize() == 4, "unexpected size of the list.");
@@ -87,7 +87,7 @@ function assertError(func, message) {
     assertError(list.get.bind(list, 4), "there is no error when retrieving an item which is out-of-bounds in the list.");
 
 
-    list.insert(2, 5);
+    list.add(2, 5);
     list.debugVerifyIntegrity();
 
     assertTruth(list.getSize() == 5, "unexpected size of the list.");
@@ -285,7 +285,7 @@ function assertError(func, message) {
     let list = new LinkedList();
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        list.insert(i, i);
+        list.add(i, i);
         list.debugVerifyIntegrity();
 
         assertTruth(list.getSize() == i + 1, "unexpected size of list.");
@@ -328,7 +328,7 @@ function assertError(func, message) {
         let item = Math.floor(sizeOfTests * Math.random());
         let index = Math.floor((ref.length + 1) * Math.random());
 
-        list.insert(index, item);
+        list.add(index, item);
         list.debugVerifyIntegrity();
 
         ref.splice(index, 0, item);
