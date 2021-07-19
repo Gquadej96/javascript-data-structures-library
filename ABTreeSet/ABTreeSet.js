@@ -107,7 +107,6 @@ export class ABTreeSet {
             this._updateLocalFields(nextBranch);
         }
 
-
         while (stack.length > 0) {
             let parent = stack.pop();
 
@@ -142,7 +141,6 @@ export class ABTreeSet {
 
             p = parent;
         }
-
 
         this._root = {
             index: [newIndex], 
@@ -253,7 +251,6 @@ export class ABTreeSet {
 
             p = parent;
         }
-
 
         while (stack.length > 0) {
             let parent = stack.pop();

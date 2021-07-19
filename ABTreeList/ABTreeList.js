@@ -94,7 +94,6 @@ export class ABTreeList {
             return;
         }
 
-
         let nextBranch;
 
         {
@@ -109,7 +108,6 @@ export class ABTreeList {
             this._updateLocalFields(p.p);
             this._updateLocalFields(nextBranch);
         }
-
 
         while (stack.length > 0) {
             let parent = stack.pop();
@@ -128,7 +126,6 @@ export class ABTreeList {
                 return;
             }
 
-
             let leftBranchSize = Math.floor(parent.p.branches.length / 2);
 
             nextBranch = {
@@ -141,7 +138,6 @@ export class ABTreeList {
 
             p = parent;
         }
-
 
         this._root = {
             branches: [this._root, nextBranch], 
@@ -156,7 +152,6 @@ export class ABTreeList {
         if (index < 0 || index >= this._root.size) {
             throw new Error("the index is out of bounds in the list.");
         }
-
 
         let stack = new Array();
         let p = this._root;
@@ -188,7 +183,6 @@ export class ABTreeList {
 
             return;
         }
-
 
         if (stack.length > 0) {
             let parent = stack.pop();
@@ -247,7 +241,6 @@ export class ABTreeList {
 
             p = parent;
         }
-
 
         while (stack.length > 0) {
             let parent = stack.pop();
@@ -324,7 +317,6 @@ export class ABTreeList {
             throw new Error("the index is out of bounds in the list.");
         }
 
-
         let p = this._root;
 
         while (p.branches != null) {
@@ -346,7 +338,6 @@ export class ABTreeList {
         if (index < 0 || index >= this._root.size) {
             throw new Error("the index is out of bounds in the list.");
         }
-
 
         let p = this._root;
 
@@ -526,7 +517,6 @@ export class ABTreeList {
                 };
             }
         }
-
 
         let inst = new ABTreeList(this._A, this._B);
 
