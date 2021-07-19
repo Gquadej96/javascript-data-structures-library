@@ -19,7 +19,7 @@ export class RBTreeSetImpl2 {
     }
 
 
-    _update_local_fields(node) {
+    _updateLocalFields(node) {
         let size = 1;
 
         if (node.left != null) {
@@ -34,7 +34,7 @@ export class RBTreeSetImpl2 {
     }
 
 
-    _rotate_subtree_left(node) {
+    _rotateSubtreeLeft(node) {
         let root = node.left;
 
         node.left = root.right;
@@ -46,12 +46,11 @@ export class RBTreeSetImpl2 {
 
         root.parent = node.parent;
         node.parent = root;
-
         return root;
     }
 
 
-    _rotate_subtree_right(node) {
+    _rotateSubtreeRight(node) {
         let root = node.right;
 
         node.right = root.left;
@@ -63,7 +62,6 @@ export class RBTreeSetImpl2 {
 
         root.parent = node.parent;
         node.parent = root;
-
         return root;
     }
 
@@ -80,11 +78,9 @@ export class RBTreeSetImpl2 {
             if (res == 0) {
                 //throw new Error("the item already exists in the set.");
                 return;
-            } 
-            else if (res < 0) {
+            } else if (res < 0) {
                 p = p.left;
-            } 
-            else { // res > 0
+            } else { // res > 0
                 p = p.right;
             }
         }
@@ -93,21 +89,18 @@ export class RBTreeSetImpl2 {
             left: null, 
             right: null, 
             parent: prev.parent, 
-
             color: "RED", 
-
             item: item, 
             size: 1
         };
-        //this._update_local_fields(p);
+        //this._updateLocalFields(p);
 
         if (prev.parent != null) {
             let parent = prev.parent;
 
             if (prev.res < 0) {
                 parent.left = p;
-            } 
-            else { // prev.res > 0
+            } else { // prev.res > 0
                 parent.right = p;
             }
         }
@@ -118,17 +111,15 @@ export class RBTreeSetImpl2 {
             let parent = p.parent;
             let grandparent = parent.parent;
 
-            if (grandparent.left != null 
-                && grandparent.left.color == "RED" 
-                && grandparent.right != null 
-                && grandparent.right.color == "RED") {
+            if (grandparent.left != null && grandparent.left.color == "RED" 
+                && grandparent.right != null && grandparent.right.color == "RED") {
                 
                 grandparent.color = "RED";
                 grandparent.left.color = "BLACK";
                 grandparent.right.color = "BLACK";
 
-                this._update_local_fields(parent);
-                this._update_local_fields(grandparent);
+                this._updateLocalFields(parent);
+                this._updateLocalFields(grandparent);
 
                 p = grandparent;
                 continue;
@@ -137,53 +128,50 @@ export class RBTreeSetImpl2 {
             break;
         }
 
-        if (p.parent != null 
-            && p.parent.color == "RED") { // p.parent.parent != null
+        if (p.parent != null && p.parent.color == "RED") { // p.parent.parent != null
             
             let parent = p.parent;
             let grandparent = parent.parent;
 
-            let prev_grandparent = grandparent;
+            let prevGrandparent = grandparent;
 
             if (parent == grandparent.left) {
                 if (p == parent.right) {
-                    parent = this._rotate_subtree_right(parent);
+                    parent = this._rotateSubtreeRight(parent);
                     grandparent.left = parent;
 
-                    this._update_local_fields(parent.left);
+                    this._updateLocalFields(parent.left);
                 }
 
-                grandparent = this._rotate_subtree_left(grandparent);
+                grandparent = this._rotateSubtreeLeft(grandparent);
                 grandparent.color = "BLACK";
                 grandparent.right.color = "RED";
 
-                this._update_local_fields(grandparent.right);
-                this._update_local_fields(grandparent);
-            } 
-            else { // parent == grandparent.right
+                this._updateLocalFields(grandparent.right);
+                this._updateLocalFields(grandparent);
+            } else { // parent == grandparent.right
                 if (p == parent.left) {
-                    parent = this._rotate_subtree_left(parent);
+                    parent = this._rotateSubtreeLeft(parent);
                     grandparent.right = parent;
 
-                    this._update_local_fields(parent.right);
+                    this._updateLocalFields(parent.right);
                 }
 
-                grandparent = this._rotate_subtree_right(grandparent);
+                grandparent = this._rotateSubtreeRight(grandparent);
                 grandparent.color = "BLACK";
                 grandparent.left.color = "RED";
 
-                this._update_local_fields(grandparent.left);
-                this._update_local_fields(grandparent);
+                this._updateLocalFields(grandparent.left);
+                this._updateLocalFields(grandparent);
             }
 
             if (grandparent.parent != null) {
-                let great_grandparent = grandparent.parent;
+                let greatGrandparent = grandparent.parent;
 
-                if (prev_grandparent == great_grandparent.left) {
-                    great_grandparent.left = grandparent;
-                } 
-                else { // prev_grandparent == great_grandparent.right
-                    great_grandparent.right = grandparent;
+                if (prevGrandparent == greatGrandparent.left) {
+                    greatGrandparent.left = grandparent;
+                } else { // prevGrandparent == greatGrandparent.right
+                    greatGrandparent.right = grandparent;
                 }
             }
 
@@ -192,7 +180,7 @@ export class RBTreeSetImpl2 {
 
         while (p.parent != null) {
             p = p.parent;
-            this._update_local_fields(p);
+            this._updateLocalFields(p);
         }
 
         this._root = p;
@@ -209,20 +197,16 @@ export class RBTreeSetImpl2 {
                 return;
             }
 
-
             let res = this._comparator.compare(item, p.item);
 
             if (res == 0) {
                 break;
-            } 
-            else if (res < 0) {
+            } else if (res < 0) {
                 p = p.left;
-            } 
-            else { // res > 0
+            } else { // res > 0
                 p = p.right;
             }
         }
-
 
         let prev = p;
         let target;
@@ -234,8 +218,7 @@ export class RBTreeSetImpl2 {
             if (p.right != null) {
                 do {
                     p = p.right;
-                } 
-                while (p.right != null);
+                } while (p.right != null);
 
                 prev.item = p.item;
 
@@ -244,8 +227,7 @@ export class RBTreeSetImpl2 {
 
                 target = p;
                 p = p.left;
-            } 
-            else {
+            } else {
                 prev.item = p.item;
 
                 parent = p.parent;
@@ -254,15 +236,13 @@ export class RBTreeSetImpl2 {
                 target = p;
                 p = p.left;
             }
-        } 
-        else {
+        } else {
             parent = p.parent;
 
             if (parent != null) {
                 if (p == parent.left) {
                     parent.left = p.right;
-                } 
-                else { // p == parent.right
+                } else { // p == parent.right
                     parent.right = p.right;
                 }
             }
@@ -285,20 +265,17 @@ export class RBTreeSetImpl2 {
                 // parent.left != null || parent.right != null
                 if (p == parent.left) {
                     sibling = parent.right;
-                } 
-                else { // p == parent.right
+                } else { // p == parent.right
                     sibling = parent.left;
                 }
 
                 if (sibling.color == "BLACK" 
-                    && (sibling.left == null 
-                    || sibling.left.color == "BLACK") 
-                    && (sibling.right == null 
-                    || sibling.right.color == "BLACK")) {
+                    && (sibling.left == null || sibling.left.color == "BLACK") 
+                    && (sibling.right == null || sibling.right.color == "BLACK")) {
                     
                     sibling.color = "RED";
 
-                    this._update_local_fields(parent);
+                    this._updateLocalFields(parent);
 
                     p = parent;
                     parent = parent.parent;
@@ -312,15 +289,14 @@ export class RBTreeSetImpl2 {
                 && p.color == "RED") {
                 
                 p.color = "BLACK";
-            } 
-            else if (parent != null) {
+            } else if (parent != null) {
                 if (p == parent.left) {
                     let sibling = parent.right;
 
                     if (sibling.color == "RED") {
-                        let prev_parent = parent;
+                        let prevParent = parent;
                         
-                        parent = this._rotate_subtree_right(parent);
+                        parent = this._rotateSubtreeRight(parent);
 
                         parent.color = "BLACK";
                         parent.left.color = "RED";
@@ -328,10 +304,9 @@ export class RBTreeSetImpl2 {
                         if (parent.parent != null) {
                             let grandparent = parent.parent;
         
-                            if (prev_parent == grandparent.left) {
+                            if (prevParent == grandparent.left) {
                                 grandparent.left = parent;
-                            } 
-                            else { // prev_parent == grandparent.right
+                            } else { // prevParent == grandparent.right
                                 grandparent.right = parent;
                             }
                         }
@@ -340,12 +315,10 @@ export class RBTreeSetImpl2 {
                         sibling = parent.right;
                     }
 
-                    if (sibling.right != null 
-                        && sibling.right.color == "RED") {
+                    if (sibling.right != null && sibling.right.color == "RED") {
+                        let prevParent = parent;
 
-                        let prev_parent = parent;
-
-                        parent = this._rotate_subtree_right(parent);
+                        parent = this._rotateSubtreeRight(parent);
 
                         parent.color = parent.left.color;
                         parent.left.color = "BLACK";
@@ -354,28 +327,25 @@ export class RBTreeSetImpl2 {
                         if (parent.parent != null) {
                             let grandparent = parent.parent;
         
-                            if (prev_parent == grandparent.left) {
+                            if (prevParent == grandparent.left) {
                                 grandparent.left = parent;
-                            } 
-                            else { // prev_parent == grandparent.right
+                            } else { // prevParent == grandparent.right
                                 grandparent.right = parent;
                             }
                         }
 
-                        this._update_local_fields(parent.left);
-                        this._update_local_fields(parent);
+                        this._updateLocalFields(parent.left);
+                        this._updateLocalFields(parent);
 
                         p = parent;
                         parent = parent.parent;
-                    } 
-                    else if (sibling.left != null 
-                        && sibling.left.color == "RED") {
+                    } else if (sibling.left != null && sibling.left.color == "RED") {
 
-                        let prev_parent = parent;
+                        let prevParent = parent;
                         
-                        sibling = this._rotate_subtree_left(sibling);
+                        sibling = this._rotateSubtreeLeft(sibling);
                         parent.right = sibling;
-                        parent = this._rotate_subtree_right(parent);
+                        parent = this._rotateSubtreeRight(parent);
 
                         parent.color = parent.left.color;
                         parent.left.color = "BLACK";
@@ -383,44 +353,39 @@ export class RBTreeSetImpl2 {
                         if (parent.parent != null) {
                             let grandparent = parent.parent;
         
-                            if (prev_parent == grandparent.left) {
+                            if (prevParent == grandparent.left) {
                                 grandparent.left = parent;
-                            } 
-                            else { // prev_parent == grandparent.right
+                            } else { // prevParent == grandparent.right
                                 grandparent.right = parent;
                             }
                         }
 
-                        this._update_local_fields(parent.left);
-                        this._update_local_fields(parent.right);
-                        this._update_local_fields(parent);
+                        this._updateLocalFields(parent.left);
+                        this._updateLocalFields(parent.right);
+                        this._updateLocalFields(parent);
 
                         p = parent;
                         parent = parent.parent;
-                    } 
-                    else { /*
-                        (sibling.left == null 
-                        || sibling.left.color == "BLACK") 
-                        && (sibling.right == null 
-                        || sibling.right.color == "BLACK")
+                    } else { /*
+                        (sibling.left == null || sibling.left.color == "BLACK") 
+                        && (sibling.right == null || sibling.right.color == "BLACK")
                         */
 
                         sibling.color = "RED";
                         parent.color = "BLACK";
 
-                        this._update_local_fields(parent);
+                        this._updateLocalFields(parent);
 
                         p = parent;
                         parent = parent.parent;
                     }
-                } 
-                else { // p == parent.right
+                } else { // p == parent.right
                     let sibling = parent.left;
 
                     if (sibling.color == "RED") {
-                        let prev_parent = parent;
+                        let prevParent = parent;
 
-                        parent = this._rotate_subtree_left(parent);
+                        parent = this._rotateSubtreeLeft(parent);
 
                         parent.color = "BLACK";
                         parent.right.color = "RED";
@@ -428,10 +393,9 @@ export class RBTreeSetImpl2 {
                         if (parent.parent != null) {
                             let grandparent = parent.parent;
         
-                            if (prev_parent == grandparent.left) {
+                            if (prevParent == grandparent.left) {
                                 grandparent.left = parent;
-                            } 
-                            else { // prev_parent == grandparent.right
+                            } else { // prevParent == grandparent.right
                                 grandparent.right = parent;
                             }
                         }
@@ -440,12 +404,10 @@ export class RBTreeSetImpl2 {
                         sibling = parent.left;
                     }
 
-                    if (sibling.left != null 
-                        && sibling.left.color == "RED") {
+                    if (sibling.left != null && sibling.left.color == "RED") {
+                        let prevParent = parent;
 
-                        let prev_parent = parent;
-
-                        parent = this._rotate_subtree_left(parent);
+                        parent = this._rotateSubtreeLeft(parent);
 
                         parent.color = parent.right.color;
                         parent.left.color = "BLACK";
@@ -454,28 +416,24 @@ export class RBTreeSetImpl2 {
                         if (parent.parent != null) {
                             let grandparent = parent.parent;
         
-                            if (prev_parent == grandparent.left) {
+                            if (prevParent == grandparent.left) {
                                 grandparent.left = parent;
-                            } 
-                            else { // prev_parent == grandparent.right
+                            } else { // prevParent == grandparent.right
                                 grandparent.right = parent;
                             }
                         }
 
-                        this._update_local_fields(parent.right);
-                        this._update_local_fields(parent);
+                        this._updateLocalFields(parent.right);
+                        this._updateLocalFields(parent);
 
                         p = parent;
                         parent = parent.parent;
-                    } 
-                    else if (sibling.right != null 
-                        && sibling.right.color == "RED") {
-                        
-                        let prev_parent = parent;
+                    } else if (sibling.right != null && sibling.right.color == "RED") {
+                        let prevParent = parent;
 
-                        sibling = this._rotate_subtree_right(sibling);
+                        sibling = this._rotateSubtreeRight(sibling);
                         parent.left = sibling;
-                        parent = this._rotate_subtree_left(parent);
+                        parent = this._rotateSubtreeLeft(parent);
 
                         parent.color = parent.right.color;
                         parent.right.color = "BLACK";
@@ -483,32 +441,28 @@ export class RBTreeSetImpl2 {
                         if (parent.parent != null) {
                             let grandparent = parent.parent;
         
-                            if (prev_parent == grandparent.left) {
+                            if (prevParent == grandparent.left) {
                                 grandparent.left = parent;
-                            } 
-                            else { // prev_parent == grandparent.right
+                            } else { // prevParent == grandparent.right
                                 grandparent.right = parent;
                             }
                         }
 
-                        this._update_local_fields(parent.left);
-                        this._update_local_fields(parent.right);
-                        this._update_local_fields(parent);
+                        this._updateLocalFields(parent.left);
+                        this._updateLocalFields(parent.right);
+                        this._updateLocalFields(parent);
 
                         p = parent;
                         parent = parent.parent;
-                    } 
-                    else { /*
-                        (sibling.left == null 
-                        || sibling.left.color == "BLACK") 
-                        && (sibling.right == null 
-                        || sibling.right.color == "BLACK")
+                    } else { /*
+                        (sibling.left == null || sibling.left.color == "BLACK") 
+                        && (sibling.right == null || sibling.right.color == "BLACK")
                         */
 
                         sibling.color = "RED";
                         parent.color = "BLACK";
 
-                        this._update_local_fields(parent);
+                        this._updateLocalFields(parent);
 
                         p = parent;
                         parent = parent.parent;
@@ -518,7 +472,7 @@ export class RBTreeSetImpl2 {
         }
 
         while (parent != null) {
-            this._update_local_fields(parent);
+            this._updateLocalFields(parent);
             p = parent;
             parent = parent.parent;
         }
@@ -535,11 +489,9 @@ export class RBTreeSetImpl2 {
 
             if (res == 0) {
                 return true;
-            } 
-            else if (res < 0) {
+            } else if (res < 0) {
                 p = p.left;
-            } 
-            else {
+            } else {
                 p = p.right;
             }
         }
@@ -548,37 +500,34 @@ export class RBTreeSetImpl2 {
     }
 
 
-    get_size() {
+    getSize() {
         if (this._root != null) {
             return this._root.size;
-        } 
-        else {
+        } else {
             return 0;
         }
     }
 
 
-    get_rank_of_item(item) {
+    getRankOfItem(item) {
         let p = this._root;
         let rank = 0;
 
         while (p != null) {
             let res = this._comparator.compare(item, p.item);
-            let left_size = 0;
+            let leftSize = 0;
 
             if (p.left != null) {
-                left_size = p.left.size;
+                leftSize = p.left.size;
             }
 
             if (res == 0) {
-                rank = rank + left_size;
+                rank = rank + leftSize;
                 return rank;
-            } 
-            else if (res < 0) {
+            } else if (res < 0) {
                 p = p.left;
-            } 
-            else { // res > 0
-                rank = rank + left_size + 1;
+            } else { // res > 0
+                rank = rank + leftSize + 1;
                 p = p.right;
             }
         }
@@ -588,10 +537,8 @@ export class RBTreeSetImpl2 {
     }
     
 
-    get_item_by_rank(rank) {
-        if (rank < 0 
-            || rank >= this.get_size()) {
-            
+    getItemByRank(rank) {
+        if (rank < 0 || rank >= this.getSize()) {
             throw new Error("there is no item of this rank in the set.");
         }
 
@@ -599,20 +546,18 @@ export class RBTreeSetImpl2 {
         let p = this._root;
 
         while (true) {
-            let left_size = 0;
+            let leftSize = 0;
 
             if (p.left != null) {
-                left_size = p.left.size;
+                leftSize = p.left.size;
             }
 
-            if (rank == left_size) {
+            if (rank == leftSize) {
                 return p.item;
-            } 
-            else if (rank < left_size) {
+            } else if (rank < leftSize) {
                 p = p.left;
-            } 
-            else { // rank > left_size
-                rank = rank - left_size - 1;
+            } else { // rank > leftSize
+                rank = rank - leftSize - 1;
                 p = p.right;
             }
         }
@@ -621,62 +566,57 @@ export class RBTreeSetImpl2 {
     }
     
 
-    get_LUB(item) {
+    getLeastUpperBoundItem(item) {
         let p = this._root;
-        let upper_bound = null;
+        let upperBound = null;
 
         while (p != null) {
             let res = this._comparator.compare(item, p.item);
 
             if (res == 0) {
-                upper_bound = p.item;
-                return upper_bound;
-            } 
-            else if (res < 0) {
-                upper_bound = p.item;
+                upperBound = p.item;
+                return upperBound;
+            } else if (res < 0) {
+                upperBound = p.item;
                 p = p.left;
-            } 
-            else { // res > 0
+            } else { // res > 0
                 p = p.right;
             }
         }
 
-        return upper_bound;
+        return upperBound;
     }
 
 
-    get_GLB(item) {
+    getGreatestLowerBoundItem(item) {
         let p = this._root;
-        let lower_bound = null;
+        let lowerBound = null;
 
         while (p != null) {
             let res = this._comparator.compare(item, p.item);
 
             if (res == 0) {
-                lower_bound = p.item;
-                return lower_bound;
-            } 
-            else if (res < 0) {
+                lowerBound = p.item;
+                return lowerBound;
+            } else if (res < 0) {
                 p = p.left;
-            } 
-            else { // res > 0
-                lower_bound = p.item;
+            } else { // res > 0
+                lowerBound = p.item;
                 p = p.right;
             }
         }
 
-        return lower_bound;
+        return lowerBound;
     }
     
 
-    do_for_each_item_in_order(consumer) {
+    doForEachItemInOrder(consumer) {
         let p = this._root;
 
         if (p != null) {
             while (p.left != null) {
                 p = p.left;
             }
-
 
             let prev = null;
 
@@ -712,16 +652,14 @@ export class RBTreeSetImpl2 {
             return;
         }
 
-
-        let size = this.get_size();
+        let size = this.getSize();
 
         {
             let p = this._root; // p != null
 
             while (p.left != null) {
-                p = this._rotate_subtree_left(p);
+                p = this._rotateSubtreeLeft(p);
             }
-
 
             let prev = p;
 
@@ -730,7 +668,7 @@ export class RBTreeSetImpl2 {
 
             while (p != null) {
                 while (p.left != null) {
-                    p = this._rotate_subtree_left(p);
+                    p = this._rotateSubtreeLeft(p);
                 }
                 
                 p.parent.right = p;
@@ -742,38 +680,34 @@ export class RBTreeSetImpl2 {
             prev.right = { // a dummy node.
                 left: null, 
                 right: null, 
-
                 color: "BLACK", 
-
                 item: null, 
                 size: 1
             };
-            //this._update_local_fields(p.value);
+            //this._updateLocalFields(p.value);
         }
 
 
         {
-            let num_of_leaves = size + 1 - 2 ** Math.floor(Math.log2(size + 1));
+            let numOfLeaves = size + 1 - 2 ** Math.floor(Math.log2(size + 1));
             let p = this._root;
             
-            if (num_of_leaves >= 1) {
-                p = this._rotate_subtree_right(p);
+            if (numOfLeaves >= 1) {
+                p = this._rotateSubtreeRight(p);
                 this._root = p;
 
-                this._update_local_fields(p.left);
+                this._updateLocalFields(p.left);
 
                 p.left.color = "RED";
                 p = p.right;
             }
 
-            for (let i = 1; 
-                i < num_of_leaves; 
-                ++i) {
+            for (let i = 1; i < numOfLeaves; ++i) {
                 
-                p = this._rotate_subtree_right(p);
+                p = this._rotateSubtreeRight(p);
                 p.parent.right = p;
 
-                this._update_local_fields(p.left);
+                this._updateLocalFields(p.left);
 
                 p.left.color = "RED";
                 p = p.right;
@@ -784,21 +718,19 @@ export class RBTreeSetImpl2 {
             let p = this._root; // p != null
 
             while (p.right != null) {
-                p = this._rotate_subtree_right(p);
+                p = this._rotateSubtreeRight(p);
                 this._root = p;
 
-                this._update_local_fields(p.left);
+                this._updateLocalFields(p.left);
 
                 p.left.color = "BLACK";
                 p = p.right;
 
-                while (p != null 
-                    /*&& p.right != null*/) {
-                    
-                    p = this._rotate_subtree_right(p);
+                while (p != null /*&& p.right != null*/) {
+                    p = this._rotateSubtreeRight(p);
                     p.parent.right = p;
 
-                    this._update_local_fields(p.left);
+                    this._updateLocalFields(p.left);
 
                     p.left.color = "BLACK";
                     p = p.right;
@@ -813,35 +745,30 @@ export class RBTreeSetImpl2 {
     }
     
 
-    to_array() {
+    toArray() {
         let array = new Array();
 
-        this.do_for_each_item_in_order((item) => array.push(item));
-
+        this.doForEachItemInOrder(item => array.push(item));
         return array;
     }
 
 
     clone() {
-        function clone_subtree(node, parent) {
+        function cloneSubtree(node, parent) {
             if (node != null) {
-                let new_node = {
+                let newNode = {
                     left: null, 
                     right: null, 
                     parent: parent, 
-
                     color: node.color, 
-
                     item: node.item, 
                     size: node.size
                 };
 
-                new_node.left = clone_subtree(node.left, new_node);
-                new_node.right = clone_subtree(node.right, new_node);
-
-                return new_node;
-            } 
-            else {
+                newNode.left = cloneSubtree(node.left, newNode);
+                newNode.right = cloneSubtree(node.right, newNode);
+                return newNode;
+            } else {
                 return null;
             }
         }
@@ -849,8 +776,7 @@ export class RBTreeSetImpl2 {
 
         let inst = new RBTreeSetImpl2(this._comparator);
 
-        inst._root = clone_subtree(this._root, null);
-
+        inst._root = cloneSubtree(this._root, null);
         return inst;
     }
     
@@ -858,9 +784,7 @@ export class RBTreeSetImpl2 {
     debugVerifyIntegrity() {
         // verify that the root is black.
 
-        if (this._root != null 
-            && this._root.color == "RED") {
-            
+        if (this._root != null && this._root.color == "RED") {
             throw new Error("the root is not black.");
         }
 
@@ -884,21 +808,20 @@ export class RBTreeSetImpl2 {
 
             while (stack.length > 0) {
                 let info = stack.pop();
-                let path_depth = info.depth;
+                let pathDepth = info.depth;
 
                 p = info.p.right;
 
                 while (p != null) {
                     if (p.color == "BLACK") {
-                        path_depth = path_depth + 1;
+                        pathDepth = pathDepth + 1;
                     }
 
-                    stack.push({p: p, depth: path_depth});
-
+                    stack.push({p: p, depth: pathDepth});
                     p = p.left;
                 }
 
-                if (path_depth != depth) {
+                if (pathDepth != depth) {
                     throw new Error("there are two paths from the root to a leaf which have different black-lengths.");
                 }
             }
@@ -923,11 +846,10 @@ export class RBTreeSetImpl2 {
                 stack.push(node.right);
 
                 if (node.color == "RED" 
-                    && ((node.left != null 
-                    && node.right.color == "RED") 
-                    || (node.right != null 
-                    && node.right.color == "RED"))) {
-
+                    && (
+                        (node.left != null && node.right.color == "RED") 
+                        || (node.right != null && node.right.color == "RED")
+                    )) {
                     throw new Error("there is a pair of consecutive reds within the tree.");
                 }
             }
@@ -937,12 +859,9 @@ export class RBTreeSetImpl2 {
         // verify the "parent" attribute of each node.
 
         {
-            if (this._root != null 
-                && this._root.parent != null) {
-                
+            if (this._root != null && this._root.parent != null) {
                 throw new Error("the parent attribute of the root is not null.");
             }
-
 
             let stack = new Array();
             
@@ -958,11 +877,8 @@ export class RBTreeSetImpl2 {
                 stack.push(node.left);
                 stack.push(node.right);
 
-                if ((node.left != null 
-                    && node.left.parent != node) 
-                    || (node.right != null 
-                    && node.right.parent != node)) {
-
+                if ((node.left != null && node.left.parent != node) 
+                    || (node.right != null && node.right.parent != node)) {
                     throw new Error("the parent attribute of a node does not match the parent of its subtree.");
                 }
             }
@@ -972,13 +888,12 @@ export class RBTreeSetImpl2 {
         // verify the "size" attribute of each node.
 
         {
-            function get_size_and_verify_subtree(node) {
+            function getSizeAndVerifySubtree(node) {
                 if (node == null) {
                     return 0;
                 }
-
                 
-                let size = get_size_and_verify_subtree(node.left) + get_size_and_verify_subtree(node.right) + 1;
+                let size = getSizeAndVerifySubtree(node.left) + getSizeAndVerifySubtree(node.right) + 1;
 
                 if (size != node.size) {
                     throw new Error("the size attribute of a node does not match the size of its subtree.");
@@ -987,7 +902,7 @@ export class RBTreeSetImpl2 {
                 return size;
             };
 
-            get_size_and_verify_subtree(this._root);
+            getSizeAndVerifySubtree(this._root);
         }
 
 
@@ -1005,14 +920,14 @@ export class RBTreeSetImpl2 {
                     q = q.right;
                 }
 
-                stack.push({p: p, upper_bound: q.item});
+                stack.push({p: p, upperBound: q.item});
 
                 prev = p;
                 p = p.left;
             }
 
             while (p != null) {
-                stack.push({p: p, upper_bound: prev.item});
+                stack.push({p: p, upperBound: prev.item});
 
                 if (!(this._comparator.compare(p.item, prev.item) <= 0)) {
                     throw new Error("the search tree property is not satisfied.");
@@ -1029,13 +944,12 @@ export class RBTreeSetImpl2 {
                 p = info.p.right;
 
                 if (p != null) {
-                    stack.push({p: p, upper_bound: info.upper_bound});
+                    stack.push({p: p, upperBound: info.upperBound});
 
                     prev = p;
                     p = p.left;
-                } 
-                else {
-                    if (!(this._comparator.compare(info.p.item, info.upper_bound) <= 0)) {
+                } else {
+                    if (!(this._comparator.compare(info.p.item, info.upperBound) <= 0)) {
                         throw new Error("the search tree property is not satisfied.");
                     }
 
@@ -1043,7 +957,7 @@ export class RBTreeSetImpl2 {
                 }
 
                 while (p != null) {
-                    stack.push({p: p, upper_bound: prev.item});
+                    stack.push({p: p, upperBound: prev.item});
 
                     if (!(this._comparator.compare(p.item, prev.item) <= 0)) {
                         throw new Error("the search tree property is not satisfied.");
@@ -1061,20 +975,18 @@ export class RBTreeSetImpl2 {
     }
     
 
-    debug_describe_items() {
+    debugDescribeItems() {
         let string = "{";
 
-        this.do_for_each_item_in_order(
-        (item) => {
+        this.doForEachItemInOrder(item => {
             string = string + "[" + item + "], ";
         });
 
-        if (this.get_size() > 0) {
+        if (this.getSize() > 0) {
             string = string.substring(0, string.length - ", ".length);
         }
 
         string = string + "}";
-
         return string;
     }
 }
