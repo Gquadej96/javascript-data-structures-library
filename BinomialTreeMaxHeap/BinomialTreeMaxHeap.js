@@ -37,8 +37,8 @@ export class BinomialTreeMaxHeap {
     }
 
 
-    get_size() {
-        return this._heap.get_size();
+    getSize() {
+        return this._heap.getSize();
     }
 
 
@@ -47,8 +47,8 @@ export class BinomialTreeMaxHeap {
     }
 
 
-    debug_verify_integrity() {
-        this._heap.debug_verify_integrity();
+    debugVerifyIntegrity() {
+        this._heap.debugVerifyIntegrity();
     }
 }
 

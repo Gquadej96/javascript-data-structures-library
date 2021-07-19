@@ -9,17 +9,16 @@ import * as arrayTools from "../../arrayTools/arrayTools.js";
 import * as comparators from "../../comparators/comparators.js";
 
 
-function assert_truth(condition, message) {
+function assertTruth(condition, message) {
     if (!condition) {
         throw new Error(message);
     }
 }
 
-function assert_error(func, message) {
+function assertError(func, message) {
     try {
         func();
-    } 
-    catch (error) {
+    } catch (error) {
         return;
     }
 
@@ -32,126 +31,119 @@ function assert_error(func, message) {
 {
     let heap = new BinomialTreeMinHeap();
 
-    heap.debug_verify_integrity();
-    assert_truth(heap.get_size() == 0, "unexpected size of the heap.");
+    heap.debugVerifyIntegrity();
+    assertTruth(heap.getSize() == 0, "unexpected size of the heap.");
 
-    assert_error(heap.dequeue.bind(heap), "no error thrown when attempting to dequeue from an empty heap.");
+    assertError(heap.dequeue.bind(heap), "no error thrown when attempting to dequeue from an empty heap.");
 
 
     heap.enqueue(1);
-    heap.debug_verify_integrity();
+    heap.debugVerifyIntegrity();
 
-    assert_truth(heap.peek() == 1, "unexpected item peeked from heap.");
-    assert_truth(heap.get_size() == 1, "unexpected size of the heap.");
+    assertTruth(heap.peek() == 1, "unexpected item peeked from heap.");
+    assertTruth(heap.getSize() == 1, "unexpected size of the heap.");
 
 
     heap.enqueue(2);
-    heap.debug_verify_integrity();
+    heap.debugVerifyIntegrity();
 
-    assert_truth(heap.peek() == 1, "unexpected item peeked from heap.");
-    assert_truth(heap.get_size() == 2, "unexpected size of the heap.");
+    assertTruth(heap.peek() == 1, "unexpected item peeked from heap.");
+    assertTruth(heap.getSize() == 2, "unexpected size of the heap.");
 
 
     heap.enqueue(3);
-    heap.debug_verify_integrity();
+    heap.debugVerifyIntegrity();
 
-    assert_truth(heap.peek() == 1, "unexpected item peeked from heap.");
-    assert_truth(heap.get_size() == 3, "unexpected size of the heap.");
+    assertTruth(heap.peek() == 1, "unexpected item peeked from heap.");
+    assertTruth(heap.getSize() == 3, "unexpected size of the heap.");
 
 
     heap.enqueue(4);
-    heap.debug_verify_integrity();
+    heap.debugVerifyIntegrity();
 
-    assert_truth(heap.peek() == 1, "unexpected item peeked from heap.");
-    assert_truth(heap.get_size() == 4, "unexpected size of the heap.");
+    assertTruth(heap.peek() == 1, "unexpected item peeked from heap.");
+    assertTruth(heap.getSize() == 4, "unexpected size of the heap.");
 
 
     heap = heap.clone();
-    heap.debug_verify_integrity();
+    heap.debugVerifyIntegrity();
 
 
-    assert_truth(heap.dequeue() == 1, "unexpected item dequeued from heap.");
+    assertTruth(heap.dequeue() == 1, "unexpected item dequeued from heap.");
 
-    assert_truth(heap.peek() == 2, "unexpected item peeked from heap.");
-    assert_truth(heap.get_size() == 3, "unexpected size of the heap.");
+    assertTruth(heap.peek() == 2, "unexpected item peeked from heap.");
+    assertTruth(heap.getSize() == 3, "unexpected size of the heap.");
 
 
     heap.enqueue(1);
-    heap.debug_verify_integrity();
+    heap.debugVerifyIntegrity();
 
-    assert_truth(heap.peek() == 1, "unexpected item peeked from heap.");
-    assert_truth(heap.get_size() == 4, "unexpected size of the heap.");
-
-
-    assert_truth(heap.dequeue() == 1, "unexpected item dequeued from heap.");
-    heap.debug_verify_integrity();
-
-    assert_truth(heap.peek() == 2, "unexpected item peeked from heap.");
-    assert_truth(heap.get_size() == 3, "unexpected size of the heap.");
+    assertTruth(heap.peek() == 1, "unexpected item peeked from heap.");
+    assertTruth(heap.getSize() == 4, "unexpected size of the heap.");
 
 
-    assert_truth(heap.dequeue() == 2, "unexpected item dequeued from heap.");
-    heap.debug_verify_integrity();
+    assertTruth(heap.dequeue() == 1, "unexpected item dequeued from heap.");
+    heap.debugVerifyIntegrity();
 
-    assert_truth(heap.peek() == 3, "unexpected item peeked from heap.");
-    assert_truth(heap.get_size() == 2, "unexpected size of the heap.");
-
-
-    assert_truth(heap.dequeue() == 3, "unexpected item dequeued from heap.");
-    heap.debug_verify_integrity();
-
-    assert_truth(heap.peek() == 4, "unexpected item peeked from heap.");
-    assert_truth(heap.get_size() == 1, "unexpected size of the heap.");
+    assertTruth(heap.peek() == 2, "unexpected item peeked from heap.");
+    assertTruth(heap.getSize() == 3, "unexpected size of the heap.");
 
 
-    assert_truth(heap.dequeue() == 4, "unexpected item dequeued from heap.");
-    heap.debug_verify_integrity();
+    assertTruth(heap.dequeue() == 2, "unexpected item dequeued from heap.");
+    heap.debugVerifyIntegrity();
 
-    assert_truth(heap.get_size() == 0, "unexpected size of the heap.");
+    assertTruth(heap.peek() == 3, "unexpected item peeked from heap.");
+    assertTruth(heap.getSize() == 2, "unexpected size of the heap.");
 
-    assert_error(heap.dequeue.bind(heap), "no error thrown when attempting to dequeue from an empty heap.");
-    assert_error(heap.peek.bind(heap), "no error thrown when attempting to peek an empty heap.");
+
+    assertTruth(heap.dequeue() == 3, "unexpected item dequeued from heap.");
+    heap.debugVerifyIntegrity();
+
+    assertTruth(heap.peek() == 4, "unexpected item peeked from heap.");
+    assertTruth(heap.getSize() == 1, "unexpected size of the heap.");
+
+
+    assertTruth(heap.dequeue() == 4, "unexpected item dequeued from heap.");
+    heap.debugVerifyIntegrity();
+
+    assertTruth(heap.getSize() == 0, "unexpected size of the heap.");
+
+    assertError(heap.dequeue.bind(heap), "no error thrown when attempting to dequeue from an empty heap.");
+    assertError(heap.peek.bind(heap), "no error thrown when attempting to peek an empty heap.");
 }
 
 
 // test set #2.
 
 {
-    let size_of_tests = 1000;
-
+    let sizeOfTests = 1000;
     let heap = new BinomialTreeMinHeap();
-    let ref = new Array(size_of_tests);
+    let ref = new Array(sizeOfTests);
 
-    for (let i = 0; 
-        i < size_of_tests; 
-        ++i) {
-        let item = Math.floor(size_of_tests * Math.random());
+    for (let i = 0; i < sizeOfTests; ++i) {
+        let item = Math.floor(sizeOfTests * Math.random());
 
         heap.enqueue(item);
-        heap.debug_verify_integrity();
+        heap.debugVerifyIntegrity();
         
         ref[i] = item;
         
-        assert_truth(heap.get_size() == i + 1, "unexpected size of the heap.");
+        assertTruth(heap.getSize() == i + 1, "unexpected size of the heap.");
     }
 
     arrayTools.heapSort(ref);
 
-    
-    let array = new Array(size_of_tests);
+    let array = new Array(sizeOfTests);
 
-    for (let i = 0; 
-        i < size_of_tests; 
-        ++i) {
+    for (let i = 0; i < sizeOfTests; ++i) {
         array[i] = heap.dequeue();
-        heap.debug_verify_integrity();
+        heap.debugVerifyIntegrity();
         
-        assert_truth(heap.get_size() == size_of_tests - i - 1, "unexpected size of the heap.");
+        assertTruth(heap.getSize() == sizeOfTests - i - 1, "unexpected size of the heap.");
     }
-
 
     let comparator = new comparators.ArrayElementComparator();
 
-    assert_truth(comparator.compare(array, ref) == 0, "unexpected item dequeued from heap.");
+    assertTruth(comparator.compare(array, ref) == 0, "unexpected item dequeued from heap.");
 }
 

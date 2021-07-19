@@ -18,7 +18,7 @@ export class BinomialTreeMinHeap {
     }
 
 
-    _merge_node_list(list) {
+    _mergeNodeList(list) {
         let p = [this._first, list].filter((node) => node != null);
 
         let first = null;
@@ -38,8 +38,7 @@ export class BinomialTreeMinHeap {
                 if (p[0].end == null) {
                     p[0].first = p[1];
                     p[0].end = p[0].first;
-                } 
-                else {
+                } else {
                     p[0].end.next = p[1];
                     p[0].end = p[0].end.next;
                 }
@@ -55,13 +54,11 @@ export class BinomialTreeMinHeap {
                     p[1] = p[1].next;
                     temp.next = null;
                 }
-            } 
-            else {
+            } else {
                 if (end == null) {
                     first = p[0];
                     end = first;
-                } 
-                else {
+                } else {
                     end.next = p[0];
                     end = end.next;
                 }
@@ -77,12 +74,10 @@ export class BinomialTreeMinHeap {
             if (end == null) {
                 first = p[0];
                 end = first;
-            } 
-            else {
+            } else {
                 end.next = p[0];
             }
-        } 
-        else if (end != null) {
+        } else if (end != null) {
             end.next = null;
         }
 
@@ -90,25 +85,22 @@ export class BinomialTreeMinHeap {
     }
 
 
-    merge(binomial_tree_min_heap) {
-        if (!(binomial_tree_min_heap instanceof BinomialTreeMinHeap)) {
+    merge(binomialTreeMinHeap) {
+        if (!(binomialTreeMinHeap instanceof BinomialTreeMinHeap)) {
             throw new Error("the argument to merge must be an instance of a BinomialTreeMinHeap.");
         }
 
-        this._merge_node_list(binomial_tree_min_heap._first);
-        binomial_tree_min_heap._first = null;
+        this._mergeNodeList(binomialTreeMinHeap._first);
+        binomialTreeMinHeap._first = null;
     }
 
 
     enqueue(item) {
-        this._merge_node_list({
+        this._mergeNodeList({
             item: item, 
-
             first: null, 
             end: null, 
-
             next: null, 
-
             size: 1
         });
     }
@@ -119,35 +111,33 @@ export class BinomialTreeMinHeap {
             throw new Error("the heap is empty.");
         }
 
-
         let p = this._first;
         let prev = null;
 
-        let p_min = p;
-        let p_min_prev = null;
+        let pMin = p;
+        let pMinPrev = null;
 
         while (p != null) {
-            if (this._comparator.compare(p.item, p_min.item) < 0) {
-                p_min = p;
-                p_min_prev = prev;
+            if (this._comparator.compare(p.item, pMin.item) < 0) {
+                pMin = p;
+                pMinPrev = prev;
             }
 
             prev = p;
             p = p.next;
         }
 
-        if (p_min_prev == null) { // p_min == this._first
-            this._first = p_min.next;
+        if (pMinPrev == null) { // pMin == this._first
+            this._first = pMin.next;
 
-            this._merge_node_list(p_min.first);
-        } 
-        else {
-            p_min_prev.next = p_min.next;
+            this._mergeNodeList(pMin.first);
+        } else {
+            pMinPrev.next = pMin.next;
 
-            this._merge_node_list(p_min.first);
+            this._mergeNodeList(pMin.first);
         }
 
-        return p_min.item;
+        return pMin.item;
     }
 
 
@@ -155,7 +145,6 @@ export class BinomialTreeMinHeap {
         if (this._first == null) {
             throw new Error("the heap is empty.");
         }
-
 
         let p = this._first;
         let min = p.item;
@@ -172,7 +161,7 @@ export class BinomialTreeMinHeap {
     }
 
 
-    get_size() {
+    getSize() {
         let p = this._first;
         let size = 0;
 
@@ -186,43 +175,35 @@ export class BinomialTreeMinHeap {
 
 
     clone() {
-        function get_info_and_clone_subtree_and_clone_siblings(node) {
+        function getInfoAndCloneSubtreeAndCloneSiblings(node) {
             let first = null;
             let end = null;
 
             if (node != null) {
-                let info = get_info_and_clone_subtree_and_clone_siblings(node.first);
+                let info = getInfoAndCloneSubtreeAndCloneSiblings(node.first);
 
                 first = {
                     item: node.item, 
-
                     first: info.first, 
                     end: info.end, 
-
                     next: null, 
-
                     size: node.size
                 };
                 end = first;
-
                 node = node.next;
             }
 
             while (node != null) {
-                let info = get_info_and_clone_subtree_and_clone_siblings(node.first);
+                let info = getInfoAndCloneSubtreeAndCloneSiblings(node.first);
 
                 end.next = {
                     item: node.item, 
-
                     first: info.first, 
                     end: info.end, 
-
                     next: null, 
-
                     size: node.size
                 };
                 end = end.next;
-
                 node = node.next;
             }
 
@@ -232,25 +213,23 @@ export class BinomialTreeMinHeap {
             };
         }
 
-
         let inst = new BinomialTreeMinHeap(this._comparator);
-        let info = get_info_and_clone_subtree_and_clone_siblings(this._first);
+        let info = getInfoAndCloneSubtreeAndCloneSiblings(this._first);
 
         inst._first = info.first;
-
         return inst;
     }
 
 
-    debug_verify_integrity() {
+    debugVerifyIntegrity() {
         // verify the linked-list attributes of each node.
 
         {
-            function get_end_and_verify_subtree_and_verify_siblings(node) {
+            function getEndAndVerifySubtreeAndVerifySiblings(node) {
                 let prev = null;
 
                 if (node != null) {
-                    let end = get_end_and_verify_subtree_and_verify_siblings(node.first);
+                    let end = getEndAndVerifySubtreeAndVerifySiblings(node.first);
 
                     if (node.end != end) {
                         throw new Error("the \"end\" attribute of a node does not contain the end of the linked-list at its node.");
@@ -260,7 +239,6 @@ export class BinomialTreeMinHeap {
                     node = node.next;
                 }
 
-
                 let first = prev;
 
                 while (node != null) {
@@ -268,8 +246,7 @@ export class BinomialTreeMinHeap {
                         throw new Error("there is a cycle in the linked-list attributes of a node.");
                     }
 
-
-                    let end = get_end_and_verify_subtree_and_verify_siblings(node.first);
+                    let end = getEndAndVerifySubtreeAndVerifySiblings(node.first);
 
                     if (node.end != end) {
                         throw new Error("the \"end\" attribute of a node does not contain the end of the linked-list at its node.");
@@ -282,7 +259,7 @@ export class BinomialTreeMinHeap {
                 return prev;
             }
 
-            get_end_and_verify_subtree_and_verify_siblings(this._first);
+            getEndAndVerifySubtreeAndVerifySiblings(this._first);
         }
 
 
@@ -296,8 +273,7 @@ export class BinomialTreeMinHeap {
                 do {
                     stack.push(p);
                     p = p.first;
-                } 
-                while (p != null);
+                } while (p != null);
 
                 p = stack.pop();
 
@@ -340,7 +316,7 @@ export class BinomialTreeMinHeap {
         {
             let self = this;
 
-            function verify_subtree_and_verify_siblings(node) {
+            function verifySubtreeAndVerifySiblings(node) {
                 while (node != null) {
                     let p = node.first;
 
@@ -352,13 +328,12 @@ export class BinomialTreeMinHeap {
                         p = p.next;
                     }
 
-                    verify_subtree_and_verify_siblings(node.first);
-
+                    verifySubtreeAndVerifySiblings(node.first);
                     node = node.next;
                 }
             }
 
-            verify_subtree_and_verify_siblings(this._first);
+            verifySubtreeAndVerifySiblings(this._first);
         }
     }
 }
