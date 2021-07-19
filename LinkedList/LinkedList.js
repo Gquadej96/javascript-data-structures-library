@@ -16,32 +16,24 @@ export class LinkedList {
 
 
     insert(index, item) {
-        if (index < 0 
-            || index > this._size) {
-            
+        if (index < 0 || index > this._size) {
             throw new Error("the index is out of bounds in the list.");
         }
 
         if (index == 0) {
             this._first = {
                 item: item, 
-
                 next: this._first
             };
-        } 
-        else {
+        } else {
             let p = this._first;
 
-            for (let i = 1; 
-                i < index; 
-                ++i) {
-                
+            for (let i = 1; i < index; ++i) {
                 p = p.next;
             }
 
             p.next = {
                 item: item, 
-
                 next: p.next
             };
         }
@@ -51,22 +43,16 @@ export class LinkedList {
 
 
     remove(index) {
-        if (index < 0 
-            || index >= this._size) {
-            
+        if (index < 0 || index >= this._size) {
             throw new Error("the index is out of bounds in the list.");
         }
 
         if (index == 0) {
             this._first = this._first.next;
-        } 
-        else {
+        } else {
             let p = this._first;
 
-            for (let i = 1; 
-                i < index; 
-                ++i) {
-                
+            for (let i = 1; i < index; ++i) {
                 p = p.next;
             }
 
@@ -78,19 +64,13 @@ export class LinkedList {
 
 
     get(index) {
-        if (index < 0 
-            || index >= this._size) {
-            
+        if (index < 0 || index >= this._size) {
             throw new Error("the index is out of bounds in the list.");
         }
 
-
         let p = this._first;
 
-        for (let i = 0; 
-            i < index; 
-            ++i) {
-            
+        for (let i = 0; i < index; ++i) {
             p = p.next;
         }
 
@@ -99,19 +79,13 @@ export class LinkedList {
 
 
     set(index, item) {
-        if (index < 0 
-            || index >= this._size) {
-            
+        if (index < 0 || index >= this._size) {
             throw new Error("the index is out of bounds in the list.");
         }
 
-
         let p = this._first;
 
-        for (let i = 0; 
-            i < index; 
-            ++i) {
-            
+        for (let i = 0; i < index; ++i) {
             p = p.next;
         }
 
@@ -119,12 +93,12 @@ export class LinkedList {
     }
 
 
-    get_size() {
+    getSize() {
         return this._size;
     }
 
 
-    do_for_each_item_in_order(consumer) {
+    doForEachItemInOrder(consumer) {
         let p = this._first;
 
         while (p != null) {
@@ -139,7 +113,7 @@ export class LinkedList {
     }
 
 
-    to_array() {
+    toArray() {
         let p = this._first;
         let array = new Array();
 
@@ -161,22 +135,18 @@ export class LinkedList {
         if (p != null) {
             first = {
                 item: p.item, 
-
                 next: null
             };
             end = first;
-
             p = p.next;
         }
 
         while (p != null) {
             end.next = {
                 item: p.item, 
-
                 next: null
             };
             end = end.next;
-
             p = p.next;
         }
 
@@ -185,12 +155,11 @@ export class LinkedList {
 
         inst._first = first;
         inst._size = this._size;
-
         return inst;
     }
 
 
-    debug_verify_integrity() {
+    debugVerifyIntegrity() {
         // verify the linked-list fields of the structure.
 
         {
@@ -228,20 +197,18 @@ export class LinkedList {
     }
 
 
-    debug_describe_items() {
+    debugDescribeItems() {
         let string = "(";
 
-        this.do_for_each_item_in_order(
-        (item) => {
+        this.doForEachItemInOrder(item => {
             string = string + "[" + item + "], ";
         });
 
-        if (this.get_size() > 0) {
+        if (this.getSize() > 0) {
             string = string.substring(0, string.length - ", ".length);
         }
 
         string = string + ")";
-
         return string;
     }
 }
