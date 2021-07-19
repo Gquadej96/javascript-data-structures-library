@@ -30,9 +30,7 @@ export class AVLTreeMap {
         if (value != null) {
             let entry = this._entries.getLeastUpperBoundItem({key: key, value: undefined});
 
-            if (entry == null 
-                || this._keyComparator.compare(key, entry.key) != 0) {
-                
+            if (entry == null || this._keyComparator.compare(key, entry.key) != 0) {
                 this._entries.add({key: key, value: value});
                 return;
             }

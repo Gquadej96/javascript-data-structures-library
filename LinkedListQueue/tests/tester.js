@@ -139,7 +139,6 @@ function assertError(func, message) {
         assertTruth(queue.getSize() == sizeOfTests - i - 1, "unexpected size of the queue.");
     }
 
-
     let comparator = new comparators.ArrayElementComparator();
 
     assertTruth(comparator.compare(array, ref) == 0, "unexpected item dequeued from queue.");

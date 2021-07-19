@@ -37,7 +37,6 @@ export class LinkedListStack {
             throw new Error("the stack is empty.");
         }
 
-
         let item = this._first.item;
 
         this._first = this._first.next;
@@ -96,7 +95,6 @@ export class LinkedListStack {
             end = end.next;
             p = p.next;
         }
-
 
         let inst = new LinkedListStack();
 

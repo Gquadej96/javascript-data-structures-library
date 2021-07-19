@@ -542,7 +542,6 @@ export class RBTreeSetImpl2 {
             throw new Error("there is no item of this rank in the set.");
         }
 
-
         let p = this._root;
 
         while (true) {
@@ -772,7 +771,6 @@ export class RBTreeSetImpl2 {
                 return null;
             }
         }
-
 
         let inst = new RBTreeSetImpl2(this._comparator);
 

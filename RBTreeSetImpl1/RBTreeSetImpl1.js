@@ -88,10 +88,8 @@ export class RBTreeSetImpl1 {
             let parent = stack.pop();
             let grandparent = stack.pop();
 
-            if (grandparent.value.left.value != null 
-                && grandparent.value.left.value.color == "RED" 
-                && grandparent.value.right.value != null 
-                && grandparent.value.right.value.color == "RED") {
+            if (grandparent.value.left.value != null && grandparent.value.left.value.color == "RED" 
+                && grandparent.value.right.value != null && grandparent.value.right.value.color == "RED") {
                 
                 grandparent.value.left.value.color = "BLACK";
                 grandparent.value.right.value.color = "BLACK";
@@ -230,10 +228,8 @@ export class RBTreeSetImpl1 {
 
                 if (/*sibling.value != null 
                     && */sibling.value.color == "BLACK" 
-                    && (sibling.value.left.value == null 
-                    || sibling.value.left.value.color == "BLACK") 
-                    && (sibling.value.right.value == null 
-                    || sibling.value.right.value.color == "BLACK")) {
+                    && (sibling.value.left.value == null || sibling.value.left.value.color == "BLACK") 
+                    && (sibling.value.right.value == null || sibling.value.right.value.color == "BLACK")) {
                     
                     sibling.value.color = "RED";
 
@@ -246,9 +242,7 @@ export class RBTreeSetImpl1 {
                 }
             }
 
-            if (p.value != null 
-                && p.value.color == "RED") {
-                
+            if (p.value != null && p.value.color == "RED") {
                 p.value.color = "BLACK";
             } else if (stack.length >= 1) {
                 let parent = stack.pop();
@@ -270,9 +264,7 @@ export class RBTreeSetImpl1 {
                         parent = parent.value.left;
                     }
 
-                    if (sibling.value.right.value != null 
-                        && sibling.value.right.value.color == "RED") {
-
+                    if (sibling.value.right.value != null && sibling.value.right.value.color == "RED") {
                         this._rotateSubtreeRight(parent);
 
                         parent.value.color = parent.value.left.value.color;
@@ -281,9 +273,7 @@ export class RBTreeSetImpl1 {
 
                         this._updateLocalFields(parent.value.left.value);
                         this._updateLocalFields(parent.value);
-                    } else if (sibling.value.left.value != null 
-                        && sibling.value.left.value.color == "RED") {
-                        
+                    } else if (sibling.value.left.value != null && sibling.value.left.value.color == "RED") {
                         this._rotateSubtreeLeft(sibling);
                         this._rotateSubtreeRight(parent);
 
@@ -318,8 +308,7 @@ export class RBTreeSetImpl1 {
                         parent = parent.value.right;
                     }
 
-                    if (sibling.value.left.value != null 
-                        && sibling.value.left.value.color == "RED") {
+                    if (sibling.value.left.value != null && sibling.value.left.value.color == "RED") {
                         this._rotateSubtreeLeft(parent);
 
                         parent.value.color = parent.value.right.value.color;
@@ -328,8 +317,7 @@ export class RBTreeSetImpl1 {
 
                         this._updateLocalFields(parent.value.right.value);
                         this._updateLocalFields(parent.value);
-                    } else if (sibling.value.right.value != null 
-                        && sibling.value.right.value.color == "RED") {
+                    } else if (sibling.value.right.value != null && sibling.value.right.value.color == "RED") {
                         this._rotateSubtreeRight(sibling);
                         this._rotateSubtreeLeft(parent);
 
@@ -598,7 +586,6 @@ export class RBTreeSetImpl1 {
                 return {value: null};
             }
         }
-
 
         let inst = new RBTreeSetImpl1(this._comparator);
 

@@ -54,7 +54,6 @@ export class AVLTreeList {
             throw new Error("the index is out of bounds in the list.");
         }
 
-
         let stack = new Array();
         let p = this._root;
 
@@ -249,7 +248,6 @@ export class AVLTreeList {
             }
         }
 
-
         let target;
 
         {
@@ -409,12 +407,9 @@ export class AVLTreeList {
 
 
     get(index) {
-        if (index < 0 
-            || index >= this.getSize()) {
-            
+        if (index < 0 || index >= this.getSize()) {
             throw new Error("the index is out of bounds in the list.");
         }
-
 
         let p = this._root.value;
 
@@ -440,12 +435,9 @@ export class AVLTreeList {
 
 
     set(index, item) {
-        if (index < 0 
-            || index >= this.getSize()) {
-            
+        if (index < 0 || index >= this.getSize()) {
             throw new Error("the index is out of bounds in the list.");
         }
-
 
         let p = this._root.value;
 
@@ -602,7 +594,6 @@ export class AVLTreeList {
             }
         }
 
-
         let inst = new AVLTreeList();
 
         inst._root = cloneSubtree(this._root);
@@ -619,7 +610,6 @@ export class AVLTreeList {
                 if (node == null) {
                     return 0;
                 }
-
 
                 let leftHeight = getHeightAndVerifySubtree(node.left.value);
                 let rightHeight = getHeightAndVerifySubtree(node.right.value);

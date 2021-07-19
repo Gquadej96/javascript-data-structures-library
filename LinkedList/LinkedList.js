@@ -150,7 +150,6 @@ export class LinkedList {
             p = p.next;
         }
 
-
         let inst = new LinkedList();
 
         inst._first = first;

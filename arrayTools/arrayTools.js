@@ -61,7 +61,6 @@ export function heapSort(array, comparator) {
         shiftItemDown(i, array.length);
     }
 
-
     let unsortedLength = array.length;
 
     while (unsortedLength >= 2) {
@@ -106,9 +105,7 @@ export function binarySearchGetLast(array, target, comparator) {
 
 
 export function binarySearchGetFirstSuccessor(array, target, comparator) {
-    
     comparator = comparator || new comparators.UniversalComparator();
-
 
     let leftInclusiveIndex = 0;
     let rightExclusiveIndex = array.length;
@@ -179,7 +176,6 @@ export function quickSelect(array, k, comparator) {
         for (let i = 0; i + 5 <= length; i = i + 5) {
             partiallySort(i, i + 5);
         }
-
 
         let median = recur(5 * a, b + 2 * a, Math.floor(length / 5), Math.floor(length / 5 / 2));
         let center = 0;

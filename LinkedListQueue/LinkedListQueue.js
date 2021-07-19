@@ -104,7 +104,6 @@ export class LinkedListQueue {
             p = p.next;
         }
 
-
         let inst = new LinkedListQueue();
 
         inst._first = first;

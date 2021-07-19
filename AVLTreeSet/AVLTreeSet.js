@@ -58,7 +58,6 @@ export class AVLTreeSet {
         while (p.value != null) {
             stack.push(p);
 
-
             let res = this._comparator.compare(item, p.value.item);
 
             if (res == 0) {
@@ -638,7 +637,6 @@ export class AVLTreeSet {
                 return {value: null};
             }
         }
-
 
         let inst = new AVLTreeSet(this._comparator);
 

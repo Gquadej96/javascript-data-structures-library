@@ -149,9 +149,7 @@ export class BinaryTreeMinHeap {
                 }
             }
 
-            if (p.left != null 
-                && this._comparator.compare(p.item, p.left.item) > 0) {
-                
+            if (p.left != null && this._comparator.compare(p.item, p.left.item) > 0) {
                 let temp = p.item;
 
                 p.item = p.left.item;
@@ -198,7 +196,6 @@ export class BinaryTreeMinHeap {
             }
         }
 
-
         let inst = new BinaryTreeMinHeap(this._comparator);
 
         inst._root = cloneSubtree(this._root, null);
@@ -215,9 +212,7 @@ export class BinaryTreeMinHeap {
         }
         
         function findEndOfSubtree(node, depth) {
-            if (node.left == null 
-                && node.right == null) {
-                
+            if (node.left == null && node.right == null) {
                 return node;
             }
 
@@ -254,7 +249,6 @@ export class BinaryTreeMinHeap {
                         depth: 0
                     };
                 }
-
 
                 let leftInfo = getInfoAndVerifySubtree(node.left);
                 let rightInfo = getInfoAndVerifySubtree(node.right);

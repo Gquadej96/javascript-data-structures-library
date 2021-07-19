@@ -12,16 +12,13 @@ export class ABTreeList {
 
 
     constructor(A, B) {
-        if ((B + 1) / 2 < A 
-            || A < 2) {
-
+        if ((B + 1) / 2 < A || A < 2) {
             throw new Error("the inequality (B + 1) / 2 >= A >= 2 does not hold.");
         }
 
         this._root = {
             index: [], 
             branches: null, 
-
             size: 0
         };
         //this._updateLocalFields(this._root);
@@ -47,12 +44,9 @@ export class ABTreeList {
 
 
     add(index, item) {
-        if (index < 0 
-            || index > this._root.size) {
-
+        if (index < 0 || index > this._root.size) {
             throw new Error("the index is out of bounds in the list.");
         }
-
 
         let stack = new Array();
         let p = this._root;
@@ -304,7 +298,7 @@ export class ABTreeList {
 
         if (this._root.branches != null 
             && this._root.branches.length == 1) {
-            
+
             this._root = this._root.branches[0];
         } else {
             this._updateLocalFields(this._root);

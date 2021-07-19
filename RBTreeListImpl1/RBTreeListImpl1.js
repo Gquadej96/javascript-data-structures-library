@@ -103,10 +103,8 @@ export class RBTreeListImpl1 {
             let parent = stack.pop();
             let grandparent = stack.pop();
 
-            if (grandparent.value.left.value != null 
-                && grandparent.value.left.value.color == "RED" 
-                && grandparent.value.right.value != null 
-                && grandparent.value.right.value.color == "RED") {
+            if (grandparent.value.left.value != null && grandparent.value.left.value.color == "RED" 
+                && grandparent.value.right.value != null && grandparent.value.right.value.color == "RED") {
                 
                 grandparent.value.left.value.color = "BLACK";
                 grandparent.value.right.value.color = "BLACK";
@@ -201,7 +199,6 @@ export class RBTreeListImpl1 {
                 p = p.value.right;
             }
         }
-        
 
         let target;
 
@@ -282,9 +279,7 @@ export class RBTreeListImpl1 {
                         parent = parent.value.left;
                     }
 
-                    if (sibling.value.right.value != null 
-                        && sibling.value.right.value.color == "RED") {
-
+                    if (sibling.value.right.value != null && sibling.value.right.value.color == "RED") {
                         this._rotateSubtreeRight(parent);
 
                         parent.value.color = parent.value.left.value.color;
@@ -293,9 +288,7 @@ export class RBTreeListImpl1 {
 
                         this._updateLocalFields(parent.value.left.value);
                         this._updateLocalFields(parent.value);
-                    } else if (sibling.value.left.value != null 
-                        && sibling.value.left.value.color == "RED") {
-                        
+                    } else if (sibling.value.left.value != null && sibling.value.left.value.color == "RED") {
                         this._rotateSubtreeLeft(sibling);
                         this._rotateSubtreeRight(parent);
 
@@ -329,9 +322,7 @@ export class RBTreeListImpl1 {
                         parent = parent.value.right;
                     }
 
-                    if (sibling.value.left.value != null 
-                        && sibling.value.left.value.color == "RED") {
-
+                    if (sibling.value.left.value != null && sibling.value.left.value.color == "RED") {
                         this._rotateSubtreeLeft(parent);
 
                         parent.value.color = parent.value.right.value.color;
@@ -340,9 +331,7 @@ export class RBTreeListImpl1 {
 
                         this._updateLocalFields(parent.value.right.value);
                         this._updateLocalFields(parent.value);
-                    } else if (sibling.value.right.value != null 
-                        && sibling.value.right.value.color == "RED") {
-                        
+                    } else if (sibling.value.right.value != null && sibling.value.right.value.color == "RED") {
                         this._rotateSubtreeRight(sibling);
                         this._rotateSubtreeLeft(parent);
 
@@ -549,7 +538,6 @@ export class RBTreeListImpl1 {
                 return {value: null};
             }
         }
-
 
         let inst = new RBTreeListImpl1();
 

@@ -17,9 +17,7 @@ export class ABTreeSet {
 
 
     constructor(A, B, comparator) {
-        if ((B + 1) / 2 < A 
-            || A < 2) {
-
+        if ((B + 1) / 2 < A || A < 2) {
             throw new Error("the inequality (B + 1) / 2 >= A >= 2 does not hold.");
         }
 
@@ -760,7 +758,6 @@ export class ABTreeSet {
                     return node.index[node.index.length - 1];
                 }
             }
-
 
             let p = this._root;
 

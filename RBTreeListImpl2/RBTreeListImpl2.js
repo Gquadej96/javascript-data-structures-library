@@ -127,10 +127,8 @@ export class RBTreeListImpl2 {
             let parent = p.parent;
             let grandparent = parent.parent;
 
-            if (grandparent.left != null 
-                && grandparent.left.color == "RED" 
-                && grandparent.right != null 
-                && grandparent.right.color == "RED") {
+            if (grandparent.left != null && grandparent.left.color == "RED" 
+                && grandparent.right != null && grandparent.right.color == "RED") {
                 
                 grandparent.color = "RED";
                 grandparent.left.color = "BLACK";
@@ -146,9 +144,7 @@ export class RBTreeListImpl2 {
             break;
         }
 
-        if (p.parent != null 
-            && p.parent.color == "RED") { // p.parent.parent != null
-            
+        if (p.parent != null && p.parent.color == "RED") { // p.parent.parent != null
             let parent = p.parent;
             let grandparent = parent.parent;
 
@@ -293,10 +289,8 @@ export class RBTreeListImpl2 {
                 }
 
                 if (sibling.color == "BLACK" 
-                    && (sibling.left == null 
-                    || sibling.left.color == "BLACK") 
-                    && (sibling.right == null 
-                    || sibling.right.color == "BLACK")) {
+                    && (sibling.left == null || sibling.left.color == "BLACK") 
+                    && (sibling.right == null || sibling.right.color == "BLACK")) {
                     
                     sibling.color = "RED";
 
@@ -310,9 +304,7 @@ export class RBTreeListImpl2 {
                 break;
             }
 
-            if (p != null 
-                && p.color == "RED") {
-                
+            if (p != null && p.color == "RED") {
                 p.color = "BLACK";
             } else if (parent != null) {
                 if (p == parent.left) {
@@ -340,9 +332,7 @@ export class RBTreeListImpl2 {
                         sibling = parent.right;
                     }
 
-                    if (sibling.right != null 
-                        && sibling.right.color == "RED") {
-
+                    if (sibling.right != null && sibling.right.color == "RED") {
                         let prevParent = parent;
 
                         parent = this._rotateSubtreeRight(parent);
@@ -366,9 +356,7 @@ export class RBTreeListImpl2 {
 
                         p = parent;
                         parent = parent.parent;
-                    } else if (sibling.left != null 
-                        && sibling.left.color == "RED") {
-
+                    } else if (sibling.left != null && sibling.left.color == "RED") {
                         let prevParent = parent;
                         
                         sibling = this._rotateSubtreeLeft(sibling);
@@ -432,9 +420,7 @@ export class RBTreeListImpl2 {
                         sibling = parent.left;
                     }
 
-                    if (sibling.left != null 
-                        && sibling.left.color == "RED") {
-
+                    if (sibling.left != null && sibling.left.color == "RED") {
                         let prevParent = parent;
 
                         parent = this._rotateSubtreeLeft(parent);
@@ -458,9 +444,7 @@ export class RBTreeListImpl2 {
 
                         p = parent;
                         parent = parent.parent;
-                    } else if (sibling.right != null 
-                        && sibling.right.color == "RED") {
-                        
+                    } else if (sibling.right != null && sibling.right.color == "RED") {
                         let prevParent = parent;
 
                         sibling = this._rotateSubtreeRight(sibling);
@@ -744,7 +728,6 @@ export class RBTreeListImpl2 {
                 return null;
             }
         }
-
 
         let inst = new RBTreeListImpl2(this._comparator);
 
