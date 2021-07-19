@@ -8,11 +8,9 @@ export class BasicComparator {
     compare(a, b) {
         if (a == b) {
             return 0;
-        } 
-        else if (a < b) {
+        } else if (a < b) {
             return -1;
-        } 
-        else {
+        } else {
             return 1;
         }
     }
@@ -21,16 +19,16 @@ export class BasicComparator {
 
 export class ObjectReferenceComparator {
     _refs = new Map();
-    _next_ref = 0;
+    _nextRef = 0;
 
     
-    _get_object_reference(object) {
+    _getObjectReference(object) {
         let ref = this._refs.get(object);
 
         if (ref == null) {
-            ref = this._next_ref;
+            ref = this._nextRef;
 
-            this._next_ref = this._next_ref + 1;
+            this._nextRef = this._nextRef + 1;
             this._refs.set(object, ref);
         }
 
@@ -39,27 +37,25 @@ export class ObjectReferenceComparator {
 
 
     compare(a, b) {
-        return this._get_object_reference(a) - this._get_object_reference(b);
+        return this._getObjectReference(a) - this._getObjectReference(b);
     }
 }
 
 
 export class ArrayElementComparator {
-    _element_comparator = new BasicComparator();
+    _elementComparator = new BasicComparator();
 
 
-    constructor(element_comparator) {
-        this._element_comparator = element_comparator || this._element_comparator;
+    constructor(elementComparator) {
+        this._elementComparator = elementComparator || this._elementComparator;
     }
 
 
     compare(a, b) {
         let length = Math.min(a.length, b.length);
 
-        for (let i = 0; 
-            i < length; 
-            ++i) {
-            let res = this._element_comparator.compare(a[i], b[i]);
+        for (let i = 0; i < length; ++i) {
+            let res = this._elementComparator.compare(a[i], b[i]);
 
             if (res != 0) {
                 return res;
@@ -75,48 +71,52 @@ export class StringComparator
     extends ArrayElementComparator {
 
     constructor() {
-        super(new class {
-            compare(a, b) {
-                return a.codePointAt(0) - b.codePointAt(0);
+        super(
+            new class {
+                compare(a, b) {
+                    return a.codePointAt(0) - b.codePointAt(0);
+                }
             }
-        });
+        );
     }
 }
 
 
 export class ObjectFieldComparator {
-    _string_comparator = new StringComparator();
-    _value_comparator = new BasicComparator();
-    _entry_array_comparator = null;
+    _stringComparator = new StringComparator();
+    _valueComparator = new BasicComparator();
+    _entryArrayComparator = null;
 
 
-    constructor(value_comparator) {
+    constructor(valueComparator) {
         let self = this;
 
-        this._value_comparator = value_comparator || this._value_comparator;
-        this._entry_array_comparator = new ArrayElementComparator(new class {
-            compare(a, b) {
-                let res = self._string_comparator.compare(a.name, b.name);
-    
-                if (res != 0) {
+        this._valueComparator = valueComparator || this._valueComparator;
+        this._entryArrayComparator = new ArrayElementComparator(
+            new class {
+                compare(a, b) {
+                    let res = self._stringComparator.compare(a.name, b.name);
+        
+                    if (res != 0) {
+                        return res;
+                    }
+        
+                    res = self._valueComparator.compare(a.value, b.value);
                     return res;
                 }
-    
-                res = self._value_comparator.compare(a.value, b.value);
-                return res;
             }
-        });
+        );
     }
 
 
     compare(a, b) {
-        let a_entry_array = Object.getOwnPropertyNames(a).map((name) => {return {name: name, value: a[name]};});
-        let b_entry_array = Object.getOwnPropertyNames(b).map((name) => {return {name: name, value: b[name]};});
+        let entryArray1 = Object.getOwnPropertyNames(a).map((name) => {return {name: name, value: a[name]};});
+        let entryArray2 = Object.getOwnPropertyNames(b).map((name) => {return {name: name, value: b[name]};});
 
-        a_entry_array.sort((a, b) => this._string_comparator.compare(a.name, b.name));
-        b_entry_array.sort((a, b) => this._string_comparator.compare(a.name, b.name));
+        entryArray1.sort((a, b) => this._stringComparator.compare(a.name, b.name));
+        entryArray2.sort((a, b) => this._stringComparator.compare(a.name, b.name));
 
-        return this._entry_array_comparator.compare(a_entry_array, b_entry_array);
+        return this._entryArrayComparator.compare(entryArray1, entryArray2);
     }
 }
 
@@ -137,7 +137,7 @@ export class ReverseComparator {
 
 
 export class UniversalComparator {
-    static _string_comparator = new StringComparator();
+    static _stringComparator = new StringComparator();
     static _comparators = {
         "string": new StringComparator(), 
         "number": new BasicComparator(), 
@@ -146,7 +146,7 @@ export class UniversalComparator {
 
 
     compare(a, b) {
-        let res = UniversalComparator._string_comparator.compare(typeof(a), typeof(b));
+        let res = UniversalComparator._stringComparator.compare(typeof(a), typeof(b));
 
         if (res != 0) {
             return res;

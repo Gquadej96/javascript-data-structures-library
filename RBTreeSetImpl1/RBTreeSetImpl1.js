@@ -667,7 +667,7 @@ export class RBTreeSetImpl1 {
     }
 
 
-    debug_verify_integrity() {
+    debugVerifyIntegrity() {
         // verify that the root is black.
 
         if (this._root.value != null 

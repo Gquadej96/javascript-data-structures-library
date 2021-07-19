@@ -31,16 +31,16 @@ function assert_error(func, message) {
     let set = new RBTreeSetImpl2();
 
 
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
     assert_truth(set.get_size() == 0, "unexpected size of the set.");
 
 
     set.rebalance();
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
 
     set.add(1);
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 1, "unexpected size of the set.");
 
@@ -59,7 +59,7 @@ function assert_error(func, message) {
 
 
     set.add(2);
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 2, "unexpected size of the set.");
 
@@ -78,7 +78,7 @@ function assert_error(func, message) {
 
 
     set.add(1);
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 2, "unexpected size of the set.");
 
@@ -89,7 +89,7 @@ function assert_error(func, message) {
 
 
     set.add(4);
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 3, "unexpected size of the set.");
 
@@ -108,7 +108,7 @@ function assert_error(func, message) {
 
 
     set.add(2);
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 3, "unexpected size of the set.");
 
@@ -119,7 +119,7 @@ function assert_error(func, message) {
 
 
     set.add(3);
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 4, "unexpected size of the set.");
 
@@ -141,7 +141,7 @@ function assert_error(func, message) {
 
 
     set.add(3);
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 4, "unexpected size of the set.");
 
@@ -152,11 +152,11 @@ function assert_error(func, message) {
 
 
     set.rebalance();
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
     
 
     set = set.clone();
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 4, "unexpected size of the set.");
 
@@ -229,7 +229,7 @@ function assert_error(func, message) {
 
 
     set.remove(1);
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 3, "unexpected size of the set.");
 
@@ -256,7 +256,7 @@ function assert_error(func, message) {
 
 
     set.remove(3);
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 2, "unexpected size of the set.");
 
@@ -280,7 +280,7 @@ function assert_error(func, message) {
 
 
     set.remove(2);
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 1, "unexpected size of the set.");
 
@@ -301,7 +301,7 @@ function assert_error(func, message) {
 
 
     set.remove(4);
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     assert_truth(set.get_size() == 0, "unexpected size of the set.");
 
@@ -331,7 +331,7 @@ function assert_error(func, message) {
         ++i) {
 
         set.add(i);
-        set.debug_verify_integrity();
+        set.debugVerifyIntegrity();
 
         assert_truth(set.get_size() == i + 1, "unexpected size of set.");
     }
@@ -339,7 +339,7 @@ function assert_error(func, message) {
     set = set.clone();
 
     set.rebalance();
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     for (let i = 0; 
         i < size_of_tests; 
@@ -396,60 +396,60 @@ function assert_error(func, message) {
         ++i) {
         
         set.remove(i);
-        set.debug_verify_integrity();
+        set.debugVerifyIntegrity();
 
         assert_truth(!set.has(i), "this is an unexpected item in the set.");
         assert_truth(set.get_size() == size_of_tests - i - 1, "unexpected size of the set.");
     }
 
     set.rebalance();
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     for (let i = size_of_tests - 1; 
         i >= 0; 
         --i) {
         
         set.add(i);
-        set.debug_verify_integrity();
+        set.debugVerifyIntegrity();
 
         assert_truth(set.get_size() == size_of_tests - i, "unexpected size of the set.");
     }
 
     set.rebalance();
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     for (let i = 0; 
         i < Math.floor(size_of_tests / 2); 
         ++i) {
         
         set.remove(i);
-        set.debug_verify_integrity();
+        set.debugVerifyIntegrity();
 
         assert_truth(set.get_size() == size_of_tests - i - 1, "unexpected size of the set.");
     }
 
     set.rebalance();
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     for (let i = Math.floor(size_of_tests / 2) - 1; 
         i >= 0; 
         --i) {
 
         set.add(i);
-        set.debug_verify_integrity();
+        set.debugVerifyIntegrity();
 
         assert_truth(set.get_size() == size_of_tests - i, "unexpected size of the set.");
     }
 
     set.rebalance();
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     for (let i = size_of_tests - 1; 
         i >= 0; 
         --i) {
         
         set.remove(i);
-        set.debug_verify_integrity();
+        set.debugVerifyIntegrity();
 
         assert_truth(set.get_size() == i, "unexpected size of the set.");
     }
@@ -471,7 +471,7 @@ function assert_error(func, message) {
         let item = Math.floor(size_of_tests * Math.random());
 
         set.add(item);
-        set.debug_verify_integrity();
+        set.debugVerifyIntegrity();
 
         ref.add(item);
 
@@ -480,7 +480,7 @@ function assert_error(func, message) {
     }
 
     set.rebalance();
-    set.debug_verify_integrity();
+    set.debugVerifyIntegrity();
 
     for (let i = 0; 
         i < size_of_tests; 
@@ -490,7 +490,7 @@ function assert_error(func, message) {
 
         if (ref.has(item)) {
             set.remove(item);
-            set.debug_verify_integrity();
+            set.debugVerifyIntegrity();
 
             ref.delete(item);
         } 
