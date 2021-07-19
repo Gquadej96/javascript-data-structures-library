@@ -12,7 +12,7 @@ let testPaths = [
     "../ABTreeList/ABTreeList.test.js", 
     "../ABTreeMap/ABTreeMap.test.js", 
     "../ABTreeSet/ABTreeSet.test.js", 
-    "../arrayTools/arrayTools.test.js", 
+    "../arrayUtils/arrayUtils.test.js", 
     "../AVLTreeList/AVLTreeList.test.js", 
     "../AVLTreeMap/AVLTreeMap.test.js", 
     "../AVLTreeSet/AVLTreeSet.test.js", 

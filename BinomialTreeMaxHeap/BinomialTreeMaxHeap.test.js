@@ -6,7 +6,7 @@
 
 import {assertTruth, assertError} from "../testUtils/testUtils.js";
 import {BinomialTreeMaxHeap} from "./BinomialTreeMaxHeap.js";
-import * as arrayTools from "../arrayTools/arrayTools.js";
+import * as arrayUtils from "../arrayUtils/arrayUtils.js";
 import * as comparators from "../comparators/comparators.js";
 
 
@@ -98,7 +98,7 @@ export function testOverallMethods2() {
         assertTruth(heap.getSize() == i + 1, "unexpected size of the heap.");
     }
 
-    arrayTools.heapSort(ref, new comparators.ReverseComparator(new comparators.UniversalComparator()));
+    arrayUtils.heapSort(ref, new comparators.ReverseComparator(new comparators.UniversalComparator()));
 
     let array = new Array(sizeOfTests);
 
