@@ -1,8 +1,7 @@
-/*
-Author: Quade Jones
-GitHub: https://github.com/Gquadej96
-*/
-
+/**
+ * Author: Quade Jones
+ * GitHub: https://github.com/Gquadej96
+ */
 
 import {RBTreeMapImpl2} from "../RBTreeMapImpl2.js";
 

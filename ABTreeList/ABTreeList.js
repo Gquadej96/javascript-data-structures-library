@@ -31,7 +31,7 @@ export class ABTreeList {
     }
 
 
-    _update_local_fields(node) {
+    _updateLocalFields(node) {
         if (node.branches != null) {
             let size = 0;
 
@@ -40,14 +40,13 @@ export class ABTreeList {
             }
 
             node.size = size;
-        } 
-        else {
+        } else {
             node.size = node.index.length;
         }
     }
 
 
-    insert(index, item) {
+    add(index, item) {
         if (index < 0 
             || index > this._root.size) {
 
@@ -72,8 +71,7 @@ export class ABTreeList {
             }
 
             p = {p: p, branch: index};
-        } 
-        else {
+        } else {
             while (p.branches != null) {
                 stack.push({p: p, branch: p.branches.length - 1});
                 p = p.branches[p.branches.length - 1];
@@ -85,82 +83,77 @@ export class ABTreeList {
         p.p.index.splice(p.branch, 0, item);
 
         if (p.p.index.length <= this._B) {
-            this._update_local_fields(p.p);
+            this._updateLocalFields(p.p);
 
             while (stack.length > 0) {
                 p = stack.pop();
 
-                this._update_local_fields(p.p);
+                this._updateLocalFields(p.p);
             }
 
             return;
         }
 
 
-        let next_branch;
+        let nextBranch;
 
         {
-            let left_branch_size = Math.floor(p.p.index.length / 2);
+            let leftBranchSize = Math.floor(p.p.index.length / 2);
 
-            next_branch = {
-                index: p.p.index.splice(left_branch_size), 
+            nextBranch = {
+                index: p.p.index.splice(leftBranchSize), 
                 branches: null, 
-
-                size: NaN
+                size: null
             };
 
-            this._update_local_fields(p.p);
-            this._update_local_fields(next_branch);
+            this._updateLocalFields(p.p);
+            this._updateLocalFields(nextBranch);
         }
 
 
         while (stack.length > 0) {
             let parent = stack.pop();
 
-            parent.p.branches.splice(parent.branch + 1, 0, next_branch);
+            parent.p.branches.splice(parent.branch + 1, 0, nextBranch);
 
             if (parent.p.branches.length <= this._B) {
-                this._update_local_fields(parent.p);
+                this._updateLocalFields(parent.p);
 
                 while (stack.length > 0) {
                     p = stack.pop();
 
-                    this._update_local_fields(p.p);
+                    this._updateLocalFields(p.p);
                 }
 
                 return;
             }
 
 
-            let left_branch_size = Math.floor(parent.p.branches.length / 2);
+            let leftBranchSize = Math.floor(parent.p.branches.length / 2);
 
-            next_branch = {
-                branches: parent.p.branches.splice(left_branch_size), 
-
-                size: NaN
+            nextBranch = {
+                branches: parent.p.branches.splice(leftBranchSize), 
+                size: null
             };
 
-            this._update_local_fields(parent.p);
-            this._update_local_fields(next_branch);
+            this._updateLocalFields(parent.p);
+            this._updateLocalFields(nextBranch);
 
             p = parent;
         }
 
 
         this._root = {
-            branches: [this._root, next_branch], 
-
-            size: NaN
+            branches: [this._root, nextBranch], 
+            size: null
         };
 
-        this._update_local_fields(this._root);
+        this._updateLocalFields(this._root);
     }
 
 
     remove(index) {
-        if (index < 0 
-            || index >= this._root.size) {
-
+        if (index < 0 || index >= this._root.size) {
             throw new Error("the index is out of bounds in the list.");
         }
 
@@ -185,12 +178,12 @@ export class ABTreeList {
         p.p.index.splice(p.branch, 1);
 
         if (p.p.index.length >= this._A) {
-            this._update_local_fields(p.p);
+            this._updateLocalFields(p.p);
 
             while (stack.length > 0) {
                 p = stack.pop();
 
-                this._update_local_fields(p.p);
+                this._updateLocalFields(p.p);
             }
 
             return;
@@ -201,55 +194,52 @@ export class ABTreeList {
             let parent = stack.pop();
 
             if (parent.branch == parent.p.branches.length - 1) {
-                let parent_sibling_branch = parent.branch - 1;
-                let sibling = parent.p.branches[parent_sibling_branch];
+                let parentSiblingBranch = parent.branch - 1;
+                let sibling = parent.p.branches[parentSiblingBranch];
 
                 if (sibling.index.length > this._A) {
                     p.p.index.splice(0, 0, sibling.index[sibling.index.length - 1]);
                     sibling.index.splice(sibling.index.length - 1, 1);
 
-                    this._update_local_fields(p.p);
-                    this._update_local_fields(sibling);
+                    this._updateLocalFields(p.p);
+                    this._updateLocalFields(sibling);
 
                     //return;
-                } 
-                else { // sibling.index.length == this._A
+                } else { // sibling.index.length == this._A
                     sibling.index.splice(sibling.index.length, 0, ...p.p.index);
 
                     parent.p.branches.splice(parent.p.branches.length - 1, 1);
 
-                    this._update_local_fields(sibling);
+                    this._updateLocalFields(sibling);
                 }
-            } 
-            else { // parent.branch < parent.p.branches.length - 1
-                let parent_sibling_branch = parent.branch + 1;
-                let sibling = parent.p.branches[parent_sibling_branch];
+            } else { // parent.branch < parent.p.branches.length - 1
+                let parentSiblingBranch = parent.branch + 1;
+                let sibling = parent.p.branches[parentSiblingBranch];
 
                 if (sibling.index.length > this._A) {
                     p.p.index.splice(p.p.index.length, 0, sibling.index[0]);
                     sibling.index.splice(0, 1);
 
-                    this._update_local_fields(p.p);
-                    this._update_local_fields(sibling);
+                    this._updateLocalFields(p.p);
+                    this._updateLocalFields(sibling);
 
                     //return;
-                } 
-                else { // sibling.index.length == this._A
+                } else { // sibling.index.length == this._A
                     sibling.index.splice(0, 0, ...p.p.index);
 
                     parent.p.branches.splice(parent.branch, 1);
 
-                    this._update_local_fields(sibling);
+                    this._updateLocalFields(sibling);
                 }
             }
 
             if (parent.p.branches.length >= this._A) {
-                this._update_local_fields(parent.p);
+                this._updateLocalFields(parent.p);
 
                 while (stack.length > 0) {
                     p = stack.pop();
 
-                    this._update_local_fields(p.p);
+                    this._updateLocalFields(p.p);
                 }
 
                 return;
@@ -263,57 +253,54 @@ export class ABTreeList {
             let parent = stack.pop();
 
             if (parent.branch == parent.p.branches.length - 1) {
-                let parent_sibling_branch = parent.branch - 1;
-                let sibling = parent.p.branches[parent_sibling_branch];
+                let parentSiblingBranch = parent.branch - 1;
+                let sibling = parent.p.branches[parentSiblingBranch];
 
                 if (sibling.branches.length > this._A) {
                     p.p.branches.splice(0, 0, sibling.branches[sibling.branches.length - 1]);
 
                     sibling.branches.splice(sibling.branches.length - 1, 1);
 
-                    this._update_local_fields(p.p);
-                    this._update_local_fields(sibling);
+                    this._updateLocalFields(p.p);
+                    this._updateLocalFields(sibling);
 
                     //return;
-                } 
-                else { // sibling.branches.length == this._A
+                } else { // sibling.branches.length == this._A
                     sibling.branches.splice(sibling.branches.length, 0, ...p.p.branches);
 
                     parent.p.branches.splice(parent.p.branches.length - 1, 1);
 
-                    this._update_local_fields(sibling);
+                    this._updateLocalFields(sibling);
                 }
-            } 
-            else { // parent.branch < parent.p.branches.length - 1
-                let parent_sibling_branch = parent.branch + 1;
-                let sibling = parent.p.branches[parent_sibling_branch];
+            } else { // parent.branch < parent.p.branches.length - 1
+                let parentSiblingBranch = parent.branch + 1;
+                let sibling = parent.p.branches[parentSiblingBranch];
 
                 if (sibling.branches.length > this._A) {
                     p.p.branches.splice(p.p.branches.length, 0, sibling.branches[0]);
 
                     sibling.branches.splice(0, 1);
 
-                    this._update_local_fields(p.p);
-                    this._update_local_fields(sibling);
+                    this._updateLocalFields(p.p);
+                    this._updateLocalFields(sibling);
 
                     //return;
-                } 
-                else { // sibling.branches.length == this._A
+                } else { // sibling.branches.length == this._A
                     sibling.branches.splice(0, 0, ...p.p.branches);
 
                     parent.p.branches.splice(parent.branch, 1);
 
-                    this._update_local_fields(sibling);
+                    this._updateLocalFields(sibling);
                 }
             }
 
             if (parent.p.branches.length >= this._A) {
-                this._update_local_fields(parent.p);
+                this._updateLocalFields(parent.p);
 
                 while (stack.length > 0) {
                     p = stack.pop();
 
-                    this._update_local_fields(p.p);
+                    this._updateLocalFields(p.p);
                 }
 
                 return;
@@ -326,17 +313,14 @@ export class ABTreeList {
             && this._root.branches.length == 1) {
             
             this._root = this._root.branches[0];
-        } 
-        else {
-            this._update_local_fields(this._root);
+        } else {
+            this._updateLocalFields(this._root);
         }
     }
 
 
     get(index) {
-        if (index < 0 
-            || index >= this._root.size) {
-
+        if (index < 0 || index >= this._root.size) {
             throw new Error("the index is out of bounds in the list.");
         }
 
@@ -359,9 +343,7 @@ export class ABTreeList {
 
 
     set(index, item) {
-        if (index < 0 
-            || index >= this._root.size) {
-
+        if (index < 0 || index >= this._root.size) {
             throw new Error("the index is out of bounds in the list.");
         }
 
@@ -383,182 +365,163 @@ export class ABTreeList {
     }
 
 
-    get_size() {
+    getSize() {
         return this._root.size;
     }
 
 
     rebalance() {
-        let level = this.to_array();
+        let level = this.toArray();
 
         {
-            let new_level = new Array();
+            let newLevel = new Array();
 
             while (level.length > this._A + this._B) {
-                let new_branch = {
+                let newBranch = {
                     index: level.splice(0, this._B), 
                     branches: null, 
-
-                    size: NaN
+                    size: null
                 };
 
-                this._update_local_fields(new_branch);
+                this._updateLocalFields(newBranch);
 
-                new_level.push(new_branch);
+                newLevel.push(newBranch);
             }
 
             if (level.length > this._B) {
-                let new_left_branch_size = level.length - this._A;
-                let new_left_branch = {
-                    index: level.splice(0, new_left_branch_size), 
+                let newLeftBranchSize = level.length - this._A;
+                let newLeftBranch = {
+                    index: level.splice(0, newLeftBranchSize), 
                     branches: null, 
-
-                    size: NaN
+                    size: null
                 };
 
-                this._update_local_fields(new_left_branch);
+                this._updateLocalFields(newLeftBranch);
 
-                new_level.push(new_left_branch);
+                newLevel.push(newLeftBranch);
 
-
-                let new_branch = {
+                let newBranch = {
                     index: level, 
                     branches: null, 
-
-                    size: NaN
+                    size: null
                 };
 
-                this._update_local_fields(new_branch);
+                this._updateLocalFields(newBranch);
 
-                new_level.push(new_branch);
-            } 
-            else { // level.length <= this._B && level.length > this._A
-                let new_branch = {
+                newLevel.push(newBranch);
+            } else { // level.length <= this._B && level.length > this._A
+                let newBranch = {
                     index: level, 
                     branches: null, 
-
-                    size: NaN
+                    size: null
                 };
 
-                this._update_local_fields(new_branch);
+                this._updateLocalFields(newBranch);
 
-                new_level.push(new_branch);
+                newLevel.push(newBranch);
             }
 
-            level = new_level;
+            level = newLevel;
         }
 
         while (level.length >= this._A) {
-            let new_level = new Array();
+            let newLevel = new Array();
 
             while (level.length > this._A + this._B) {
-                let new_branch = {
+                let newBranch = {
                     branches: level.splice(0, this._B), 
-
-                    size: NaN
+                    size: null
                 };
 
-                this._update_local_fields(new_branch);
+                this._updateLocalFields(newBranch);
 
-                new_level.push(new_branch);
+                newLevel.push(newBranch);
             }
 
             if (level.length > this._B) {
-                let new_left_branch_size = level.length - this._A;
-                let new_left_branch = {
-                    branches: level.splice(0, new_left_branch_size), 
-
-                    size: NaN
+                let newLeftBranchSize = level.length - this._A;
+                let newLeftBranch = {
+                    branches: level.splice(0, newLeftBranchSize), 
+                    size: null
                 };
 
-                this._update_local_fields(new_left_branch);
+                this._updateLocalFields(newLeftBranch);
 
-                new_level.push(new_left_branch);
+                newLevel.push(newLeftBranch);
 
-
-                let new_branch = {
+                let newBranch = {
                     branches: level, 
-
-                    size: NaN
+                    size: null
                 };
 
-                this._update_local_fields(new_branch);
+                this._updateLocalFields(newBranch);
 
-                new_level.push(new_branch);
-            } 
-            else { // level.length <= this._B && level.length > this._A
-                let new_branch = {
+                newLevel.push(newBranch);
+            } else { // level.length <= this._B && level.length > this._A
+                let newBranch = {
                     branches: level, 
-
-                    size: NaN
+                    size: null
                 };
 
-                this._update_local_fields(new_branch);
+                this._updateLocalFields(newBranch);
 
-                new_level.push(new_branch);
+                newLevel.push(newBranch);
             }
 
-            level = new_level;
+            level = newLevel;
         }
 
         if (level.length == 1) {
             this._root = level[0];
-        } 
-        else {
-            let new_branch = {
+        } else {
+            let newBranch = {
                 branches: level, 
-
-                size: NaN
+                size: null
             };
 
-            this._update_local_fields(new_branch);
+            this._updateLocalFields(newBranch);
 
-            this._root = new_branch;
+            this._root = newBranch;
         }
     }
 
 
-    do_for_each_item_in_order(consumer) {
-        function do_for_each_item_in_subtree_in_order(node) {
+    doForEachItemInOrder(consumer) {
+        function doForEachItemInSubtreeInOrder(node) {
             if (node.branches != null) {
                 for (let branch of node.branches) {
-                    do_for_each_item_in_subtree_in_order(branch);
+                    doForEachItemInSubtreeInOrder(branch);
                 }
-            } 
-            else {
+            } else {
                 for (let item of node.index) {
                     consumer(item);
                 }
             }
         }
 
-        do_for_each_item_in_subtree_in_order(this._root);
+        doForEachItemInSubtreeInOrder(this._root);
     }
 
 
-    to_array() {
+    toArray() {
         let array = new Array();
 
-        this.do_for_each_item_in_order((item) => array.push(item));
-
+        this.doForEachItemInOrder(item => array.push(item));
         return array;
     }
 
 
     clone() {
-        function clone_subtree(node) {
+        function cloneSubtree(node) {
             if (node.branches != null) {
                 return {
-                    branches: node.branches.map((branch) => clone_subtree(branch)), 
-
+                    branches: node.branches.map(branch => cloneSubtree(branch)), 
                     size: node.size
                 };
-            } 
-            else {
+            } else {
                 return {
                     index: node.index.slice(), 
                     branches: null, 
-
                     size: node.size
                 };
             }
@@ -567,23 +530,19 @@ export class ABTreeList {
 
         let inst = new ABTreeList(this._A, this._B);
 
-        inst._root = clone_subtree(this._root);
-
+        inst._root = cloneSubtree(this._root);
         return inst;
     }
 
 
-    debug_verify_integrity() {
+    debugVerifyIntegrity() {
         // verify that the root node has an appropriate number of children.
 
         if (this._root.branches != null) {
-            if (this._root.branches.length < 2 
-                || this._root.branches.length > this._B) {
-                
+            if (this._root.branches.length < 2 || this._root.branches.length > this._B) {
                 throw new Error("the root node does not have an approprite number of children.");
             }
-        } 
-        else { // this._root.branches == null
+        } else { // this._root.branches == null
             if (this._root.index.length > this._B) {
                 throw new Error("the root node does not have an appropriate number of children.");
             }
@@ -609,16 +568,11 @@ export class ABTreeList {
                         stack.push(branch);
                     }
 
-                    if (p.branches.length < this._A 
-                        || p.branches.length > this._B) {
-                        
+                    if (p.branches.length < this._A || p.branches.length > this._B) {
                         throw new Error("a node does not have an appropriate number of children.");
                     }
-                } 
-                else { // (p) is a leaf node.
-                    if (p.index.length < this._A 
-                        || p.index.length > this._B) {
-                        
+                } else { // (p) is a leaf node.
+                    if (p.index.length < this._A || p.index.length > this._B) {
                         throw new Error("a node does not have an appropriate number of children.");
                     }
                 }
@@ -629,12 +583,12 @@ export class ABTreeList {
         // verify the "size" attribute of each node.
 
         {
-            function get_size_and_verify_subtree(node) {
+            function getSizeAndVerifySubtree(node) {
                 if (node.branches != null) {
                     let size = 0;
 
                     for (let branch of node.branches) {
-                        size = size + get_size_and_verify_subtree(branch);
+                        size = size + getSizeAndVerifySubtree(branch);
                     }
 
                     if (size != node.size) {
@@ -642,8 +596,7 @@ export class ABTreeList {
                     }
 
                     return size;
-                } 
-                else {
+                } else {
                     if (node.index.length != node.size) {
                         throw new Error("the size attribute of a node does not match the size of its subtree.");
                     }
@@ -652,25 +605,23 @@ export class ABTreeList {
                 }
             };
 
-            get_size_and_verify_subtree(this._root);
+            getSizeAndVerifySubtree(this._root);
         }
     }
 
 
-    debug_describe_items() {
+    debugDescribeItems() {
         let string = "(";
 
-        this.do_for_each_item_in_order(
-        (item) => {
+        this.doForEachItemInOrder(item => {
             string = string + "[" + item + "], ";
         });
 
-        if (this.get_size() > 0) {
+        if (this.getSize() > 0) {
             string = string.substring(0, string.length - ", ".length);
         }
 
         string = string + ")";
-
         return string;
     }
 }
