@@ -5,7 +5,7 @@
 
 
 import * as comparators from "../comparators/comparators.js";
-import * as arrayTools from "../array_tools/array_tools.js"
+import * as arrayTools from "../arrayTools/arrayTools.js"
 
 
 export class ABTreeSet {
@@ -57,14 +57,14 @@ export class ABTreeSet {
         let p = this._root;
 
         while (p.branches != null) {
-            let branch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+            let branch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
             stack.push({p: p, branch: branch});
             p = p.branches[branch];
         }
 
         {
-            let lastBranch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+            let lastBranch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
             if (lastBranch < p.index.length
                 && this._comparator.compare(item, p.index[lastBranch]) == 0) {
@@ -159,14 +159,14 @@ export class ABTreeSet {
         let p = this._root;
 
         while (p.branches != null) {
-            let branch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+            let branch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
             stack.push({p: p, branch: branch});
             p = p.branches[branch];
         }
 
         {
-            let lastBranch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+            let lastBranch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
             if (lastBranch >= p.index.length 
                 || this._comparator.compare(item, p.index[lastBranch]) != 0) {
@@ -339,12 +339,12 @@ export class ABTreeSet {
         let p = this._root;
 
         while (p.branches != null) {
-            let branch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+            let branch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
             p = p.branches[branch];
         }
 
-        let lastBranch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+        let lastBranch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
         return (lastBranch < p.index.length 
             && this._comparator.compare(item, p.index[lastBranch]) == 0);
@@ -361,7 +361,7 @@ export class ABTreeSet {
         let rank = 0;
 
         while (p.branches != null) {
-            let branch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+            let branch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
             for (let i = 0; 
                 i < branch; 
@@ -373,7 +373,7 @@ export class ABTreeSet {
             p = p.branches[branch];
         }
 
-        let lastBranch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+        let lastBranch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
         rank = rank + lastBranch;
         return rank;
@@ -407,7 +407,7 @@ export class ABTreeSet {
         let nextUpperBound = null;
 
         while (p.branches != null) {
-            let branch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+            let branch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
             if (branch != p.branches.length - 1) {
                 nextUpperBound = p.branches[branch + 1];
@@ -417,7 +417,7 @@ export class ABTreeSet {
         }
 
         {
-            let lastBranch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+            let lastBranch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
             if (lastBranch < p.index.length) {
                 return p.index[lastBranch];
@@ -443,7 +443,7 @@ export class ABTreeSet {
         let nextLowerBound = null;
 
         while (p.branches != null) {
-            let branch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+            let branch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
             if (branch != 0) {
                 nextLowerBound = p.branches[branch - 1];
@@ -453,7 +453,7 @@ export class ABTreeSet {
         }
 
         {
-            let lastBranch = arrayTools.binary_search_get_first(p.index, item, this._comparator);
+            let lastBranch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
             if (lastBranch < p.index.length 
                 && this._comparator.compare(item, p.index[lastBranch]) == 0) {

@@ -5,7 +5,7 @@
 
 
 import {BinaryTreeMaxHeap} from "../BinaryTreeMaxHeap.js";
-import * as array_tools from "../../array_tools/array_tools.js";
+import * as arrayTools from "../../arrayTools/arrayTools.js";
 import * as comparators from "../../comparators/comparators.js";
 
 
@@ -134,7 +134,7 @@ function assert_error(func, message) {
         assert_truth(heap.get_size() == i + 1, "unexpected size of the heap.");
     }
 
-    array_tools.heap_sort(ref, new comparators.ReverseComparator(new comparators.UniversalComparator()));
+    arrayTools.heapSort(ref, new comparators.ReverseComparator(new comparators.UniversalComparator()));
 
     
     let array = new Array(size_of_tests);
