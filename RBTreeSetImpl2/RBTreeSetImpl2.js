@@ -528,144 +528,144 @@ export class RBTreeSetImpl2 {
 
 
     has(item) {
-		let p = this._root;
+        let p = this._root;
 
-		while (p != null) {
-			let res = this._comparator.compare(item, p.item);
+        while (p != null) {
+            let res = this._comparator.compare(item, p.item);
 
-			if (res == 0) {
-				return true;
-			} 
-			else if (res < 0) {
-				p = p.left;
-			} 
-			else {
-				p = p.right;
-			}
-		}
+            if (res == 0) {
+                return true;
+            } 
+            else if (res < 0) {
+                p = p.left;
+            } 
+            else {
+                p = p.right;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 
     get_size() {
-		if (this._root != null) {
-			return this._root.size;
-		} 
-		else {
-			return 0;
-		}
+        if (this._root != null) {
+            return this._root.size;
+        } 
+        else {
+            return 0;
+        }
     }
 
 
     get_rank_of_item(item) {
-		let p = this._root;
-		let rank = 0;
+        let p = this._root;
+        let rank = 0;
 
-		while (p != null) {
-			let res = this._comparator.compare(item, p.item);
-			let left_size = 0;
+        while (p != null) {
+            let res = this._comparator.compare(item, p.item);
+            let left_size = 0;
 
-			if (p.left != null) {
-				left_size = p.left.size;
-			}
+            if (p.left != null) {
+                left_size = p.left.size;
+            }
 
-			if (res == 0) {
-				rank = rank + left_size;
-				return rank;
-			} 
-			else if (res < 0) {
-				p = p.left;
-			} 
-			else { // res > 0
-				rank = rank + left_size + 1;
-				p = p.right;
-			}
-		}
+            if (res == 0) {
+                rank = rank + left_size;
+                return rank;
+            } 
+            else if (res < 0) {
+                p = p.left;
+            } 
+            else { // res > 0
+                rank = rank + left_size + 1;
+                p = p.right;
+            }
+        }
 
-		//throw new Error("the item does not exist in the set.");
-		return rank;
+        //throw new Error("the item does not exist in the set.");
+        return rank;
     }
     
 
     get_item_by_rank(rank) {
-		if (rank < 0 
-			|| rank >= this.get_size()) {
-			
-			throw new Error("there is no item of this rank in the set.");
-		}
+        if (rank < 0 
+            || rank >= this.get_size()) {
+            
+            throw new Error("there is no item of this rank in the set.");
+        }
 
 
-		let p = this._root;
+        let p = this._root;
 
-		while (true) {
-			let left_size = 0;
+        while (true) {
+            let left_size = 0;
 
-			if (p.left != null) {
-				left_size = p.left.size;
-			}
+            if (p.left != null) {
+                left_size = p.left.size;
+            }
 
-			if (rank == left_size) {
-				return p.item;
-			} 
-			else if (rank < left_size) {
-				p = p.left;
-			} 
-			else { // rank > left_size
-				rank = rank - left_size - 1;
-				p = p.right;
-			}
-		}
+            if (rank == left_size) {
+                return p.item;
+            } 
+            else if (rank < left_size) {
+                p = p.left;
+            } 
+            else { // rank > left_size
+                rank = rank - left_size - 1;
+                p = p.right;
+            }
+        }
 
-		// not reachable.
+        // not reachable.
     }
     
 
     get_LUB(item) {
-		let p = this._root;
-		let upper_bound = null;
+        let p = this._root;
+        let upper_bound = null;
 
-		while (p != null) {
-			let res = this._comparator.compare(item, p.item);
+        while (p != null) {
+            let res = this._comparator.compare(item, p.item);
 
-			if (res == 0) {
-				upper_bound = p.item;
-				return upper_bound;
-			} 
-			else if (res < 0) {
-				upper_bound = p.item;
-				p = p.left;
-			} 
-			else { // res > 0
-				p = p.right;
-			}
-		}
+            if (res == 0) {
+                upper_bound = p.item;
+                return upper_bound;
+            } 
+            else if (res < 0) {
+                upper_bound = p.item;
+                p = p.left;
+            } 
+            else { // res > 0
+                p = p.right;
+            }
+        }
 
-		return upper_bound;
-	}
+        return upper_bound;
+    }
 
 
-	get_GLB(item) {
-		let p = this._root;
-		let lower_bound = null;
+    get_GLB(item) {
+        let p = this._root;
+        let lower_bound = null;
 
-		while (p != null) {
-			let res = this._comparator.compare(item, p.item);
+        while (p != null) {
+            let res = this._comparator.compare(item, p.item);
 
-			if (res == 0) {
-				lower_bound = p.item;
-				return lower_bound;
-			} 
-			else if (res < 0) {
-				p = p.left;
-			} 
-			else { // res > 0
-				lower_bound = p.item;
-				p = p.right;
-			}
-		}
+            if (res == 0) {
+                lower_bound = p.item;
+                return lower_bound;
+            } 
+            else if (res < 0) {
+                p = p.left;
+            } 
+            else { // res > 0
+                lower_bound = p.item;
+                p = p.right;
+            }
+        }
 
-		return lower_bound;
+        return lower_bound;
     }
     
 
@@ -704,19 +704,19 @@ export class RBTreeSetImpl2 {
                 }
             }
         }
-	}
+    }
 
 
-	rebalance() {
+    rebalance() {
         if (this._root == null) {
             return;
         }
 
 
-		let size = this.get_size();
+        let size = this.get_size();
 
-		{
-			let p = this._root; // p != null
+        {
+            let p = this._root; // p != null
 
             while (p.left != null) {
                 p = this._rotate_subtree_left(p);
@@ -728,8 +728,8 @@ export class RBTreeSetImpl2 {
             this._root = p;
             p = p.right;
 
-			while (p != null) {
-				while (p.left != null) {
+            while (p != null) {
+                while (p.left != null) {
                     p = this._rotate_subtree_left(p);
                 }
                 
@@ -737,23 +737,23 @@ export class RBTreeSetImpl2 {
 
                 prev = p;
                 p = p.right;
-			}
+            }
 
-			prev.right = { // a dummy node.
-				left: null, 
-				right: null, 
+            prev.right = { // a dummy node.
+                left: null, 
+                right: null, 
 
-				color: "BLACK", 
+                color: "BLACK", 
 
-				item: null, 
-				size: 1
-			};
-			//this._update_local_fields(p.value);
-		}
+                item: null, 
+                size: 1
+            };
+            //this._update_local_fields(p.value);
+        }
 
 
-		{
-			let num_of_leaves = size + 1 - 2 ** Math.floor(Math.log2(size + 1));
+        {
+            let num_of_leaves = size + 1 - 2 ** Math.floor(Math.log2(size + 1));
             let p = this._root;
             
             if (num_of_leaves >= 1) {
@@ -766,24 +766,24 @@ export class RBTreeSetImpl2 {
                 p = p.right;
             }
 
-			for (let i = 1; 
-				i < num_of_leaves; 
-				++i) {
-				
+            for (let i = 1; 
+                i < num_of_leaves; 
+                ++i) {
+                
                 p = this._rotate_subtree_right(p);
                 p.parent.right = p;
 
-				this._update_local_fields(p.left);
+                this._update_local_fields(p.left);
 
-				p.left.color = "RED";
-				p = p.right;
-			}
-		}
+                p.left.color = "RED";
+                p = p.right;
+            }
+        }
 
-		{
-			let p = this._root; // p != null
+        {
+            let p = this._root; // p != null
 
-			while (p.right != null) {
+            while (p.right != null) {
                 p = this._rotate_subtree_right(p);
                 this._root = p;
 
@@ -798,15 +798,15 @@ export class RBTreeSetImpl2 {
                     p = this._rotate_subtree_right(p);
                     p.parent.right = p;
 
-					this._update_local_fields(p.left);
+                    this._update_local_fields(p.left);
 
-					p.left.color = "BLACK";
-					p = p.right;
+                    p.left.color = "BLACK";
+                    p = p.right;
                 }
 
-				p = this._root;
-			}
-		}
+                p = this._root;
+            }
+        }
 
         this._root = this._root.left;
         this._root.parent = null;
@@ -814,18 +814,18 @@ export class RBTreeSetImpl2 {
     
 
     to_array() {
-		let array = new Array();
+        let array = new Array();
 
-		this.do_for_each_item_in_order((item) => array.push(item));
+        this.do_for_each_item_in_order((item) => array.push(item));
 
-		return array;
-	}
+        return array;
+    }
 
 
-	clone() {
-		function clone_subtree(node, parent) {
-			if (node != null) {
-				let new_node = {
+    clone() {
+        function clone_subtree(node, parent) {
+            if (node != null) {
+                let new_node = {
                     left: null, 
                     right: null, 
                     parent: parent, 
@@ -840,103 +840,103 @@ export class RBTreeSetImpl2 {
                 new_node.right = clone_subtree(node.right, new_node);
 
                 return new_node;
-			} 
-			else {
-				return null;
-			}
-		}
+            } 
+            else {
+                return null;
+            }
+        }
 
 
-		let inst = new RBTreeSetImpl2(this._comparator);
+        let inst = new RBTreeSetImpl2(this._comparator);
 
         inst._root = clone_subtree(this._root, null);
 
         return inst;
-	}
+    }
     
 
     debug_verify_integrity() {
-		// verify that the root is black.
+        // verify that the root is black.
 
-		if (this._root != null 
-			&& this._root.color == "RED") {
-			
-			throw new Error("the root is not black.");
-		}
-
-
-		// verify that all paths from the root to a leaf have the same black-length.
-
-		{
-			let stack = new Array();
-			let p = this._root;
-			let depth = 0;
-
-			while (p != null) {
-				if (p.color == "BLACK") {
-					depth = depth + 1;
-				}
-
-				stack.push({p: p, depth: depth});
-
-				p = p.left;
-			}
-
-			while (stack.length > 0) {
-				let info = stack.pop();
-				let path_depth = info.depth;
-
-				p = info.p.right;
-
-				while (p != null) {
-					if (p.color == "BLACK") {
-						path_depth = path_depth + 1;
-					}
-
-					stack.push({p: p, depth: path_depth});
-
-					p = p.left;
-				}
-
-				if (path_depth != depth) {
-					throw new Error("there are two paths from the root to a leaf which have different black-lengths.");
-				}
-			}
-		}
+        if (this._root != null 
+            && this._root.color == "RED") {
+            
+            throw new Error("the root is not black.");
+        }
 
 
-		// verify that no paths have consecutive red nodes.
+        // verify that all paths from the root to a leaf have the same black-length.
 
-		{
-			let stack = new Array();
-			
-			stack.push(this._root);
+        {
+            let stack = new Array();
+            let p = this._root;
+            let depth = 0;
 
-			while (stack.length > 0) {
-				let node = stack.pop();
+            while (p != null) {
+                if (p.color == "BLACK") {
+                    depth = depth + 1;
+                }
 
-				if (node == null) {
-					continue;
-				}
+                stack.push({p: p, depth: depth});
 
-				stack.push(node.left);
-				stack.push(node.right);
+                p = p.left;
+            }
 
-				if (node.color == "RED" 
-					&& ((node.left != null 
-					&& node.right.color == "RED") 
-					|| (node.right != null 
-					&& node.right.color == "RED"))) {
+            while (stack.length > 0) {
+                let info = stack.pop();
+                let path_depth = info.depth;
 
-					throw new Error("there is a pair of consecutive reds within the tree.");
-				}
-			}
+                p = info.p.right;
+
+                while (p != null) {
+                    if (p.color == "BLACK") {
+                        path_depth = path_depth + 1;
+                    }
+
+                    stack.push({p: p, depth: path_depth});
+
+                    p = p.left;
+                }
+
+                if (path_depth != depth) {
+                    throw new Error("there are two paths from the root to a leaf which have different black-lengths.");
+                }
+            }
+        }
+
+
+        // verify that no paths have consecutive red nodes.
+
+        {
+            let stack = new Array();
+            
+            stack.push(this._root);
+
+            while (stack.length > 0) {
+                let node = stack.pop();
+
+                if (node == null) {
+                    continue;
+                }
+
+                stack.push(node.left);
+                stack.push(node.right);
+
+                if (node.color == "RED" 
+                    && ((node.left != null 
+                    && node.right.color == "RED") 
+                    || (node.right != null 
+                    && node.right.color == "RED"))) {
+
+                    throw new Error("there is a pair of consecutive reds within the tree.");
+                }
+            }
         }
         
 
         // verify the "parent" attribute of each node.
 
-		{
+        {
             if (this._root != null 
                 && this._root.parent != null) {
                 
@@ -944,138 +944,138 @@ export class RBTreeSetImpl2 {
             }
 
 
-			let stack = new Array();
-			
-			stack.push(this._root);
+            let stack = new Array();
+            
+            stack.push(this._root);
 
-			while (stack.length > 0) {
-				let node = stack.pop();
+            while (stack.length > 0) {
+                let node = stack.pop();
 
-				if (node == null) {
-					continue;
-				}
+                if (node == null) {
+                    continue;
+                }
 
-				stack.push(node.left);
-				stack.push(node.right);
+                stack.push(node.left);
+                stack.push(node.right);
 
                 if ((node.left != null 
                     && node.left.parent != node) 
                     || (node.right != null 
                     && node.right.parent != node)) {
 
-					throw new Error("the parent attribute of a node does not match the parent of its subtree.");
-				}
-			}
-		}
-
-
-		// verify the "size" attribute of each node.
-
-		{
-			function get_size_and_verify_subtree(node) {
-				if (node == null) {
-					return 0;
-				}
-
-				
-				let size = get_size_and_verify_subtree(node.left) + get_size_and_verify_subtree(node.right) + 1;
-
-				if (size != node.size) {
-					throw new Error("the size attribute of a node does not match the size of its subtree.");
-				}
-
-				return size;
-			};
-
-			get_size_and_verify_subtree(this._root);
+                    throw new Error("the parent attribute of a node does not match the parent of its subtree.");
+                }
+            }
         }
 
 
-		// verify the search tree property.
+        // verify the "size" attribute of each node.
 
-		{
-			let stack = new Array();
-			let prev = null;
-			let p = this._root;
+        {
+            function get_size_and_verify_subtree(node) {
+                if (node == null) {
+                    return 0;
+                }
 
-			if (p != null) {
-				let q = p;
+                
+                let size = get_size_and_verify_subtree(node.left) + get_size_and_verify_subtree(node.right) + 1;
 
-				while (q.right != null) {
-					q = q.right;
-				}
+                if (size != node.size) {
+                    throw new Error("the size attribute of a node does not match the size of its subtree.");
+                }
 
-				stack.push({p: p, upper_bound: q.item});
+                return size;
+            };
 
-				prev = p;
-				p = p.left;
-			}
+            get_size_and_verify_subtree(this._root);
+        }
 
-			while (p != null) {
-				stack.push({p: p, upper_bound: prev.item});
 
-				if (!(this._comparator.compare(p.item, prev.item) <= 0)) {
-					throw new Error("the search tree property is not satisfied.");
-				}
+        // verify the search tree property.
 
-				prev = p;
-				p = p.left;
-			}
+        {
+            let stack = new Array();
+            let prev = null;
+            let p = this._root;
 
-			while (stack.length > 0) {
-				let info = stack.pop();
+            if (p != null) {
+                let q = p;
 
-				prev = null;
-				p = info.p.right;
+                while (q.right != null) {
+                    q = q.right;
+                }
 
-				if (p != null) {
-					stack.push({p: p, upper_bound: info.upper_bound});
+                stack.push({p: p, upper_bound: q.item});
 
-					prev = p;
-					p = p.left;
-				} 
-				else {
-					if (!(this._comparator.compare(info.p.item, info.upper_bound) <= 0)) {
-						throw new Error("the search tree property is not satisfied.");
-					}
+                prev = p;
+                p = p.left;
+            }
 
-					break;
-				}
+            while (p != null) {
+                stack.push({p: p, upper_bound: prev.item});
 
-				while (p != null) {
-					stack.push({p: p, upper_bound: prev.item});
+                if (!(this._comparator.compare(p.item, prev.item) <= 0)) {
+                    throw new Error("the search tree property is not satisfied.");
+                }
 
-					if (!(this._comparator.compare(p.item, prev.item) <= 0)) {
-						throw new Error("the search tree property is not satisfied.");
-					}
+                prev = p;
+                p = p.left;
+            }
 
-					prev = p;
-					p = p.left;
-				}
+            while (stack.length > 0) {
+                let info = stack.pop();
 
-				if (!(this._comparator.compare(info.p.item, prev.item) <= 0)) {
-					throw new Error("the search tree property is not satisfied.");
-				}
-			}
-		}
+                prev = null;
+                p = info.p.right;
+
+                if (p != null) {
+                    stack.push({p: p, upper_bound: info.upper_bound});
+
+                    prev = p;
+                    p = p.left;
+                } 
+                else {
+                    if (!(this._comparator.compare(info.p.item, info.upper_bound) <= 0)) {
+                        throw new Error("the search tree property is not satisfied.");
+                    }
+
+                    break;
+                }
+
+                while (p != null) {
+                    stack.push({p: p, upper_bound: prev.item});
+
+                    if (!(this._comparator.compare(p.item, prev.item) <= 0)) {
+                        throw new Error("the search tree property is not satisfied.");
+                    }
+
+                    prev = p;
+                    p = p.left;
+                }
+
+                if (!(this._comparator.compare(info.p.item, prev.item) <= 0)) {
+                    throw new Error("the search tree property is not satisfied.");
+                }
+            }
+        }
     }
     
 
     debug_describe_items() {
-		let string = "{";
+        let string = "{";
 
-		this.do_for_each_item_in_order(
-		(item) => {
-			string = string + "[" + item + "], ";
-		});
+        this.do_for_each_item_in_order(
+        (item) => {
+            string = string + "[" + item + "], ";
+        });
 
-		if (this.get_size() > 0) {
-			string = string.substring(0, string.length - ", ".length);
-		}
+        if (this.get_size() > 0) {
+            string = string.substring(0, string.length - ", ".length);
+        }
 
-		string = string + "}";
+        string = string + "}";
 
-		return string;
-	}
+        return string;
+    }
 }
 

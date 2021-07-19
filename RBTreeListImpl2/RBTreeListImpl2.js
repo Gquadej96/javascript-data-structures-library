@@ -68,10 +68,10 @@ export class RBTreeListImpl2 {
         let size = this.get_size();
 
         if (index < 0 
-			|| index > size) {
-			
-			throw new Error("the index is out of bounds in the list.");
-		}
+            || index > size) {
+            
+            throw new Error("the index is out of bounds in the list.");
+        }
 
 
         let p = this._root;
@@ -107,16 +107,16 @@ export class RBTreeListImpl2 {
         }
 
         p = {
-			left: null, 
+            left: null, 
             right: null, 
             parent: prev.parent, 
 
-			color: "RED", 
+            color: "RED", 
 
-			item: item, 
-			size: 1
-		};
-		//this._update_local_fields(p);
+            item: item, 
+            size: 1
+        };
+        //this._update_local_fields(p);
 
         if (prev.parent != null) {
             let parent = prev.parent;
@@ -219,9 +219,9 @@ export class RBTreeListImpl2 {
 
     remove(index) {
         if (index < 0 
-			|| index >= this.get_size()) {
-			
-			throw new Error("the index is out of bounds in the list.");
+            || index >= this.get_size()) {
+            
+            throw new Error("the index is out of bounds in the list.");
         }
         
 
@@ -551,79 +551,79 @@ export class RBTreeListImpl2 {
 
 
     get(index) {
-		if (index < 0 
-			|| index >= this.get_size()) {
-			
+        if (index < 0 
+            || index >= this.get_size()) {
+            
             throw new Error("the index is out of bounds in the list.");
-		}
+        }
 
 
-		let p = this._root;
+        let p = this._root;
 
-		while (true) {
-			let left_size = 0;
+        while (true) {
+            let left_size = 0;
 
-			if (p.left != null) {
-				left_size = p.left.size;
-			}
+            if (p.left != null) {
+                left_size = p.left.size;
+            }
 
-			if (index == left_size) {
-				return p.item;
-			} 
-			else if (index < left_size) {
-				p = p.left;
-			} 
-			else { // index > left_size
-				index = index - left_size - 1;
-				p = p.right;
-			}
-		}
+            if (index == left_size) {
+                return p.item;
+            } 
+            else if (index < left_size) {
+                p = p.left;
+            } 
+            else { // index > left_size
+                index = index - left_size - 1;
+                p = p.right;
+            }
+        }
 
-		// not reachable.
+        // not reachable.
     }
     
 
     set(index, item) {
         if (index < 0 
-			|| index >= this.get_size()) {
-			
+            || index >= this.get_size()) {
+            
             throw new Error("the index is out of bounds in the list.");
-		}
+        }
 
 
-		let p = this._root;
+        let p = this._root;
 
-		while (true) {
-			let left_size = 0;
+        while (true) {
+            let left_size = 0;
 
-			if (p.left != null) {
-				left_size = p.left.size;
-			}
+            if (p.left != null) {
+                left_size = p.left.size;
+            }
 
-			if (index == left_size) {
+            if (index == left_size) {
                 p.item = item;
                 return;
-			} 
-			else if (index < left_size) {
-				p = p.left;
-			} 
-			else { // index > left_size
-				index = index - left_size - 1;
-				p = p.right;
-			}
-		}
+            } 
+            else if (index < left_size) {
+                p = p.left;
+            } 
+            else { // index > left_size
+                index = index - left_size - 1;
+                p = p.right;
+            }
+        }
 
-		// not reachable.
+        // not reachable.
     }
 
 
-	get_size() {
-		if (this._root != null) {
-			return this._root.size;
-		} 
-		else {
-			return 0;
-		}
+    get_size() {
+        if (this._root != null) {
+            return this._root.size;
+        } 
+        else {
+            return 0;
+        }
     }
     
 
@@ -662,19 +662,19 @@ export class RBTreeListImpl2 {
                 }
             }
         }
-	}
+    }
 
 
-	rebalance() {
+    rebalance() {
         if (this._root == null) {
             return;
         }
 
 
-		let size = this.get_size();
+        let size = this.get_size();
 
-		{
-			let p = this._root; // p != null
+        {
+            let p = this._root; // p != null
 
             while (p.left != null) {
                 p = this._rotate_subtree_left(p);
@@ -686,8 +686,8 @@ export class RBTreeListImpl2 {
             this._root = p;
             p = p.right;
 
-			while (p != null) {
-				while (p.left != null) {
+            while (p != null) {
+                while (p.left != null) {
                     p = this._rotate_subtree_left(p);
                 }
                 
@@ -695,23 +695,23 @@ export class RBTreeListImpl2 {
 
                 prev = p;
                 p = p.right;
-			}
+            }
 
-			prev.right = { // a dummy node.
-				left: null, 
-				right: null, 
+            prev.right = { // a dummy node.
+                left: null, 
+                right: null, 
 
-				color: "BLACK", 
+                color: "BLACK", 
 
-				item: null, 
-				size: 1
-			};
-			//this._update_local_fields(p.value);
-		}
+                item: null, 
+                size: 1
+            };
+            //this._update_local_fields(p.value);
+        }
 
 
-		{
-			let num_of_leaves = size + 1 - 2 ** Math.floor(Math.log2(size + 1));
+        {
+            let num_of_leaves = size + 1 - 2 ** Math.floor(Math.log2(size + 1));
             let p = this._root;
             
             if (num_of_leaves >= 1) {
@@ -724,24 +724,24 @@ export class RBTreeListImpl2 {
                 p = p.right;
             }
 
-			for (let i = 1; 
-				i < num_of_leaves; 
-				++i) {
-				
+            for (let i = 1; 
+                i < num_of_leaves; 
+                ++i) {
+                
                 p = this._rotate_subtree_right(p);
                 p.parent.right = p;
 
-				this._update_local_fields(p.left);
+                this._update_local_fields(p.left);
 
-				p.left.color = "RED";
-				p = p.right;
-			}
-		}
+                p.left.color = "RED";
+                p = p.right;
+            }
+        }
 
-		{
-			let p = this._root; // p != null
+        {
+            let p = this._root; // p != null
 
-			while (p.right != null) {
+            while (p.right != null) {
                 p = this._rotate_subtree_right(p);
                 this._root = p;
 
@@ -756,15 +756,15 @@ export class RBTreeListImpl2 {
                     p = this._rotate_subtree_right(p);
                     p.parent.right = p;
 
-					this._update_local_fields(p.left);
+                    this._update_local_fields(p.left);
 
-					p.left.color = "BLACK";
-					p = p.right;
+                    p.left.color = "BLACK";
+                    p = p.right;
                 }
 
-				p = this._root;
-			}
-		}
+                p = this._root;
+            }
+        }
 
         this._root = this._root.left;
         this._root.parent = null;
@@ -772,18 +772,18 @@ export class RBTreeListImpl2 {
     
 
     to_array() {
-		let array = new Array();
+        let array = new Array();
 
-		this.do_for_each_item_in_order((item) => array.push(item));
+        this.do_for_each_item_in_order((item) => array.push(item));
 
-		return array;
-	}
+        return array;
+    }
 
 
-	clone() {
-		function clone_subtree(node, parent) {
-			if (node != null) {
-				let new_node = {
+    clone() {
+        function clone_subtree(node, parent) {
+            if (node != null) {
+                let new_node = {
                     left: null, 
                     right: null, 
                     parent: parent, 
@@ -798,103 +798,103 @@ export class RBTreeListImpl2 {
                 new_node.right = clone_subtree(node.right, new_node);
 
                 return new_node;
-			} 
-			else {
-				return null;
-			}
-		}
+            } 
+            else {
+                return null;
+            }
+        }
 
 
-		let inst = new RBTreeListImpl2(this._comparator);
+        let inst = new RBTreeListImpl2(this._comparator);
 
         inst._root = clone_subtree(this._root, null);
 
         return inst;
-	}
+    }
     
 
     debug_verify_integrity() {
-		// verify that the root is black.
+        // verify that the root is black.
 
-		if (this._root != null 
-			&& this._root.color == "RED") {
-			
-			throw new Error("the root is not black.");
-		}
-
-
-		// verify that all paths from the root to a leaf have the same black-length.
-
-		{
-			let stack = new Array();
-			let p = this._root;
-			let depth = 0;
-
-			while (p != null) {
-				if (p.color == "BLACK") {
-					depth = depth + 1;
-				}
-
-				stack.push({p: p, depth: depth});
-
-				p = p.left;
-			}
-
-			while (stack.length > 0) {
-				let info = stack.pop();
-				let path_depth = info.depth;
-
-				p = info.p.right;
-
-				while (p != null) {
-					if (p.color == "BLACK") {
-						path_depth = path_depth + 1;
-					}
-
-					stack.push({p: p, depth: path_depth});
-
-					p = p.left;
-				}
-
-				if (path_depth != depth) {
-					throw new Error("there are two paths from the root to a leaf which have different black-lengths.");
-				}
-			}
-		}
+        if (this._root != null 
+            && this._root.color == "RED") {
+            
+            throw new Error("the root is not black.");
+        }
 
 
-		// verify that no paths have consecutive red nodes.
+        // verify that all paths from the root to a leaf have the same black-length.
 
-		{
-			let stack = new Array();
-			
-			stack.push(this._root);
+        {
+            let stack = new Array();
+            let p = this._root;
+            let depth = 0;
 
-			while (stack.length > 0) {
-				let node = stack.pop();
+            while (p != null) {
+                if (p.color == "BLACK") {
+                    depth = depth + 1;
+                }
 
-				if (node == null) {
-					continue;
-				}
+                stack.push({p: p, depth: depth});
 
-				stack.push(node.left);
-				stack.push(node.right);
+                p = p.left;
+            }
 
-				if (node.color == "RED" 
-					&& ((node.left != null 
-					&& node.right.color == "RED") 
-					|| (node.right != null 
-					&& node.right.color == "RED"))) {
+            while (stack.length > 0) {
+                let info = stack.pop();
+                let path_depth = info.depth;
 
-					throw new Error("there is a pair of consecutive reds within the tree.");
-				}
-			}
+                p = info.p.right;
+
+                while (p != null) {
+                    if (p.color == "BLACK") {
+                        path_depth = path_depth + 1;
+                    }
+
+                    stack.push({p: p, depth: path_depth});
+
+                    p = p.left;
+                }
+
+                if (path_depth != depth) {
+                    throw new Error("there are two paths from the root to a leaf which have different black-lengths.");
+                }
+            }
+        }
+
+
+        // verify that no paths have consecutive red nodes.
+
+        {
+            let stack = new Array();
+            
+            stack.push(this._root);
+
+            while (stack.length > 0) {
+                let node = stack.pop();
+
+                if (node == null) {
+                    continue;
+                }
+
+                stack.push(node.left);
+                stack.push(node.right);
+
+                if (node.color == "RED" 
+                    && ((node.left != null 
+                    && node.right.color == "RED") 
+                    || (node.right != null 
+                    && node.right.color == "RED"))) {
+
+                    throw new Error("there is a pair of consecutive reds within the tree.");
+                }
+            }
         }
         
 
         // verify the "parent" attribute of each node.
 
-		{
+        {
             if (this._root != null 
                 && this._root.parent != null) {
                 
@@ -902,69 +902,69 @@ export class RBTreeListImpl2 {
             }
 
 
-			let stack = new Array();
-			
-			stack.push(this._root);
+            let stack = new Array();
+            
+            stack.push(this._root);
 
-			while (stack.length > 0) {
-				let node = stack.pop();
+            while (stack.length > 0) {
+                let node = stack.pop();
 
-				if (node == null) {
-					continue;
-				}
+                if (node == null) {
+                    continue;
+                }
 
-				stack.push(node.left);
-				stack.push(node.right);
+                stack.push(node.left);
+                stack.push(node.right);
 
                 if ((node.left != null 
                     && node.left.parent != node) 
                     || (node.right != null 
                     && node.right.parent != node)) {
 
-					throw new Error("the parent attribute of a node does not match the parent of its subtree.");
-				}
-			}
-		}
+                    throw new Error("the parent attribute of a node does not match the parent of its subtree.");
+                }
+            }
+        }
 
 
-		// verify the "size" attribute of each node.
+        // verify the "size" attribute of each node.
 
-		{
-			function get_size_and_verify_subtree(node) {
-				if (node == null) {
-					return 0;
-				}
+        {
+            function get_size_and_verify_subtree(node) {
+                if (node == null) {
+                    return 0;
+                }
 
-				
-				let size = get_size_and_verify_subtree(node.left) + get_size_and_verify_subtree(node.right) + 1;
+                
+                let size = get_size_and_verify_subtree(node.left) + get_size_and_verify_subtree(node.right) + 1;
 
-				if (size != node.size) {
-					throw new Error("the size attribute of a node does not match the size of its subtree.");
-				}
+                if (size != node.size) {
+                    throw new Error("the size attribute of a node does not match the size of its subtree.");
+                }
 
-				return size;
-			};
+                return size;
+            };
 
-			get_size_and_verify_subtree(this._root);
+            get_size_and_verify_subtree(this._root);
         }
     }
     
 
     debug_describe_items() {
-		let string = "(";
+        let string = "(";
 
-		this.do_for_each_item_in_order(
-		(item) => {
-			string = string + "[" + item + "], ";
-		});
+        this.do_for_each_item_in_order(
+        (item) => {
+            string = string + "[" + item + "], ";
+        });
 
-		if (this.get_size() > 0) {
-			string = string.substring(0, string.length - ", ".length);
-		}
+        if (this.get_size() > 0) {
+            string = string.substring(0, string.length - ", ".length);
+        }
 
-		string = string + ")";
+        string = string + ")";
 
-		return string;
-	}
+        return string;
+    }
 }
 

@@ -184,9 +184,9 @@ export class LinkedListQueue {
             p = p.next;
         }
 
-		string = string + ")";
+        string = string + ")";
 
-		return string;
+        return string;
     }
 }
 

@@ -231,18 +231,18 @@ export class LinkedList {
     debug_describe_items() {
         let string = "(";
 
-		this.do_for_each_item_in_order(
-		(item) => {
-			string = string + "[" + item + "], ";
-		});
+        this.do_for_each_item_in_order(
+        (item) => {
+            string = string + "[" + item + "], ";
+        });
 
-		if (this.get_size() > 0) {
-			string = string.substring(0, string.length - ", ".length);
-		}
+        if (this.get_size() > 0) {
+            string = string.substring(0, string.length - ", ".length);
+        }
 
-		string = string + ")";
+        string = string + ")";
 
-		return string;
+        return string;
     }
 }
 

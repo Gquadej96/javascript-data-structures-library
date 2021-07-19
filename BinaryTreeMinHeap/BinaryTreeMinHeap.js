@@ -196,28 +196,28 @@ export class BinaryTreeMinHeap {
 
 
     clone() {
-		function clone_subtree(node, parent) {
-			if (node != null) {
-				let new_node = {
+        function clone_subtree(node, parent) {
+            if (node != null) {
+                let new_node = {
                     parent: parent, 
                     left: null, 
                     right: null, 
                     
-					item: node.item, 
+                    item: node.item, 
                 };
                 
                 new_node.left = clone_subtree(node.left, new_node);
                 new_node.right = clone_subtree(node.right, new_node);
 
                 return new_node;
-			} 
-			else {
-				return null;
-			}
-		}
+            } 
+            else {
+                return null;
+            }
+        }
 
 
-		let inst = new BinaryTreeMinHeap(this._comparator);
+        let inst = new BinaryTreeMinHeap(this._comparator);
 
         inst._root = clone_subtree(this._root, null);
 
@@ -266,7 +266,7 @@ export class BinaryTreeMinHeap {
         inst._size = this._size;
 
         return inst;
-	}
+    }
 
 
     debug_verify_integrity() {
@@ -445,7 +445,7 @@ export class BinaryTreeMinHeap {
                     prev = p;
                     p = p.left;
                 }
-			}
+            }
         }
     }
 }

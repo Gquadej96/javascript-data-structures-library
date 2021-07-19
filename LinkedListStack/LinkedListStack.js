@@ -172,9 +172,9 @@ export class LinkedListStack {
             p = p.next;
         }
 
-		string = string + ")";
+        string = string + ")";
 
-		return string;
+        return string;
     }
 }
 

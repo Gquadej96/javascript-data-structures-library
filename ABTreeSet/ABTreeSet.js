@@ -682,11 +682,11 @@ export class ABTreeSet {
 
 
     to_array() {
-		let array = new Array();
+        let array = new Array();
 
-		this.do_for_each_item_in_order((item) => array.push(item));
+        this.do_for_each_item_in_order((item) => array.push(item));
 
-		return array;
+        return array;
     }
 
 
@@ -774,9 +774,9 @@ export class ABTreeSet {
 
         // verify the "size" attribute of each node.
 
-		{
-			function get_size_and_verify_subtree(node) {
-				if (node.branches != null) {
+        {
+            function get_size_and_verify_subtree(node) {
+                if (node.branches != null) {
                     let size = 0;
 
                     for (let branch of node.branches) {
@@ -796,10 +796,10 @@ export class ABTreeSet {
 
                     return node.index.length;
                 }
-			};
+            };
 
-			get_size_and_verify_subtree(this._root);
-		}
+            get_size_and_verify_subtree(this._root);
+        }
 
 
         // verify the search tree property.
@@ -854,20 +854,20 @@ export class ABTreeSet {
 
 
     debug_describe_items() {
-		let string = "{";
+        let string = "{";
 
-		this.do_for_each_item_in_order(
-		(item) => {
-			string = string + "[" + item + "], ";
-		});
+        this.do_for_each_item_in_order(
+        (item) => {
+            string = string + "[" + item + "], ";
+        });
 
-		if (this.get_size() > 0) {
-			string = string.substring(0, string.length - ", ".length);
-		}
+        if (this.get_size() > 0) {
+            string = string.substring(0, string.length - ", ".length);
+        }
 
-		string = string + "}";
+        string = string + "}";
 
-		return string;
-	}
+        return string;
+    }
 }
 

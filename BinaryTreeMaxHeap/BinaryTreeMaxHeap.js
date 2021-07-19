@@ -43,8 +43,8 @@ export class BinaryTreeMaxHeap {
 
 
     clone() {
-		return this._heap.clone();
-	}
+        return this._heap.clone();
+    }
 
 
     debug_verify_integrity() {
