@@ -1,8 +1,8 @@
 
-/*
-Author: Quade Jones
-Email: Gquadej96@live.com
-*/
+/**
+ * Author: Quade Jones
+ * GitHub: https://github.com/Gquadej96
+ */
 
 
 export {RBTreeMapImpl2 as RBTreeMap} from "../RBTreeMapImpl2/RBTreeMapImpl2.js";

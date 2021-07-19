@@ -1,7 +1,7 @@
-/*
-Author: Quade Jones
-Email: Gquadej96@live.com
-*/
+/**
+ * Author: Quade Jones
+ * GitHub: https://github.com/Gquadej96
+ */
 
 
 import * as array_tools from "../array_tools.js";

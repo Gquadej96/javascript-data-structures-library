@@ -1,8 +1,8 @@
 
-/*
-Author: Quade Jones
-Email: Gquadej96@live.com
-*/
+/**
+ * Author: Quade Jones
+ * GitHub: https://github.com/Gquadej96
+ */
 
 
 export {RBTreeListImpl2 as RBTreeList} from "../RBTreeListImpl2/RBTreeListImpl2.js";
