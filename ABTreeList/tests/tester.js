@@ -31,7 +31,7 @@ function assertError(func, message) {
 
 
     list.debugVerifyIntegrity();
-    assertTruth(list.get_size() == 0, "unexpected size of the list.");
+    assertTruth(list.getSize() == 0, "unexpected size of the list.");
 
 
     list.rebalance();
@@ -41,7 +41,7 @@ function assertError(func, message) {
     list.add(0, 1);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 1, "unexpected size of the list.");
+    assertTruth(list.getSize() == 1, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
 
@@ -51,7 +51,7 @@ function assertError(func, message) {
     list.add(1, 2);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 2, "unexpected size of the list.");
+    assertTruth(list.getSize() == 2, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
@@ -63,7 +63,7 @@ function assertError(func, message) {
     list.add(1, 3);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 3, "unexpected size of the list.");
+    assertTruth(list.getSize() == 3, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 3, "there is an incorrect item in the list.");
@@ -76,7 +76,7 @@ function assertError(func, message) {
     list.add(0, 4);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 4, "unexpected size of the list.");
+    assertTruth(list.getSize() == 4, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 4, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 1, "there is an incorrect item in the list.");
@@ -90,7 +90,7 @@ function assertError(func, message) {
     list.add(2, 5);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 4, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 1, "there is an incorrect item in the list.");
@@ -105,7 +105,7 @@ function assertError(func, message) {
     list.set(0, 1);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 1, "there is an incorrect item in the list.");
@@ -120,7 +120,7 @@ function assertError(func, message) {
     list.set(1, 2);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
@@ -135,7 +135,7 @@ function assertError(func, message) {
     list.set(2, 3);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
@@ -150,7 +150,7 @@ function assertError(func, message) {
     list.set(3, 4);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
@@ -165,7 +165,7 @@ function assertError(func, message) {
     list.set(4, 5);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
@@ -187,7 +187,7 @@ function assertError(func, message) {
     list = list.clone();
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
@@ -196,7 +196,7 @@ function assertError(func, message) {
     assertTruth(list.get(4) == 5, "there is an incorrect item in the list.");
 
     {
-        let array = list.to_array();
+        let array = list.toArray();
 
         assertTruth(array.length == 5, "the array form of the list is incorrect.");
 
@@ -208,7 +208,7 @@ function assertError(func, message) {
     {
         let array = new Array();
 
-        list.do_for_each_item_in_order((i) => array.push(i));
+        list.doForEachItemInOrder(i => array.push(i));
 
         assertTruth(array.length == 5, "the iteration of the list is incorrect.");
 
@@ -221,7 +221,7 @@ function assertError(func, message) {
     list.remove(1);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 4, "unexpected size of the list.");
+    assertTruth(list.getSize() == 4, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 3, "there is an incorrect item in the list.");
@@ -235,7 +235,7 @@ function assertError(func, message) {
     list.remove(3);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 3, "unexpected size of the list.");
+    assertTruth(list.getSize() == 3, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 3, "there is an incorrect item in the list.");
@@ -248,7 +248,7 @@ function assertError(func, message) {
     list.remove(2);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 2, "unexpected size of the list.");
+    assertTruth(list.getSize() == 2, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
     assertTruth(list.get(1) == 3, "there is an incorrect item in the list.");
@@ -260,7 +260,7 @@ function assertError(func, message) {
     list.remove(0);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 1, "unexpected size of the list.");
+    assertTruth(list.getSize() == 1, "unexpected size of the list.");
 
     assertTruth(list.get(0) == 3, "there is an incorrect item in the list.");
 
@@ -271,7 +271,7 @@ function assertError(func, message) {
     list.remove(0);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == 0, "unexpected size of the list.");
+    assertTruth(list.getSize() == 0, "unexpected size of the list.");
 
     assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
     assertError(list.get.bind(list, 0), "there is no error when retrieving an item which is out-of-bounds in the list.");
@@ -289,7 +289,7 @@ function assertError(func, message) {
         list.add(i, i);
         list.debugVerifyIntegrity();
 
-        assertTruth(list.get_size() == i + 1, "unexpected size of list.");
+        assertTruth(list.getSize() == i + 1, "unexpected size of list.");
     }
 
     list = list.clone();
@@ -310,7 +310,7 @@ function assertError(func, message) {
         list.remove(0);
         list.debugVerifyIntegrity();
 
-        assertTruth(list.get_size() == sizeOfTests - i - 1, "unexpected size of the list.");
+        assertTruth(list.getSize() == sizeOfTests - i - 1, "unexpected size of the list.");
     }
 
     list.rebalance();
@@ -339,7 +339,7 @@ function assertError(func, message) {
     list.rebalance();
     list.debugVerifyIntegrity();
 
-    assertTruth(list.get_size() == ref.length, "unexpected size of list.");
+    assertTruth(list.getSize() == ref.length, "unexpected size of list.");
 
     for (let i = 0; i < ref.length; ++i) {
         assertTruth(list.get(i) == ref[i], "there is incorrect membership in the list.");
@@ -352,7 +352,7 @@ function assertError(func, message) {
         ref.splice(index, 1);
     }
 
-    assertTruth(list.get_size() == ref.length, "unexpected size of list.");
+    assertTruth(list.getSize() == ref.length, "unexpected size of list.");
 
     for (let i = 0; i < ref.length; ++i) {
         assertTruth(list.get(i) == ref[i], "there is incorrect membership in the list.");

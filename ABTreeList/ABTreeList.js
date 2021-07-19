@@ -24,7 +24,7 @@ export class ABTreeList {
 
             size: 0
         };
-        //this._update_local_fields(this._root);
+        //this._updateLocalFields(this._root);
 
         this._A = A || this._A;
         this._B = B || this._B;

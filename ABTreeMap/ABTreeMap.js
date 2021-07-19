@@ -11,19 +11,19 @@ import * as comparators from "../comparators/comparators.js";
 export class ABTreeMap {
 
     _entries = null;
-    _key_comparator = new comparators.UniversalComparator();
+    _keyComparator = new comparators.UniversalComparator();
 
 
-    constructor(A, B, key_comparator) {
-        key_comparator = key_comparator || this._key_comparator;
-        this._key_comparator = key_comparator;
+    constructor(A, B, keyComparator) {
+        keyComparator = keyComparator || this._keyComparator;
+        this._keyComparator = keyComparator;
 
         A = A || 2;
         B = B || 3;
 
         this._entries = new ABTreeSet(A, B, new class {
             compare(a, b) {
-                return key_comparator.compare(a.key, b.key);
+                return keyComparator.compare(a.key, b.key);
             }
         });
     }
@@ -31,28 +31,27 @@ export class ABTreeMap {
 
     set(key, value) {
         if (value != null) {
-            let entry = this._entries.get_LUB({key: key, value: undefined});
+            let entry = this._entries.getLeastUpperBoundItem({key: key, value: undefined});
 
             if (entry == null 
-                || this._key_comparator.compare(key, entry.key) != 0) {
+                || this._keyComparator.compare(key, entry.key) != 0) {
                 
                 this._entries.add({key: key, value: value});
                 return;
             }
 
             entry.value = value;
-        } 
-        else {
+        } else {
             this._entries.remove({key: key, value: undefined});
         }
     }
 
 
     get(key) {
-        let entry = this._entries.get_LUB({key: key, value: undefined});
+        let entry = this._entries.getLeastUpperBoundItem({key: key, value: undefined});
 
         if (entry == null 
-            || this._key_comparator.compare(key, entry.key) != 0) {
+            || this._keyComparator.compare(key, entry.key) != 0) {
             
             throw new Error("the item does not exist in the map.");
         }
@@ -66,23 +65,23 @@ export class ABTreeMap {
     }
 
 
-    get_size() {
-        return this._entries.get_size();
+    getSize() {
+        return this._entries.getSize();
     }
 
 
-    get_rank_of_key(key) {
-        return this._entries.get_rank_of_item({key: key, value: undefined});
+    getRankOfKey(key) {
+        return this._entries.getRankOfItem({key: key, value: undefined});
     }
 
 
-    get_key_by_rank(rank) {
-        return this._entries.get_item_by_rank(rank).key;
+    getKeyByRank(rank) {
+        return this._entries.getItemByRank(rank).key;
     }
 
 
-    do_for_each_entry_in_order(consumer) {
-        this._entries.do_for_each_item_in_order((item) => {consumer(item.key, item.value);});
+    doForEachEntryInOrder(consumer) {
+        this._entries.doForEachItemInOrder(item => {consumer(item.key, item.value);});
     }
 
 
@@ -91,39 +90,36 @@ export class ABTreeMap {
     }
 
 
-    to_array() {
-        return this._entries.to_array().map((v) => {return {key: v.key, value: v.value};});
+    toArray() {
+        return this._entries.toArray().map(v => {return {key: v.key, value: v.value};});
     }
 
 
     clone() {
-        let inst = new ABTreeMap(this._A, this._B, this._key_comparator);
+        let inst = new ABTreeMap(this._A, this._B, this._keyComparator);
 
         inst._entries = this._entries.clone();
-
         return inst;
     }
 
 
-    debug_verify_integrity() {
-        this._entries.debug_verify_integrity();
+    debugVerifyIntegrity() {
+        this._entries.debugVerifyIntegrity();
     }
 
 
-    debug_describe_items() {
+    debugDescribeItems() {
         let string = "{";
 
-        this.do_for_each_item_in_order(
-        (key, value) => {
+        this.doForEachItemInOrder((key, value) => {
             string = string + "([" + key + "] = [" + value + "]), ";
         });
 
-        if (this.get_size() > 0) {
+        if (this.getSize() > 0) {
             string = string.substring(0, string.length - ", ".length);
         }
 
         string = string + "}";
-
         return string;
     }
 }
