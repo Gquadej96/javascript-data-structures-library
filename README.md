@@ -2,17 +2,17 @@
 # A Simple Collection of Javascript Data Structures.
 
 ## **List\<T\> Interface**
-| Return Type | Method Signature                       | Description                                                                  |
-| ----------- | -------------------------------------- | ---------------------------------------------------------------------------- |
-| void        | add(int index, T item)                 | Add the given **item** to the list at the given **index** location.          |
-| void        | remove(int index)                      | Remove the item at the **index** location.                                   |
-| T           | get(int index)                         | Retrieve the item at the given **index** location.                           |
-| void        | set(int index, T item)                 | Set the item at the given **index** location to the given **item**.          |
-| int         | getSize()                              | Returns the number of elements in the list.                                  |
-| void        | rebalance()                            | Optimizes the data structure for get/set operations.                         |
-| void        | doForEachItemInOrder(Func<T> consumer) | Calls the given **consumer** function for each element in the list in order. |
-| T[]         | toArray()                              | Converts the list into a primitive array.                                    |
-| List\<T\>   | clone()                                | Makes a shallow copy of this list.                                           |
+| Return Type | Method Signature                         | Description                                                                  |
+| ----------- | ---------------------------------------- | ---------------------------------------------------------------------------- |
+| void        | add(int index, T item)                   | Add the given **item** to the list at the given **index** location.          |
+| void        | remove(int index)                        | Remove the item at the **index** location.                                   |
+| T           | get(int index)                           | Retrieve the item at the given **index** location.                           |
+| void        | set(int index, T item)                   | Set the item at the given **index** location to the given **item**.          |
+| int         | getSize()                                | Returns the number of elements in the list.                                  |
+| void        | rebalance()                              | Optimizes the data structure for get/set operations.                         |
+| void        | doForEachItemInOrder(Func\<T\> consumer) | Calls the given **consumer** function for each element in the list in order. |
+| T[]         | toArray()                                | Converts the list into a primitive array.                                    |
+| List\<T\>   | clone()                                  | Makes a shallow copy of this list.                                           |
 
 ---
 
