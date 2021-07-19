@@ -200,10 +200,7 @@ function assertError(func, message) {
 
         assertTruth(array.length == 5, "the array form of the list is incorrect.");
 
-        for (let i = 0; 
-            i < array.length; 
-            ++i) {
-            
+        for (let i = 0; i < array.length; ++i) {
             assertTruth(array[i] == i + 1, "the array form of the list is incorrect.");
         }
     }
@@ -215,10 +212,7 @@ function assertError(func, message) {
 
         assertTruth(array.length == 5, "the iteration of the list is incorrect.");
 
-        for (let i = 0; 
-            i < array.length; 
-            ++i) {
-            
+        for (let i = 0; i < array.length; ++i) {
             assertTruth(array[i] == i + 1, "the iteration of the list is incorrect.");
         }
     }

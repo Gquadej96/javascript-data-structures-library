@@ -224,11 +224,9 @@ export class AVLTreeSet {
 
             if (res == 0) {
                 break;
-            } 
-            else if (res < 0) {
+            } else if (res < 0) {
                 p = p.value.left;
-            } 
-            else { // res > 0
+            } else { // res > 0
                 p = p.value.right;
             }
         }
@@ -256,8 +254,7 @@ export class AVLTreeSet {
                 p = stack.pop();
 
                 replacement = p.value.left.value;
-            } 
-            else {
+            } else {
                 p = stack.pop(); // p = p
                 replacement = p.value.right.value;
             }
@@ -303,12 +300,10 @@ export class AVLTreeSet {
                         if (parent.value.bias == 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 0;
-                        } 
-                        else if (parent.value.bias < 0) {
+                        } else if (parent.value.bias < 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 1;
-                        } 
-                        else { // parent.value.bias > 0
+                        } else { // parent.value.bias > 0
                             parent.value.left.value.bias = -1;
                             parent.value.right.value.bias = 0;
                         }
@@ -366,12 +361,10 @@ export class AVLTreeSet {
                         if (parent.value.bias == 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 0;
-                        } 
-                        else if (parent.value.bias < 0) {
+                        } else if (parent.value.bias < 0) {
                             parent.value.left.value.bias = 0;
                             parent.value.right.value.bias = 1;
-                        } 
-                        else { // parent.value.bias > 0
+                        } else { // parent.value.bias > 0
                             parent.value.left.value.bias = -1;
                             parent.value.right.value.bias = 0;
                         }

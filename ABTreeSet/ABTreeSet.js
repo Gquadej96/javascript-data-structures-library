@@ -360,10 +360,7 @@ export class ABTreeSet {
         while (p.branches != null) {
             let branch = arrayTools.binarySearchGetFirst(p.index, item, this._comparator);
 
-            for (let i = 0; 
-                i < branch; 
-                ++i) {
-                
+            for (let i = 0; i < branch; ++i) {
                 rank = rank + p.branches[i].size;
             }
 

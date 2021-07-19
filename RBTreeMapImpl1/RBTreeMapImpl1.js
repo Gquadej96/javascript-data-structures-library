@@ -38,8 +38,7 @@ export class RBTreeMapImpl1 {
             }
 
             entry.value = value;
-        } 
-        else {
+        } else {
             this._entries.remove({key: key, value: undefined});
         }
     }
