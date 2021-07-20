@@ -1,6 +1,9 @@
 
 # A Simple Collection of Javascript Data Structures.
 
+<br/>
+
+
 ## **List\<T\> Interface**
 | Return Type | Method Signature                         | Description                                                                  |
 | ----------- | ---------------------------------------- | ---------------------------------------------------------------------------- |
@@ -14,7 +17,13 @@
 | T[]         | toArray()                                | Converts the list into a primitive array.                                    |
 | List\<T\>   | clone()                                  | Makes a shallow copy of this list.                                           |
 
+
+<br/>
+
 ---
+
+<br/>
+
 
 ## **Map\<K, V\> Interface**
 | Return Type     | Method Signature                                       | Description                                                                |
@@ -30,7 +39,15 @@
 | Entry\<K, V\>[] | toArray()                                              | Converts the map into an array of entries.                                 |
 | Map\<K, V\>     | clone()                                                | Makes a shallow copy of this map.                                          |
 
+
+
+<br/>
+
 ---
+
+<br/>
+
+
 
 ## **Set\<T\> Interface**
 | Return Type | Method Signature                         | Description                                                                    |
@@ -47,3 +64,21 @@
 | void        | doForEachItemInOrder(Func\<T\> consumer) | Calls the given **consumer** function for each element in the set in order.    |
 | T[]         | toArray()                                | Converts the set into a primitive array.                                       |
 | Set\<T\>    | clone()                                  | Makes a shallow copy of this set.                                              |
+
+
+<br/>
+
+---
+
+<br/>
+
+
+## **Heap\<T\> Interface**
+| Return Type | Method Signature | Description                                                           |
+| ----------- | ---------------- | --------------------------------------------------------------------- |
+| void        | enqueue(T item)  | Add the given **item** to the heap.                                   |
+| T           | dequeue()        | Retrieve and remove the smallest (or largest) **item** from the heap. |
+| T           | peek()           | Retrieve the smallest (or largest) **item** from the heap.            |
+| int         | getSize()        | Returns the number of elements in the heap.                           |
+| Heap\<T\>   | clone()          | Makes a shallow copy of this heap.                                    |
+
