@@ -9,7 +9,7 @@ import * as comparators from "./comparators.js";
 import {RBTreeSet} from "../RBTreeSet/RBTreeSet.js";
 
 
-export function testObjectReferenceComparator1() {
+export function testObjectReferenceComparator() {
     let comparator = new comparators.ObjectReferenceComparator();
     let objects = [new Object(), new Object(), new Object()];
     let c0c1 = comparator.compare(objects[0], objects[1]);
