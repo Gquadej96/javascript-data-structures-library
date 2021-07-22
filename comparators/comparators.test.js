@@ -9,6 +9,23 @@ import * as comparators from "./comparators.js";
 import {RBTreeSet} from "../RBTreeSet/RBTreeSet.js";
 
 
+export function testObjectReferenceComparator1() {
+    let comparator = new comparators.ObjectReferenceComparator();
+    let objects = [new Object(), new Object(), new Object()];
+    let c0c1 = comparator.compare(objects[0], objects[1]);
+    let c0c2 = comparator.compare(objects[0], objects[2]);
+    let c1c2 = comparator.compare(objects[1], objects[2]);
+
+    assertTruth(c0c1 == comparator.compare(objects[0], objects[1]), "unexpected relation between elements.");
+    assertTruth(c0c2 == comparator.compare(objects[0], objects[2]), "unexpected relation between elements.");
+    assertTruth(c1c2 == comparator.compare(objects[1], objects[2]), "unexpected relation between elements.");
+    
+    assertTruth(c0c1 == -comparator.compare(objects[1], objects[0]), "unexpected relation between elements.");
+    assertTruth(c0c2 == -comparator.compare(objects[2], objects[0]), "unexpected relation between elements.");
+    assertTruth(c1c2 == -comparator.compare(objects[2], objects[1]), "unexpected relation between elements.");
+}
+
+
 export function testArrayElementComparator1() {
     let comparator = new comparators.ArrayElementComparator();
 

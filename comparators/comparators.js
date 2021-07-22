@@ -3,6 +3,8 @@
  * GitHub: https://github.com/Gquadej96
  */
 
+import {HashCodeService} from "../HashCodeService/HashCodeService.js";
+
 
 export class BasicComparator {
     compare(a, b) {
@@ -18,26 +20,11 @@ export class BasicComparator {
 
 
 export class ObjectReferenceComparator {
-    _refs = new Map();
-    _nextRef = 0;
-
-    
-    _getObjectReference(object) {
-        let ref = this._refs.get(object);
-
-        if (ref == null) {
-            ref = this._nextRef;
-
-            this._nextRef = this._nextRef + 1;
-            this._refs.set(object, ref);
-        }
-
-        return ref;
-    }
+    _hashCodeService = HashCodeService.getInstance();
 
 
     compare(a, b) {
-        return this._getObjectReference(a) - this._getObjectReference(b);
+        return this._hashCodeService.getHashCode(a) - this._hashCodeService.getHashCode(b);
     }
 }
 
