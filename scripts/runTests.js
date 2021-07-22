@@ -34,7 +34,10 @@ let testPaths = [
     "../testUtils/testUtils.test.js"
 ];
 
+
 async function runTests() {
+    let didAllTestsPass = true;
+
     for (let filePath of testPaths) {
         let module;
 
@@ -46,14 +49,22 @@ async function runTests() {
 ${error.message}
 `
             );
+            didAllTestsPass = true;
             continue;
         }
 
         for (let testCaseName of Object.keys(module)) {
-            runTest(new TestCase(filePath, testCaseName, () => module[testCaseName].call(null)));
+            didAllTestsPass = runTest(new TestCase(filePath, testCaseName, () => module[testCaseName].call(null))) && didAllTestsPass;
         }
     }
+
+    if (!didAllTestsPass) {
+        throw new Error("Failed tests!");
+    } else {
+        console.log("All tests passed!");
+    }
 }
+
 
 async function runTest(testCase) {
     try {
@@ -64,12 +75,14 @@ async function runTest(testCase) {
 [PASS] ${testCase.filePath()} - ${testCase.testCaseName()} - ${performance.now() - startTime}ms\
 `
         );
+        return true;
     } catch (error) {
         console.error(`\
 [ERROR] Exception - ${testCase.filePath()} - ${testCase.testCaseName()}
 ${(error != null ? error.message : "null")}
 `
         );
+        return false;
     }
 }
 
