@@ -4,7 +4,7 @@
  */
 
 
-import {assertTruth, assertError} from "../testUtils/testUtils.js";
+import {assertTrue, assertThrows} from "../testUtils/testUtils.js";
 import {LinkedListQueue} from "./LinkedListQueue.js";
 import * as comparators from "../comparators/comparators.js";
 
@@ -13,73 +13,73 @@ export function testOverallMethods1() {
     let queue = new LinkedListQueue();
 
     queue.debugVerifyIntegrity();
-    assertTruth(queue.getSize() == 0);
+    assertTrue(queue.getSize() == 0);
 
-    assertError(() => queue.dequeue());
+    assertThrows(() => queue.dequeue());
 
     queue.enqueue(1);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 1);
-    assertTruth(queue.getSize() == 1);
+    assertTrue(queue.peek() == 1);
+    assertTrue(queue.getSize() == 1);
 
     queue.enqueue(2);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 1);
-    assertTruth(queue.getSize() == 2);
+    assertTrue(queue.peek() == 1);
+    assertTrue(queue.getSize() == 2);
 
     queue.enqueue(3);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 1);
-    assertTruth(queue.getSize() == 3);
+    assertTrue(queue.peek() == 1);
+    assertTrue(queue.getSize() == 3);
 
     queue.enqueue(4);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 1);
-    assertTruth(queue.getSize() == 4);
+    assertTrue(queue.peek() == 1);
+    assertTrue(queue.getSize() == 4);
 
     queue = queue.clone();
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.dequeue() == 1);
+    assertTrue(queue.dequeue() == 1);
 
-    assertTruth(queue.peek() == 2);
-    assertTruth(queue.getSize() == 3);
+    assertTrue(queue.peek() == 2);
+    assertTrue(queue.getSize() == 3);
 
     queue.enqueue(1);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 2);
-    assertTruth(queue.getSize() == 4);
+    assertTrue(queue.peek() == 2);
+    assertTrue(queue.getSize() == 4);
 
-    assertTruth(queue.dequeue() == 2);
+    assertTrue(queue.dequeue() == 2);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 3);
-    assertTruth(queue.getSize() == 3);
+    assertTrue(queue.peek() == 3);
+    assertTrue(queue.getSize() == 3);
 
-    assertTruth(queue.dequeue() == 3);
+    assertTrue(queue.dequeue() == 3);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 4);
-    assertTruth(queue.getSize() == 2);
+    assertTrue(queue.peek() == 4);
+    assertTrue(queue.getSize() == 2);
 
-    assertTruth(queue.dequeue() == 4);
+    assertTrue(queue.dequeue() == 4);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 1);
-    assertTruth(queue.getSize() == 1);
+    assertTrue(queue.peek() == 1);
+    assertTrue(queue.getSize() == 1);
 
-    assertTruth(queue.dequeue() == 1);
+    assertTrue(queue.dequeue() == 1);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.getSize() == 0);
+    assertTrue(queue.getSize() == 0);
 
-    assertError(() => queue.dequeue());
-    assertError(() => queue.peek());
+    assertThrows(() => queue.dequeue());
+    assertThrows(() => queue.peek());
 }
 
 
@@ -94,7 +94,7 @@ export function testOverallMethods2() {
         queue.enqueue(item);
         queue.debugVerifyIntegrity();
         ref[i] = item;
-        assertTruth(queue.getSize() == i + 1);
+        assertTrue(queue.getSize() == i + 1);
     }
     
     let array = new Array(sizeOfTests);
@@ -102,11 +102,11 @@ export function testOverallMethods2() {
     for (let i = 0; i < sizeOfTests; ++i) {
         array[i] = queue.dequeue();
         queue.debugVerifyIntegrity();
-        assertTruth(queue.getSize() == sizeOfTests - i - 1);
+        assertTrue(queue.getSize() == sizeOfTests - i - 1);
     }
 
     let comparator = new comparators.ArrayElementComparator();
 
-    assertTruth(comparator.compare(array, ref) == 0);
+    assertTrue(comparator.compare(array, ref) == 0);
 }
 

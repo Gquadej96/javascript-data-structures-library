@@ -5,6 +5,7 @@
  */
 
 
+import * as process from "process";
 import {performance} from "perf_hooks";
 
 
@@ -60,9 +61,11 @@ ${error.message}
     }
 
     if (!didAllTestsPass) {
-        throw new Error("Failed tests!");
+        console.log("Failed tests!");
+        process.exit(-1);
     } else {
         console.log("All tests passed!");
+        process.exit(0);
     }
 }
 

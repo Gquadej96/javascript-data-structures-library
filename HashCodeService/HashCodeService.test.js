@@ -4,7 +4,7 @@
  */
 
 
-import {assertTruth} from "../testUtils/testUtils.js";
+import {assertTrue} from "../testUtils/testUtils.js";
 import {HashCodeService} from "./HashCodeService.js";
 
 
@@ -13,6 +13,6 @@ export function whenGetHashCodeIsCalledRepeatedly_andObjectIsIdentical_thenResul
     let object = new Object();
     let hashCode = hashCodeService.getHashCode(object);
 
-    assertTruth(hashCode == hashCodeService.getHashCode(object));
-    assertTruth(hashCode == hashCodeService.getHashCode(object));
+    assertTrue(hashCode == hashCodeService.getHashCode(object));
+    assertTrue(hashCode == hashCodeService.getHashCode(object));
 }

@@ -6,24 +6,31 @@
 
 import {AssertionError} from "./AssertionError.js";
 
-export function assertTruth(condition, message) {
-    message = message || `Assertion Failed
-Expected: ${true}
-Got: ${condition}\
-`
-    ;
 
-    if (!condition) {
+export function assertEquals(expectedValue, actualValue, message) {
+    message = `\
+${message || "Assertion Failed"}
+Expected: ${expectedValue}
+Actual: ${actualValue}\
+`   ;
+
+    if (expectedValue !== actualValue) {
         throw new AssertionError(message);
     }
 }
 
 
-export function assertError(func, message) {
-    message = message || `Assertion Failed
-Expected exception to be thrown.
-`
-    ;
+export function assertTrue(condition, message) {
+    assertEquals(true, condition, message);
+}
+
+
+export function assertThrows(func, message) {
+    message = `\
+${message || "Assertion Failed"}
+Expected an error.
+Actually got nothing.\
+`   ;
 
     try {
         func();
