@@ -6,49 +6,78 @@
 
 
 import * as process from "process";
+import * as fs from "fs/promises";
+import * as path from "path";
 import {performance} from "perf_hooks";
 
 
-let testPaths = [
-    "../ABTreeList/ABTreeList.test.js", 
-    "../ABTreeMap/ABTreeMap.test.js", 
-    "../ABTreeSet/ABTreeSet.test.js", 
-    "../arrayUtils/arrayUtils.test.js", 
-    "../AVLTreeList/AVLTreeList.test.js", 
-    "../AVLTreeMap/AVLTreeMap.test.js", 
-    "../AVLTreeSet/AVLTreeSet.test.js", 
-    "../BinaryTreeMaxHeap/BinaryTreeMaxHeap.test.js", 
-    "../BinaryTreeMinHeap/BinaryTreeMinHeap.test.js", 
-    "../comparators/comparators.test.js", 
-    "../LinkedList/LinkedList.test.js", 
-    "../LinkedListQueue/LinkedListQueue.test.js", 
-    "../LinkedListStack/LinkedListStack.test.js", 
-    "../RBTreeList/RBTreeList.test.js", 
-    "../RBTreeListImpl1/RBTreeListImpl1.test.js", 
-    "../RBTreeListImpl2/RBTreeListImpl2.test.js", 
-    "../RBTreeMap/RBTreeMap.test.js", 
-    "../RBTreeMapImpl1/RBTreeMapImpl1.test.js", 
-    "../RBTreeMapImpl2/RBTreeMapImpl2.test.js", 
-    "../RBTreeSet/RBTreeSet.test.js", 
-    "../RBTreeSetImpl1/RBTreeSetImpl1.test.js", 
-    "../RBTreeSetImpl2/RBTreeSetImpl2.test.js", 
-    "../testUtils/testUtils.test.js", 
-    "../testUtils/AssertionError.test.js"
-];
+async function findAllTests(rootDirEntPath) {
+    console.log(`
+======== Searching for Tests ========
+`   );
+
+    let testFilePaths = new Array();
+
+    await findTests(rootDirEntPath, testFilePaths);
+    console.log(`Found ${testFilePaths.length} test files.`);
+
+    return testFilePaths;
+}
 
 
-async function runTests() {
+async function findTests(dirEntPath, resultPaths) {
+    if (await shouldIgnoreDirEntPath(dirEntPath)) {
+        console.log(`\
+Skipping ${dirEntPath} while searching for tests.\
+`       );
+        return;
+    }
+
+    let stats = await fs.stat(dirEntPath);
+
+    if (stats.isDirectory()) {
+        for (let dirEntName of await fs.readdir(dirEntPath)) {
+            await findTests(path.join(dirEntPath, dirEntName), resultPaths);
+        }
+    } else if (stats.isFile() && /^[^]*\.\s*test\s*\.\s*js\s*$/.test(path.basename(dirEntPath))) {
+        resultPaths.push(dirEntPath);
+    }
+}
+
+
+async function shouldIgnoreDirEntPath(dirEntPath) {
+    let absolutePath = path.resolve(dirEntPath);
+    let stats = await fs.stat(dirEntPath);
+
+    for (let ignoreDirEntRule of [
+        () => /^\s*\.[^]*$/.test(path.basename(absolutePath)), // Ignore dot files/directories (ex: ".git" directory).
+        () => /^node_modules$/.test(path.basename(absolutePath)) && stats.isDirectory() // Ignore the "node_modules" directory.
+    ]) {
+        if (ignoreDirEntRule()) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+async function runAllTests(testFilePaths) {
     let didAllTestsPass = true;
 
-    for (let filePath of testPaths) {
+    console.log(`
+======== Beginning Tests ========
+`   );
+
+    for (let testFilePath of testFilePaths) {
         let module;
 
         try {
-            module = await import(filePath);
+            module = await import(path.resolve(testFilePath));
         } catch (error) {
-            console.error(`
-Error: Invalid Tests - ${filePath}
-${error.message}
+            console.error(`\
+Error: Invalid Tests - ${testFilePath}
+${error.message}\
 `
             );
             didAllTestsPass = false;
@@ -56,9 +85,11 @@ ${error.message}
         }
 
         for (let testCaseName of Object.keys(module)) {
-            didAllTestsPass = await runTest(new TestCase(filePath, testCaseName, () => module[testCaseName].call(null))) && didAllTestsPass;
+            didAllTestsPass = await runTest(new TestCase(testFilePath, testCaseName, () => module[testCaseName].call(null))) && didAllTestsPass;
         }
     }
+
+    console.log();
 
     if (!didAllTestsPass) {
         console.log("Failed tests!");
@@ -86,7 +117,7 @@ Pass: ${testCase.filePath()} - ${testCase.testCaseName()} - ${performance.now() 
         } else {
             console.error(`\
 Error: Exception - ${testCase.filePath()} - ${testCase.testCaseName()}
-${(error != null ? error.message : "null")}
+${(error != null ? error.message : "null")}\
 `
             );
         }
@@ -111,4 +142,5 @@ class TestCase {
     testMethod() { return this._testMethod; }
 }
 
-(async () => runTests())();
+
+(async () => await runAllTests(await findAllTests("./")))(); // Search for tests starting in the project root directory.
