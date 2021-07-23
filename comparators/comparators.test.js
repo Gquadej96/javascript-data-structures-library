@@ -114,4 +114,3 @@ export function testObjectFieldComparator2() {
 
     set.debugVerifyIntegrity();
 }
-

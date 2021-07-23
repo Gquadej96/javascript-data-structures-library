@@ -31,7 +31,8 @@ let testPaths = [
     "../RBTreeSet/RBTreeSet.test.js", 
     "../RBTreeSetImpl1/RBTreeSetImpl1.test.js", 
     "../RBTreeSetImpl2/RBTreeSetImpl2.test.js", 
-    "../testUtils/testUtils.test.js"
+    "../testUtils/testUtils.test.js", 
+    "../testUtils/AssertionError.test.js"
 ];
 
 
@@ -45,16 +46,16 @@ async function runTests() {
             module = await import(filePath);
         } catch (error) {
             console.error(`
-[ERROR] Invalid Tests - ${filePath}
+Error: Invalid Tests - ${filePath}
 ${error.message}
 `
             );
-            didAllTestsPass = true;
+            didAllTestsPass = false;
             continue;
         }
 
         for (let testCaseName of Object.keys(module)) {
-            didAllTestsPass = runTest(new TestCase(filePath, testCaseName, () => module[testCaseName].call(null))) && didAllTestsPass;
+            didAllTestsPass = await runTest(new TestCase(filePath, testCaseName, () => module[testCaseName].call(null))) && didAllTestsPass;
         }
     }
 
@@ -72,16 +73,20 @@ async function runTest(testCase) {
 
         testCase.testMethod().call(null);
         console.log(`\
-[PASS] ${testCase.filePath()} - ${testCase.testCaseName()} - ${performance.now() - startTime}ms\
+Pass: ${testCase.filePath()} - ${testCase.testCaseName()} - ${performance.now() - startTime}ms\
 `
         );
         return true;
     } catch (error) {
-        console.error(`\
-[ERROR] Exception - ${testCase.filePath()} - ${testCase.testCaseName()}
+        if (error.stack) {
+            console.error(error.stack);
+        } else {
+            console.error(`\
+Error: Exception - ${testCase.filePath()} - ${testCase.testCaseName()}
 ${(error != null ? error.message : "null")}
 `
-        );
+            );
+        }
         return false;
     }
 }

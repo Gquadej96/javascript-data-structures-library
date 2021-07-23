@@ -4,23 +4,24 @@
  * GitHub: https://github.com/Gquadej96
  */
 
+import {AssertionError} from "./AssertionError.js";
 
 export function assertTruth(condition, message) {
-    message = message || `\
+    message = message || `Assertion Failed
 Expected: ${true}
-Got: ${condition}
+Got: ${condition}\
 `
     ;
 
     if (!condition) {
-        throw new Error(message);
+        throw new AssertionError(message);
     }
 }
 
 
 export function assertError(func, message) {
-    message = message || `\
-Expected exception, but nothing was thrown.
+    message = message || `Assertion Failed
+Expected exception to be thrown.
 `
     ;
 
@@ -30,5 +31,5 @@ Expected exception, but nothing was thrown.
         return;
     }
 
-    throw new Error(message);
+    throw new AssertionError(message);
 }
