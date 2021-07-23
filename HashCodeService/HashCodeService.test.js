@@ -13,6 +13,6 @@ export function whenGetHashCodeIsCalledRepeatedly_andObjectIsIdentical_thenResul
     let object = new Object();
     let hashCode = hashCodeService.getHashCode(object);
 
-    assertTruth(hashCode == hashCodeService.getHashCode(object), "unexpected hash code.");
-    assertTruth(hashCode == hashCodeService.getHashCode(object), "unexpected hash code.");
+    assertTruth(hashCode == hashCodeService.getHashCode(object));
+    assertTruth(hashCode == hashCodeService.getHashCode(object));
 }

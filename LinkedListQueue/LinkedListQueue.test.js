@@ -13,73 +13,73 @@ export function testOverallMethods1() {
     let queue = new LinkedListQueue();
 
     queue.debugVerifyIntegrity();
-    assertTruth(queue.getSize() == 0, "unexpected size of the queue.");
+    assertTruth(queue.getSize() == 0);
 
-    assertError(queue.dequeue.bind(queue), "no error thrown when attempting to dequeue from an empty queue.");
+    assertError(() => queue.dequeue());
 
     queue.enqueue(1);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 1, "unexpected item peeked from queue.");
-    assertTruth(queue.getSize() == 1, "unexpected size of the queue.");
+    assertTruth(queue.peek() == 1);
+    assertTruth(queue.getSize() == 1);
 
     queue.enqueue(2);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 1, "unexpected item peeked from queue.");
-    assertTruth(queue.getSize() == 2, "unexpected size of the queue.");
+    assertTruth(queue.peek() == 1);
+    assertTruth(queue.getSize() == 2);
 
     queue.enqueue(3);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 1, "unexpected item peeked from queue.");
-    assertTruth(queue.getSize() == 3, "unexpected size of the queue.");
+    assertTruth(queue.peek() == 1);
+    assertTruth(queue.getSize() == 3);
 
     queue.enqueue(4);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 1, "unexpected item peeked from queue.");
-    assertTruth(queue.getSize() == 4, "unexpected size of the queue.");
+    assertTruth(queue.peek() == 1);
+    assertTruth(queue.getSize() == 4);
 
     queue = queue.clone();
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.dequeue() == 1, "unexpected item dequeued from queue.");
+    assertTruth(queue.dequeue() == 1);
 
-    assertTruth(queue.peek() == 2, "unexpected item peeked from queue.");
-    assertTruth(queue.getSize() == 3, "unexpected size of the queue.");
+    assertTruth(queue.peek() == 2);
+    assertTruth(queue.getSize() == 3);
 
     queue.enqueue(1);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 2, "unexpected item peeked from queue.");
-    assertTruth(queue.getSize() == 4, "unexpected size of the queue.");
+    assertTruth(queue.peek() == 2);
+    assertTruth(queue.getSize() == 4);
 
-    assertTruth(queue.dequeue() == 2, "unexpected item dequeued from queue.");
+    assertTruth(queue.dequeue() == 2);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 3, "unexpected item peeked from queue.");
-    assertTruth(queue.getSize() == 3, "unexpected size of the queue.");
+    assertTruth(queue.peek() == 3);
+    assertTruth(queue.getSize() == 3);
 
-    assertTruth(queue.dequeue() == 3, "unexpected item dequeued from queue.");
+    assertTruth(queue.dequeue() == 3);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 4, "unexpected item peeked from queue.");
-    assertTruth(queue.getSize() == 2, "unexpected size of the queue.");
+    assertTruth(queue.peek() == 4);
+    assertTruth(queue.getSize() == 2);
 
-    assertTruth(queue.dequeue() == 4, "unexpected item dequeued from queue.");
+    assertTruth(queue.dequeue() == 4);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.peek() == 1, "unexpected item peeked from queue.");
-    assertTruth(queue.getSize() == 1, "unexpected size of the queue.");
+    assertTruth(queue.peek() == 1);
+    assertTruth(queue.getSize() == 1);
 
-    assertTruth(queue.dequeue() == 1, "unexpected item dequeued from queue.");
+    assertTruth(queue.dequeue() == 1);
     queue.debugVerifyIntegrity();
 
-    assertTruth(queue.getSize() == 0, "unexpected size of the queue.");
+    assertTruth(queue.getSize() == 0);
 
-    assertError(queue.dequeue.bind(queue), "no error thrown when attempting to dequeue from an empty queue.");
-    assertError(queue.peek.bind(queue), "no error thrown when attempting to peek an empty queue.");
+    assertError(() => queue.dequeue());
+    assertError(() => queue.peek());
 }
 
 
@@ -94,7 +94,7 @@ export function testOverallMethods2() {
         queue.enqueue(item);
         queue.debugVerifyIntegrity();
         ref[i] = item;
-        assertTruth(queue.getSize() == i + 1, "unexpected size of the queue.");
+        assertTruth(queue.getSize() == i + 1);
     }
     
     let array = new Array(sizeOfTests);
@@ -102,11 +102,11 @@ export function testOverallMethods2() {
     for (let i = 0; i < sizeOfTests; ++i) {
         array[i] = queue.dequeue();
         queue.debugVerifyIntegrity();
-        assertTruth(queue.getSize() == sizeOfTests - i - 1, "unexpected size of the queue.");
+        assertTruth(queue.getSize() == sizeOfTests - i - 1);
     }
 
     let comparator = new comparators.ArrayElementComparator();
 
-    assertTruth(comparator.compare(array, ref) == 0, "unexpected item dequeued from queue.");
+    assertTruth(comparator.compare(array, ref) == 0);
 }
 

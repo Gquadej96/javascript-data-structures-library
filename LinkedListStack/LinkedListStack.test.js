@@ -13,73 +13,73 @@ export function testOverallMethods1() {
     let stack = new LinkedListStack();
 
     stack.debugVerifyIntegrity();
-    assertTruth(stack.getSize() == 0, "unexpected size of the stack.");
+    assertTruth(stack.getSize() == 0);
 
-    assertError(stack.pop.bind(stack), "no error thrown when attempting to pop from an empty stack.");
+    assertError(() => stack.pop());
 
     stack.push(1);
     stack.debugVerifyIntegrity();
 
-    assertTruth(stack.peek() == 1, "unexpected item peeked from stack.");
-    assertTruth(stack.getSize() == 1, "unexpected size of the stack.");
+    assertTruth(stack.peek() == 1);
+    assertTruth(stack.getSize() == 1);
 
     stack.push(2);
     stack.debugVerifyIntegrity();
 
-    assertTruth(stack.peek() == 2, "unexpected item peeked from stack.");
-    assertTruth(stack.getSize() == 2, "unexpected size of the stack.");
+    assertTruth(stack.peek() == 2);
+    assertTruth(stack.getSize() == 2);
 
     stack.push(3);
     stack.debugVerifyIntegrity();
 
-    assertTruth(stack.peek() == 3, "unexpected item peeked from stack.");
-    assertTruth(stack.getSize() == 3, "unexpected size of the stack.");
+    assertTruth(stack.peek() == 3);
+    assertTruth(stack.getSize() == 3);
 
     stack.push(4);
     stack.debugVerifyIntegrity();
 
-    assertTruth(stack.peek() == 4, "unexpected item peeked from stack.");
-    assertTruth(stack.getSize() == 4, "unexpected size of the stack.");
+    assertTruth(stack.peek() == 4);
+    assertTruth(stack.getSize() == 4);
 
     stack = stack.clone();
     stack.debugVerifyIntegrity();
 
-    assertTruth(stack.pop() == 4, "unexpected item destackd from stack.");
+    assertTruth(stack.pop() == 4);
 
-    assertTruth(stack.peek() == 3, "unexpected item peeked from stack.");
-    assertTruth(stack.getSize() == 3, "unexpected size of the stack.");
+    assertTruth(stack.peek() == 3);
+    assertTruth(stack.getSize() == 3);
 
     stack.push(1);
     stack.debugVerifyIntegrity();
 
-    assertTruth(stack.peek() == 1, "unexpected item peeked from stack.");
-    assertTruth(stack.getSize() == 4, "unexpected size of the stack.");
+    assertTruth(stack.peek() == 1);
+    assertTruth(stack.getSize() == 4);
 
-    assertTruth(stack.pop() == 1, "unexpected item destackd from stack.");
+    assertTruth(stack.pop() == 1);
     stack.debugVerifyIntegrity();
 
-    assertTruth(stack.peek() == 3, "unexpected item peeked from stack.");
-    assertTruth(stack.getSize() == 3, "unexpected size of the stack.");
+    assertTruth(stack.peek() == 3);
+    assertTruth(stack.getSize() == 3);
 
-    assertTruth(stack.pop() == 3, "unexpected item destackd from stack.");
+    assertTruth(stack.pop() == 3);
     stack.debugVerifyIntegrity();
 
-    assertTruth(stack.peek() == 2, "unexpected item peeked from stack.");
-    assertTruth(stack.getSize() == 2, "unexpected size of the stack.");
+    assertTruth(stack.peek() == 2);
+    assertTruth(stack.getSize() == 2);
 
-    assertTruth(stack.pop() == 2, "unexpected item destackd from stack.");
+    assertTruth(stack.pop() == 2);
     stack.debugVerifyIntegrity();
 
-    assertTruth(stack.peek() == 1, "unexpected item peeked from stack.");
-    assertTruth(stack.getSize() == 1, "unexpected size of the stack.");
+    assertTruth(stack.peek() == 1);
+    assertTruth(stack.getSize() == 1);
 
-    assertTruth(stack.pop() == 1, "unexpected item destackd from stack.");
+    assertTruth(stack.pop() == 1);
     stack.debugVerifyIntegrity();
 
-    assertTruth(stack.getSize() == 0, "unexpected size of the stack.");
+    assertTruth(stack.getSize() == 0);
 
-    assertError(stack.pop.bind(stack), "no error thrown when attempting to pop from an empty stack.");
-    assertError(stack.peek.bind(stack), "no error thrown when attempting to peek an empty stack.");
+    assertError(() => stack.pop());
+    assertError(() => stack.peek());
 }
 
 
@@ -94,7 +94,7 @@ export function testOverallMethods2() {
         stack.push(item);
         stack.debugVerifyIntegrity();
         ref.push(item);
-        assertTruth(stack.getSize() == i + 1, "unexpected size of the stack.");
+        assertTruth(stack.getSize() == i + 1);
     }
 
     ref.reverse();
@@ -104,11 +104,11 @@ export function testOverallMethods2() {
     for (let i = 0; i < sizeOfTests; ++i) {
         array[i] = stack.pop();
         stack.debugVerifyIntegrity();
-        assertTruth(stack.getSize() == sizeOfTests - i - 1, "unexpected size of the stack.");
+        assertTruth(stack.getSize() == sizeOfTests - i - 1);
     }
 
     let comparator = new comparators.ArrayElementComparator();
     
-    assertTruth(comparator.compare(array, ref) == 0, "unexpected item destackd from stack.");
+    assertTruth(comparator.compare(array, ref) == 0);
 }
 

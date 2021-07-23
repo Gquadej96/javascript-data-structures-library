@@ -12,7 +12,7 @@ export function testOverallMethods1() {
     let list = new RBTreeListImpl1();
 
     list.debugVerifyIntegrity();
-    assertTruth(list.getSize() == 0, "unexpected size of the list.");
+    assertTruth(list.getSize() == 0);
 
     list.rebalance();
     list.debugVerifyIntegrity();
@@ -20,135 +20,135 @@ export function testOverallMethods1() {
     list.add(0, 1);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 1, "unexpected size of the list.");
+    assertTruth(list.getSize() == 1);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 1), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(1));
 
     list.add(1, 2);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 2, "unexpected size of the list.");
+    assertTruth(list.getSize() == 2);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
+    assertTruth(list.get(1) == 2);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 2), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(2));
 
     list.add(1, 3);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 3, "unexpected size of the list.");
+    assertTruth(list.getSize() == 3);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(2) == 2, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
+    assertTruth(list.get(1) == 3);
+    assertTruth(list.get(2) == 2);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 3), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(3));
 
     list.add(0, 4);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 4, "unexpected size of the list.");
+    assertTruth(list.getSize() == 4);
 
-    assertTruth(list.get(0) == 4, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(2) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(3) == 2, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 4);
+    assertTruth(list.get(1) == 1);
+    assertTruth(list.get(2) == 3);
+    assertTruth(list.get(3) == 2);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 4), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(4));
 
     list.add(2, 5);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5);
 
-    assertTruth(list.get(0) == 4, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(2) == 5, "there is an incorrect item in the list.");
-    assertTruth(list.get(3) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(4) == 2, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 4);
+    assertTruth(list.get(1) == 1);
+    assertTruth(list.get(2) == 5);
+    assertTruth(list.get(3) == 3);
+    assertTruth(list.get(4) == 2);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 5), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(5));
 
     list.set(0, 1);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(2) == 5, "there is an incorrect item in the list.");
-    assertTruth(list.get(3) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(4) == 2, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
+    assertTruth(list.get(1) == 1);
+    assertTruth(list.get(2) == 5);
+    assertTruth(list.get(3) == 3);
+    assertTruth(list.get(4) == 2);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 5), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(5));
 
     list.set(1, 2);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
-    assertTruth(list.get(2) == 5, "there is an incorrect item in the list.");
-    assertTruth(list.get(3) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(4) == 2, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
+    assertTruth(list.get(1) == 2);
+    assertTruth(list.get(2) == 5);
+    assertTruth(list.get(3) == 3);
+    assertTruth(list.get(4) == 2);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 5), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(5));
 
     list.set(2, 3);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
-    assertTruth(list.get(2) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(3) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(4) == 2, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
+    assertTruth(list.get(1) == 2);
+    assertTruth(list.get(2) == 3);
+    assertTruth(list.get(3) == 3);
+    assertTruth(list.get(4) == 2);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 5), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(5));
 
     list.set(3, 4);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
-    assertTruth(list.get(2) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(3) == 4, "there is an incorrect item in the list.");
-    assertTruth(list.get(4) == 2, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
+    assertTruth(list.get(1) == 2);
+    assertTruth(list.get(2) == 3);
+    assertTruth(list.get(3) == 4);
+    assertTruth(list.get(4) == 2);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 5), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(5));
 
     list.set(4, 5);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
-    assertTruth(list.get(2) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(3) == 4, "there is an incorrect item in the list.");
-    assertTruth(list.get(4) == 5, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
+    assertTruth(list.get(1) == 2);
+    assertTruth(list.get(2) == 3);
+    assertTruth(list.get(3) == 4);
+    assertTruth(list.get(4) == 5);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 5), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(5));
 
-    assertError(list.set.bind(list, -1, 0), "there is no error when modifying an item which is out-of-bounds in the list.");
-    assertError(list.set.bind(list, 5, 6), "there is no error when modifying an item which is out-of-bounds in the list.");
+    assertError(() => list.set(-1, 0));
+    assertError(() => list.set(5, 6));
 
     list.rebalance();
     list.debugVerifyIntegrity();
@@ -157,21 +157,21 @@ export function testOverallMethods1() {
     list = list.clone();
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 5, "unexpected size of the list.");
+    assertTruth(list.getSize() == 5);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 2, "there is an incorrect item in the list.");
-    assertTruth(list.get(2) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(3) == 4, "there is an incorrect item in the list.");
-    assertTruth(list.get(4) == 5, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
+    assertTruth(list.get(1) == 2);
+    assertTruth(list.get(2) == 3);
+    assertTruth(list.get(3) == 4);
+    assertTruth(list.get(4) == 5);
 
     {
         let array = list.toArray();
 
-        assertTruth(array.length == 5, "the array form of the list is incorrect.");
+        assertTruth(array.length == 5);
 
         for (let i = 0; i < array.length; ++i) {
-            assertTruth(array[i] == i + 1, "the array form of the list is incorrect.");
+            assertTruth(array[i] == i + 1);
         }
     }
 
@@ -180,66 +180,66 @@ export function testOverallMethods1() {
 
         list.doForEachItemInOrder(i => array.push(i));
 
-        assertTruth(array.length == 5, "the iteration of the list is incorrect.");
+        assertTruth(array.length == 5);
 
         for (let i = 0; i < array.length; ++i) {
-            assertTruth(array[i] == i + 1, "the iteration of the list is incorrect.");
+            assertTruth(array[i] == i + 1);
         }
     }
 
     list.remove(1);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 4, "unexpected size of the list.");
+    assertTruth(list.getSize() == 4);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(2) == 4, "there is an incorrect item in the list.");
-    assertTruth(list.get(3) == 5, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
+    assertTruth(list.get(1) == 3);
+    assertTruth(list.get(2) == 4);
+    assertTruth(list.get(3) == 5);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 4), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(4));
 
     list.remove(3);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 3, "unexpected size of the list.");
+    assertTruth(list.getSize() == 3);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 3, "there is an incorrect item in the list.");
-    assertTruth(list.get(2) == 4, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
+    assertTruth(list.get(1) == 3);
+    assertTruth(list.get(2) == 4);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 3), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(3));
 
     list.remove(2);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 2, "unexpected size of the list.");
+    assertTruth(list.getSize() == 2);
 
-    assertTruth(list.get(0) == 1, "there is an incorrect item in the list.");
-    assertTruth(list.get(1) == 3, "there is an incorrect item in the list.");
+    assertTruth(list.get(0) == 1);
+    assertTruth(list.get(1) == 3);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 2), "there is no error when retrieving an item which is out-of-bounds in the list.");
-
-    list.remove(0);
-    list.debugVerifyIntegrity();
-
-    assertTruth(list.getSize() == 1, "unexpected size of the list.");
-
-    assertTruth(list.get(0) == 3, "there is an incorrect item in the list.");
-
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 1), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(2));
 
     list.remove(0);
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == 0, "unexpected size of the list.");
+    assertTruth(list.getSize() == 1);
 
-    assertError(list.get.bind(list, -1), "there is no error when retrieving an item which is out-of-bounds in the list.");
-    assertError(list.get.bind(list, 0), "there is no error when retrieving an item which is out-of-bounds in the list.");
+    assertTruth(list.get(0) == 3);
+
+    assertError(() => list.get(-1));
+    assertError(() => list.get(1));
+
+    list.remove(0);
+    list.debugVerifyIntegrity();
+
+    assertTruth(list.getSize() == 0);
+
+    assertError(() => list.get(-1));
+    assertError(() => list.get(0));
 }
 
 
@@ -250,7 +250,7 @@ export function testOverallMethods2() {
     for (let i = 0; i < sizeOfTests; ++i) {
         list.add(i, i);
         list.debugVerifyIntegrity();
-        assertTruth(list.getSize() == i + 1, "unexpected size of list.");
+        assertTruth(list.getSize() == i + 1);
     }
 
     list = list.clone();
@@ -259,17 +259,17 @@ export function testOverallMethods2() {
     list.debugVerifyIntegrity();
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        assertTruth(list.get(i) == i, "there is an incorrect item in the list.");
+        assertTruth(list.get(i) == i);
     }
 
-    assertError(list.get.bind(list, -1), "there is an unexpected item in the list.");
-    assertError(list.get.bind(list, sizeOfTests), "there is an unexpected item in the list.");
+    assertError(() => list.get(-1));
+    assertError(() => list.get(sizeOfTests));
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        assertTruth(list.get(0) == i, "this is an incorrect item in the list.");
+        assertTruth(list.get(0) == i);
         list.remove(0);
         list.debugVerifyIntegrity();
-        assertTruth(list.getSize() == sizeOfTests - i - 1, "unexpected size of the list.");
+        assertTruth(list.getSize() == sizeOfTests - i - 1);
     }
 
     list.rebalance();
@@ -295,10 +295,10 @@ export function testOverallMethods3() {
     list.rebalance();
     list.debugVerifyIntegrity();
 
-    assertTruth(list.getSize() == ref.length, "unexpected size of list.");
+    assertTruth(list.getSize() == ref.length);
 
     for (let i = 0; i < ref.length; ++i) {
-        assertTruth(list.get(i) == ref[i], "there is incorrect membership in the list.");
+        assertTruth(list.get(i) == ref[i]);
     }
 
     for (let i = 0; i < sizeOfTests; ++i) {
@@ -308,10 +308,10 @@ export function testOverallMethods3() {
         ref.splice(index, 1);
     }
 
-    assertTruth(list.getSize() == ref.length, "unexpected size of list.");
+    assertTruth(list.getSize() == ref.length);
 
     for (let i = 0; i < ref.length; ++i) {
-        assertTruth(list.get(i) == ref[i], "there is incorrect membership in the list.");
+        assertTruth(list.get(i) == ref[i]);
     }
 }
 

@@ -9,9 +9,9 @@ import * as arrayUtils from "./arrayUtils.js";
 
 
 export function testIsInSortOrder() {
-    assertTruth(arrayUtils.isInSortOrder([]), "unable to verify sorted array.");
-    assertTruth(arrayUtils.isInSortOrder([1]), "unable to verify sorted array.");
-    assertTruth(arrayUtils.isInSortOrder([1, 2, 3, 4, 5]), "unable to verify sorted array.");
+    assertTruth(arrayUtils.isInSortOrder([]));
+    assertTruth(arrayUtils.isInSortOrder([1]));
+    assertTruth(arrayUtils.isInSortOrder([1, 2, 3, 4, 5]));
 }
 
 
@@ -29,7 +29,7 @@ export function testHeapSort() {
         }
 
         arrayUtils.heapSort(array);
-        assertTruth(arrayUtils.isInSortOrder(array), "the array is not sorted properly.");
+        assertTruth(arrayUtils.isInSortOrder(array));
     }
 }
 
@@ -38,19 +38,19 @@ export function testBinarySearchGetFirst() {
     // indices:  0  1  2  3  4  5  6  7  8   9   10  11  12  13  14
     let array = [1, 1, 2, 3, 4, 5, 7, 9, 10, 10, 11, 13, 20, 20, 21];
 
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 1) == 0, "unexpected insert point for item.");
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 2) == 2, "unexpected insert point for item.");
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 3) == 3, "unexpected insert point for item.");
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 10) == 8, "unexpected insert point for item.");
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 11) == 10, "unexpected insert point for item.");
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 20) == 12, "unexpected insert point for item.");
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 1) == 0);
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 2) == 2);
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 3) == 3);
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 10) == 8);
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 11) == 10);
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 20) == 12);
 
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 6) == 6, "unexpected insert point for item.");
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 8) == 7, "unexpected insert point for item.");
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 14) == 12, "unexpected insert point for item.");
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 15) == 12, "unexpected insert point for item.");
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 16) == 12, "unexpected insert point for item.");
-    assertTruth(arrayUtils.binarySearchGetFirst(array, 17) == 12, "unexpected insert point for item.");
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 6) == 6);
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 8) == 7);
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 14) == 12);
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 15) == 12);
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 16) == 12);
+    assertTruth(arrayUtils.binarySearchGetFirst(array, 17) == 12);
 }
 
 
@@ -58,19 +58,19 @@ export function testBinarySearchGetFirstSuccessor() {
     // indices:  0  1  2  3  4  5  6  7  8   9   10  11  12  13  14
     let array = [1, 1, 2, 3, 4, 5, 7, 9, 10, 10, 11, 13, 20, 20, 21];
 
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 1) == 2, "unexpected first successor for item.");
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 2) == 3, "unexpected first successor for item.");
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 3) == 4, "unexpected first successor for item.");
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 10) == 10, "unexpected first successor for item.");
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 11) == 11, "unexpected first successor for item.");
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 20) == 14, "unexpected first successor for item.");
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 1) == 2);
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 2) == 3);
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 3) == 4);
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 10) == 10);
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 11) == 11);
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 20) == 14);
 
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 6) == 6, "unexpected first successor for item.");
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 8) == 7, "unexpected first successor for item.");
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 14) == 12, "unexpected first successor for item.");
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 15) == 12, "unexpected first successor for item.");
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 16) == 12, "unexpected first successor for item.");
-    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 17) == 12, "unexpected first successor for item.");
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 6) == 6);
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 8) == 7);
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 14) == 12);
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 15) == 12);
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 16) == 12);
+    assertTruth(arrayUtils.binarySearchGetFirstSuccessor(array, 17) == 12);
 }
 
 
@@ -78,19 +78,19 @@ export function testBinarySearchGetLast() {
     // indices:  0  1  2  3  4  5  6  7  8   9   10  11  12  13  14
     let array = [1, 1, 2, 3, 4, 5, 7, 9, 10, 10, 11, 13, 20, 20, 21];
 
-    assertTruth(arrayUtils.binarySearchGetLast(array, 1) == 1, "unexpected last occurance of item.");
-    assertTruth(arrayUtils.binarySearchGetLast(array, 2) == 2, "unexpected last occurance of item.");
-    assertTruth(arrayUtils.binarySearchGetLast(array, 3) == 3, "unexpected last occurance of item.");
-    assertTruth(arrayUtils.binarySearchGetLast(array, 10) == 9, "unexpected last occurance of item.");
-    assertTruth(arrayUtils.binarySearchGetLast(array, 11) == 10, "unexpected last occurance of item.");
-    assertTruth(arrayUtils.binarySearchGetLast(array, 20) == 13, "unexpected last occurance of item.");
+    assertTruth(arrayUtils.binarySearchGetLast(array, 1) == 1);
+    assertTruth(arrayUtils.binarySearchGetLast(array, 2) == 2);
+    assertTruth(arrayUtils.binarySearchGetLast(array, 3) == 3);
+    assertTruth(arrayUtils.binarySearchGetLast(array, 10) == 9);
+    assertTruth(arrayUtils.binarySearchGetLast(array, 11) == 10);
+    assertTruth(arrayUtils.binarySearchGetLast(array, 20) == 13);
 
-    assertTruth(arrayUtils.binarySearchGetLast(array, 6) == 6, "unexpected last occurance of item.");
-    assertTruth(arrayUtils.binarySearchGetLast(array, 8) == 7, "unexpected last occurance of item.");
-    assertTruth(arrayUtils.binarySearchGetLast(array, 14) == 12, "unexpected last occurance of item.");
-    assertTruth(arrayUtils.binarySearchGetLast(array, 15) == 12, "unexpected last occurance of item.");
-    assertTruth(arrayUtils.binarySearchGetLast(array, 16) == 12, "unexpected last occurance of item.");
-    assertTruth(arrayUtils.binarySearchGetLast(array, 17) == 12, "unexpected last occurance of item.");
+    assertTruth(arrayUtils.binarySearchGetLast(array, 6) == 6);
+    assertTruth(arrayUtils.binarySearchGetLast(array, 8) == 7);
+    assertTruth(arrayUtils.binarySearchGetLast(array, 14) == 12);
+    assertTruth(arrayUtils.binarySearchGetLast(array, 15) == 12);
+    assertTruth(arrayUtils.binarySearchGetLast(array, 16) == 12);
+    assertTruth(arrayUtils.binarySearchGetLast(array, 17) == 12);
 }
 
 
@@ -108,7 +108,7 @@ export function testInsertionSort() {
         }
 
         arrayUtils.insertionSort(array);
-        assertTruth(arrayUtils.isInSortOrder(array), "the array is not sorted properly.");
+        assertTruth(arrayUtils.isInSortOrder(array));
     }
 }
 
@@ -139,7 +139,7 @@ export function testQuickSelect() {
         }
 
         sort(array);
-        assertTruth(arrayUtils.isInSortOrder(array), "the array is not sorted properly.");
+        assertTruth(arrayUtils.isInSortOrder(array));
     }
 }
 
