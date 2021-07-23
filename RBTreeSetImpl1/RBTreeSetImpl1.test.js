@@ -4,7 +4,7 @@
  */
 
 
-import {assertTrue, assertThrows} from "../testUtils/testUtils.js";
+import {assertEquals, assertTrue, assertThrows} from "../testUtils/testUtils.js";
 import {RBTreeSetImpl1} from "./RBTreeSetImpl1.js";
 
 
@@ -12,7 +12,7 @@ export function testOverallMethods1() {
     let set = new RBTreeSetImpl1();
 
     set.debugVerifyIntegrity();
-    assertTrue(set.getSize() == 0);
+    assertEquals(0, set.getSize());
 
     set.rebalance();
     set.debugVerifyIntegrity();
@@ -20,107 +20,107 @@ export function testOverallMethods1() {
     set.add(1);
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 1);
+    assertEquals(1, set.getSize());
 
     assertTrue(set.has(1));
 
-    assertTrue(set.getItemByRank(0) == 1);
-    assertTrue(set.getRankOfItem(1) == 0);
+    assertEquals(1, set.getItemByRank(0));
+    assertEquals(0, set.getRankOfItem(1));
 
-    assertTrue(set.getLeastUpperBoundItem(0) == 1);
-    assertTrue(set.getLeastUpperBoundItem(1) == 1);
-    assertTrue(set.getLeastUpperBoundItem(2) == null);
+    assertEquals(1, set.getLeastUpperBoundItem(0));
+    assertEquals(1, set.getLeastUpperBoundItem(1));
+    assertEquals(null, set.getLeastUpperBoundItem(2));
 
-    assertTrue(set.getGreatestLowerBoundItem(0) == null);
-    assertTrue(set.getGreatestLowerBoundItem(1) == 1);
-    assertTrue(set.getGreatestLowerBoundItem(2) == 1);
+    assertEquals(null, set.getGreatestLowerBoundItem(0));
+    assertEquals(1, set.getGreatestLowerBoundItem(1));
+    assertEquals(1, set.getGreatestLowerBoundItem(2));
 
     set.add(2);
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 2);
+    assertEquals(2, set.getSize());
 
     assertTrue(set.has(2));
 
-    assertTrue(set.getItemByRank(1) == 2);
-    assertTrue(set.getRankOfItem(2) == 1);
+    assertEquals(2, set.getItemByRank(1));
+    assertEquals(1, set.getRankOfItem(2));
 
-    assertTrue(set.getLeastUpperBoundItem(1) == 1);
-    assertTrue(set.getLeastUpperBoundItem(2) == 2);
-    assertTrue(set.getLeastUpperBoundItem(3) == null);
+    assertEquals(1, set.getLeastUpperBoundItem(1));
+    assertEquals(2, set.getLeastUpperBoundItem(2));
+    assertEquals(null, set.getLeastUpperBoundItem(3));
 
-    assertTrue(set.getGreatestLowerBoundItem(1) == 1);
-    assertTrue(set.getGreatestLowerBoundItem(2) == 2);
-    assertTrue(set.getGreatestLowerBoundItem(3) == 2);
+    assertEquals(1, set.getGreatestLowerBoundItem(1));
+    assertEquals(2, set.getGreatestLowerBoundItem(2));
+    assertEquals(2, set.getGreatestLowerBoundItem(3));
 
     set.add(1);
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 2);
+    assertEquals(2, set.getSize());
 
     assertTrue(set.has(1));
 
-    assertTrue(set.getItemByRank(0) == 1);
-    assertTrue(set.getRankOfItem(1) == 0);
+    assertEquals(1, set.getItemByRank(0));
+    assertEquals(0, set.getRankOfItem(1));
 
     set.add(4);
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 3);
+    assertEquals(3, set.getSize());
 
     assertTrue(set.has(4));
 
-    assertTrue(set.getItemByRank(2) == 4);
-    assertTrue(set.getRankOfItem(4) == 2);
+    assertEquals(4, set.getItemByRank(2));
+    assertEquals(2, set.getRankOfItem(4));
 
-    assertTrue(set.getLeastUpperBoundItem(3) == 4);
-    assertTrue(set.getLeastUpperBoundItem(4) == 4);
-    assertTrue(set.getLeastUpperBoundItem(5) == null);
+    assertEquals(4, set.getLeastUpperBoundItem(3));
+    assertEquals(4, set.getLeastUpperBoundItem(4));
+    assertEquals(null, set.getLeastUpperBoundItem(5));
 
-    assertTrue(set.getGreatestLowerBoundItem(3) == 2);
-    assertTrue(set.getGreatestLowerBoundItem(4) == 4);
-    assertTrue(set.getGreatestLowerBoundItem(5) == 4);
+    assertEquals(2, set.getGreatestLowerBoundItem(3));
+    assertEquals(4, set.getGreatestLowerBoundItem(4));
+    assertEquals(4, set.getGreatestLowerBoundItem(5));
 
     set.add(2);
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 3);
+    assertEquals(3, set.getSize());
 
     assertTrue(set.has(2));
 
-    assertTrue(set.getItemByRank(1) == 2);
-    assertTrue(set.getRankOfItem(2) == 1);
+    assertEquals(2, set.getItemByRank(1));
+    assertEquals(1, set.getRankOfItem(2));
 
     set.add(3);
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 4);
+    assertEquals(4, set.getSize());
 
     assertTrue(set.has(3));
 
-    assertTrue(set.getItemByRank(2) == 3);
-    assertTrue(set.getRankOfItem(3) == 2);
+    assertEquals(3, set.getItemByRank(2));
+    assertEquals(2, set.getRankOfItem(3));
 
-    assertTrue(set.getItemByRank(3) == 4);
-    assertTrue(set.getRankOfItem(4) == 3);
+    assertEquals(4, set.getItemByRank(3));
+    assertEquals(3, set.getRankOfItem(4));
 
-    assertTrue(set.getLeastUpperBoundItem(2) == 2);
-    assertTrue(set.getLeastUpperBoundItem(3) == 3);
-    assertTrue(set.getLeastUpperBoundItem(4) == 4);
+    assertEquals(2, set.getLeastUpperBoundItem(2));
+    assertEquals(3, set.getLeastUpperBoundItem(3));
+    assertEquals(4, set.getLeastUpperBoundItem(4));
 
-    assertTrue(set.getGreatestLowerBoundItem(2) == 2);
-    assertTrue(set.getGreatestLowerBoundItem(3) == 3);
-    assertTrue(set.getGreatestLowerBoundItem(4) == 4);
+    assertEquals(2, set.getGreatestLowerBoundItem(2));
+    assertEquals(3, set.getGreatestLowerBoundItem(3));
+    assertEquals(4, set.getGreatestLowerBoundItem(4));
 
     set.add(3);
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 4);
+    assertEquals(4, set.getSize());
 
     assertTrue(set.has(3));
 
-    assertTrue(set.getItemByRank(2) == 3);
-    assertTrue(set.getRankOfItem(3) == 2);
+    assertEquals(3, set.getItemByRank(2));
+    assertEquals(2, set.getRankOfItem(3));
 
     set.rebalance();
     set.debugVerifyIntegrity();
@@ -128,7 +128,7 @@ export function testOverallMethods1() {
     set = set.clone();
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 4);
+    assertEquals(4, set.getSize());
 
     assertTrue(set.has(1));
     assertTrue(set.has(2));
@@ -138,44 +138,44 @@ export function testOverallMethods1() {
     assertTrue(!set.has(0));
     assertTrue(!set.has(5));
 
-    assertTrue(set.getItemByRank(0) == 1);
-    assertTrue(set.getItemByRank(1) == 2);
-    assertTrue(set.getItemByRank(2) == 3);
-    assertTrue(set.getItemByRank(3) == 4);
+    assertEquals(1, set.getItemByRank(0));
+    assertEquals(2, set.getItemByRank(1));
+    assertEquals(3, set.getItemByRank(2));
+    assertEquals(4, set.getItemByRank(3));
 
     assertThrows(() => set.getItemByRank(-1));
     assertThrows(() => set.getItemByRank(4));
 
-    assertTrue(set.getRankOfItem(-1) == 0);
-    assertTrue(set.getRankOfItem(1) == 0);
-    assertTrue(set.getRankOfItem(2) == 1);
-    assertTrue(set.getRankOfItem(3) == 2);
-    assertTrue(set.getRankOfItem(4) == 3);
-    assertTrue(set.getRankOfItem(5) == 4);
+    assertEquals(0, set.getRankOfItem(-1));
+    assertEquals(0, set.getRankOfItem(1));
+    assertEquals(1, set.getRankOfItem(2));
+    assertEquals(2, set.getRankOfItem(3));
+    assertEquals(3, set.getRankOfItem(4));
+    assertEquals(4, set.getRankOfItem(5));
 
     //assertThrows(() => set.getRankOfItem(5));
 
-    assertTrue(set.getLeastUpperBoundItem(0) == 1);
-    assertTrue(set.getLeastUpperBoundItem(1) == 1);
-    assertTrue(set.getLeastUpperBoundItem(2) == 2);
-    assertTrue(set.getLeastUpperBoundItem(3) == 3);
-    assertTrue(set.getLeastUpperBoundItem(4) == 4);
-    assertTrue(set.getLeastUpperBoundItem(5) == null);
+    assertEquals(1, set.getLeastUpperBoundItem(0));
+    assertEquals(1, set.getLeastUpperBoundItem(1));
+    assertEquals(2, set.getLeastUpperBoundItem(2));
+    assertEquals(3, set.getLeastUpperBoundItem(3));
+    assertEquals(4, set.getLeastUpperBoundItem(4));
+    assertEquals(null, set.getLeastUpperBoundItem(5));
 
-    assertTrue(set.getGreatestLowerBoundItem(0) == null);
-    assertTrue(set.getGreatestLowerBoundItem(1) == 1);
-    assertTrue(set.getGreatestLowerBoundItem(2) == 2);
-    assertTrue(set.getGreatestLowerBoundItem(3) == 3);
-    assertTrue(set.getGreatestLowerBoundItem(4) == 4);
-    assertTrue(set.getGreatestLowerBoundItem(5) == 4);
+    assertEquals(null, set.getGreatestLowerBoundItem(0));
+    assertEquals(1, set.getGreatestLowerBoundItem(1));
+    assertEquals(2, set.getGreatestLowerBoundItem(2));
+    assertEquals(3, set.getGreatestLowerBoundItem(3));
+    assertEquals(4, set.getGreatestLowerBoundItem(4));
+    assertEquals(4, set.getGreatestLowerBoundItem(5));
 
     {
         let array = set.toArray();
 
-        assertTrue(array.length == 4);
+        assertEquals(4, array.length);
 
         for (let i = 0; i < array.length; ++i) {
-            assertTrue(array[i] == i + 1);
+            assertEquals(i + 1, array[i]);
         }
     }
 
@@ -184,96 +184,96 @@ export function testOverallMethods1() {
 
         set.doForEachItemInOrder(i => array.push(i));
 
-        assertTrue(array.length == 4);
+        assertEquals(4, array.length);
 
         for (let i = 0; i < array.length; ++i) {
-            assertTrue(array[i] == i + 1);
+            assertEquals(i + 1, array[i]);
         }
     }
 
     set.remove(1);
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 3);
+    assertEquals(3, set.getSize());
 
     assertTrue(!set.has(1));
 
-    assertTrue(set.getItemByRank(0) == 2);
-    assertTrue(set.getRankOfItem(2) == 0);
+    assertEquals(2, set.getItemByRank(0));
+    assertEquals(0, set.getRankOfItem(2));
 
-    assertTrue(set.getItemByRank(1) == 3);
-    assertTrue(set.getRankOfItem(3) == 1);
+    assertEquals(3, set.getItemByRank(1));
+    assertEquals(1, set.getRankOfItem(3));
 
-    assertTrue(set.getItemByRank(2) == 4);
-    assertTrue(set.getRankOfItem(4) == 2);
+    assertEquals(4, set.getItemByRank(2));
+    assertEquals(2, set.getRankOfItem(4));
 
-    assertTrue(set.getLeastUpperBoundItem(0) == 2);
-    assertTrue(set.getLeastUpperBoundItem(1) == 2);
-    assertTrue(set.getLeastUpperBoundItem(3) == 3);
+    assertEquals(2, set.getLeastUpperBoundItem(0));
+    assertEquals(2, set.getLeastUpperBoundItem(1));
+    assertEquals(3, set.getLeastUpperBoundItem(3));
 
-    assertTrue(set.getGreatestLowerBoundItem(0) == null);
-    assertTrue(set.getGreatestLowerBoundItem(1) == null);
-    assertTrue(set.getGreatestLowerBoundItem(3) == 3);
+    assertEquals(null, set.getGreatestLowerBoundItem(0));
+    assertEquals(null, set.getGreatestLowerBoundItem(1));
+    assertEquals(3, set.getGreatestLowerBoundItem(3));
 
     //assertThrows(() => set.remove(1));
 
     set.remove(3);
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 2);
+    assertEquals(2, set.getSize());
 
     assertTrue(!set.has(3));
 
-    assertTrue(set.getItemByRank(0) == 2);
-    assertTrue(set.getRankOfItem(2) == 0);
+    assertEquals(2, set.getItemByRank(0));
+    assertEquals(0, set.getRankOfItem(2));
 
-    assertTrue(set.getItemByRank(1) == 4);
-    assertTrue(set.getRankOfItem(4) == 1);
+    assertEquals(4, set.getItemByRank(1));
+    assertEquals(1, set.getRankOfItem(4));
 
-    assertTrue(set.getLeastUpperBoundItem(1) == 2);
-    assertTrue(set.getLeastUpperBoundItem(2) == 2);
-    assertTrue(set.getLeastUpperBoundItem(3) == 4);
+    assertEquals(2, set.getLeastUpperBoundItem(1));
+    assertEquals(2, set.getLeastUpperBoundItem(2));
+    assertEquals(4, set.getLeastUpperBoundItem(3));
 
-    assertTrue(set.getGreatestLowerBoundItem(1) == null);
-    assertTrue(set.getGreatestLowerBoundItem(2) == 2);
-    assertTrue(set.getGreatestLowerBoundItem(3) == 2);
+    assertEquals(null, set.getGreatestLowerBoundItem(1));
+    assertEquals(2, set.getGreatestLowerBoundItem(2));
+    assertEquals(2, set.getGreatestLowerBoundItem(3));
 
     //assertThrows(() => set.remove(3));
 
     set.remove(2);
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 1);
+    assertEquals(1, set.getSize());
 
     assertTrue(!set.has(2));
 
-    assertTrue(set.getItemByRank(0) == 4);
-    assertTrue(set.getRankOfItem(4) == 0);
+    assertEquals(4, set.getItemByRank(0));
+    assertEquals(0, set.getRankOfItem(4));
 
-    assertTrue(set.getLeastUpperBoundItem(2) == 4);
-    assertTrue(set.getLeastUpperBoundItem(3) == 4);
-    assertTrue(set.getLeastUpperBoundItem(4) == 4);
+    assertEquals(4, set.getLeastUpperBoundItem(2));
+    assertEquals(4, set.getLeastUpperBoundItem(3));
+    assertEquals(4, set.getLeastUpperBoundItem(4));
 
-    assertTrue(set.getGreatestLowerBoundItem(3) == null);
-    assertTrue(set.getGreatestLowerBoundItem(4) == 4);
-    assertTrue(set.getGreatestLowerBoundItem(5) == 4);
+    assertEquals(null, set.getGreatestLowerBoundItem(3));
+    assertEquals(4, set.getGreatestLowerBoundItem(4));
+    assertEquals(4, set.getGreatestLowerBoundItem(5));
 
     //assertThrows(() => set.remove(2));
 
     set.remove(4);
     set.debugVerifyIntegrity();
 
-    assertTrue(set.getSize() == 0);
+    assertEquals(0, set.getSize());
 
     assertTrue(!set.has(4));
 
-    assertTrue(set.getLeastUpperBoundItem(0) == null);
-    assertTrue(set.getLeastUpperBoundItem(1) == null);
-    assertTrue(set.getLeastUpperBoundItem(3) == null);
+    assertEquals(null, set.getLeastUpperBoundItem(0));
+    assertEquals(null, set.getLeastUpperBoundItem(1));
+    assertEquals(null, set.getLeastUpperBoundItem(3));
 
-    assertTrue(set.getGreatestLowerBoundItem(0) == null);
-    assertTrue(set.getGreatestLowerBoundItem(1) == null);
-    assertTrue(set.getGreatestLowerBoundItem(2) == null);
+    assertEquals(null, set.getGreatestLowerBoundItem(0));
+    assertEquals(null, set.getGreatestLowerBoundItem(1));
+    assertEquals(null, set.getGreatestLowerBoundItem(2));
 
     //assertThrows(() => set.remove(4));
 }
@@ -287,7 +287,7 @@ export function testOverallMethods2() {
         set.add(i);
         set.debugVerifyIntegrity();
 
-        assertTrue(set.getSize() == i + 1);
+        assertEquals(i + 1, set.getSize());
     }
 
     set = set.clone();
@@ -303,39 +303,39 @@ export function testOverallMethods2() {
     assertTrue(!set.has(sizeOfTests));
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        assertTrue(set.getItemByRank(i) == i);
+        assertEquals(i, set.getItemByRank(i));
     }
 
     assertThrows(() => set.getItemByRank(-1));
     assertThrows(() => set.getItemByRank(sizeOfTests));
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        assertTrue(set.getRankOfItem(i) == i);
+        assertEquals(i, set.getRankOfItem(i));
     }
 
-    assertTrue(set.getRankOfItem(-1) == 0);
-    assertTrue(set.getRankOfItem(sizeOfTests) == sizeOfTests);
+    assertEquals(0, set.getRankOfItem(-1));
+    assertEquals(sizeOfTests, set.getRankOfItem(sizeOfTests));
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        assertTrue(set.getLeastUpperBoundItem(i) == i);
+        assertEquals(i, set.getLeastUpperBoundItem(i));
     }
 
-    assertTrue(set.getLeastUpperBoundItem(-1) == 0);
-    assertTrue(set.getLeastUpperBoundItem(sizeOfTests) == null);
+    assertEquals(0, set.getLeastUpperBoundItem(-1));
+    assertEquals(null, set.getLeastUpperBoundItem(sizeOfTests));
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        assertTrue(set.getGreatestLowerBoundItem(i) == i);
+        assertEquals(i, set.getGreatestLowerBoundItem(i));
     }
 
-    assertTrue(set.getGreatestLowerBoundItem(-1) == null);
-    assertTrue(set.getGreatestLowerBoundItem(sizeOfTests) == sizeOfTests - 1);
+    assertEquals(null, set.getGreatestLowerBoundItem(-1));
+    assertEquals(sizeOfTests - 1, set.getGreatestLowerBoundItem(sizeOfTests));
 
     for (let i = 0; i < sizeOfTests; ++i) {
         set.remove(i);
         set.debugVerifyIntegrity();
 
         assertTrue(!set.has(i), "this is an unexpected item in the set.");
-        assertTrue(set.getSize() == sizeOfTests - i - 1);
+        assertEquals(sizeOfTests - i - 1, set.getSize());
     }
 
     set.rebalance();
@@ -345,7 +345,7 @@ export function testOverallMethods2() {
         set.add(i);
         set.debugVerifyIntegrity();
 
-        assertTrue(set.getSize() == sizeOfTests - i);
+        assertEquals(sizeOfTests - i, set.getSize());
     }
 
     set.rebalance();
@@ -355,7 +355,7 @@ export function testOverallMethods2() {
         set.remove(i);
         set.debugVerifyIntegrity();
 
-        assertTrue(set.getSize() == sizeOfTests - i - 1);
+        assertEquals(sizeOfTests - i - 1, set.getSize());
     }
 
     set.rebalance();
@@ -365,7 +365,7 @@ export function testOverallMethods2() {
         set.add(i);
         set.debugVerifyIntegrity();
 
-        assertTrue(set.getSize() == sizeOfTests - i);
+        assertEquals(sizeOfTests - i, set.getSize());
     }
 
     set.rebalance();
@@ -375,7 +375,7 @@ export function testOverallMethods2() {
         set.remove(i);
         set.debugVerifyIntegrity();
 
-        assertTrue(set.getSize() == i);
+        assertEquals(i, set.getSize());
     }
 }
 
@@ -391,8 +391,8 @@ export function testOverallMethods3() {
         set.add(item);
         set.debugVerifyIntegrity();
         ref.add(item);
-        assertTrue(set.has(item) == ref.has(item));
-        assertTrue(set.getSize() == ref.size);
+        assertEquals(ref.has(item), set.has(item));
+        assertEquals(ref.size, set.getSize());
     }
 
     set.rebalance();
@@ -409,8 +409,8 @@ export function testOverallMethods3() {
             //assertThrows(() => set.remove(item));
         }
 
-        assertTrue(set.has(item) == ref.has(item));
-        assertTrue(set.getSize() == ref.size);
+        assertEquals(ref.has(item), set.has(item));
+        assertEquals(ref.size, set.getSize());
     }
 }
 

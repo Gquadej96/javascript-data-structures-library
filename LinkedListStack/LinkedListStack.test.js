@@ -4,7 +4,7 @@
  */
 
 
-import {assertTrue, assertThrows} from "../testUtils/testUtils.js";
+import {assertEquals, assertThrows} from "../testUtils/testUtils.js";
 import {LinkedListStack} from "./LinkedListStack.js";
 import * as comparators from "../comparators/comparators.js";
 
@@ -13,70 +13,70 @@ export function testOverallMethods1() {
     let stack = new LinkedListStack();
 
     stack.debugVerifyIntegrity();
-    assertTrue(stack.getSize() == 0);
+    assertEquals(0, stack.getSize());
 
     assertThrows(() => stack.pop());
 
     stack.push(1);
     stack.debugVerifyIntegrity();
 
-    assertTrue(stack.peek() == 1);
-    assertTrue(stack.getSize() == 1);
+    assertEquals(1, stack.peek());
+    assertEquals(1, stack.getSize());
 
     stack.push(2);
     stack.debugVerifyIntegrity();
 
-    assertTrue(stack.peek() == 2);
-    assertTrue(stack.getSize() == 2);
+    assertEquals(2, stack.peek());
+    assertEquals(2, stack.getSize());
 
     stack.push(3);
     stack.debugVerifyIntegrity();
 
-    assertTrue(stack.peek() == 3);
-    assertTrue(stack.getSize() == 3);
+    assertEquals(3, stack.peek());
+    assertEquals(3, stack.getSize());
 
     stack.push(4);
     stack.debugVerifyIntegrity();
 
-    assertTrue(stack.peek() == 4);
-    assertTrue(stack.getSize() == 4);
+    assertEquals(4, stack.peek());
+    assertEquals(4, stack.getSize());
 
     stack = stack.clone();
     stack.debugVerifyIntegrity();
 
-    assertTrue(stack.pop() == 4);
+    assertEquals(4, stack.pop());
 
-    assertTrue(stack.peek() == 3);
-    assertTrue(stack.getSize() == 3);
+    assertEquals(3, stack.peek());
+    assertEquals(3, stack.getSize());
 
     stack.push(1);
     stack.debugVerifyIntegrity();
 
-    assertTrue(stack.peek() == 1);
-    assertTrue(stack.getSize() == 4);
+    assertEquals(1, stack.peek());
+    assertEquals(4, stack.getSize());
 
-    assertTrue(stack.pop() == 1);
+    assertEquals(1, stack.pop());
     stack.debugVerifyIntegrity();
 
-    assertTrue(stack.peek() == 3);
-    assertTrue(stack.getSize() == 3);
+    assertEquals(3, stack.peek());
+    assertEquals(3, stack.getSize());
 
-    assertTrue(stack.pop() == 3);
+    assertEquals(3, stack.pop());
     stack.debugVerifyIntegrity();
 
-    assertTrue(stack.peek() == 2);
-    assertTrue(stack.getSize() == 2);
+    assertEquals(2, stack.peek());
+    assertEquals(2, stack.getSize());
 
-    assertTrue(stack.pop() == 2);
+    assertEquals(2, stack.pop());
     stack.debugVerifyIntegrity();
 
-    assertTrue(stack.peek() == 1);
-    assertTrue(stack.getSize() == 1);
+    assertEquals(1, stack.peek());
+    assertEquals(1, stack.getSize());
 
-    assertTrue(stack.pop() == 1);
+    assertEquals(1, stack.pop());
     stack.debugVerifyIntegrity();
 
-    assertTrue(stack.getSize() == 0);
+    assertEquals(0, stack.getSize());
 
     assertThrows(() => stack.pop());
     assertThrows(() => stack.peek());
@@ -94,7 +94,7 @@ export function testOverallMethods2() {
         stack.push(item);
         stack.debugVerifyIntegrity();
         ref.push(item);
-        assertTrue(stack.getSize() == i + 1);
+        assertEquals(i + 1, stack.getSize());
     }
 
     ref.reverse();
@@ -104,11 +104,11 @@ export function testOverallMethods2() {
     for (let i = 0; i < sizeOfTests; ++i) {
         array[i] = stack.pop();
         stack.debugVerifyIntegrity();
-        assertTrue(stack.getSize() == sizeOfTests - i - 1);
+        assertEquals(sizeOfTests - i - 1, stack.getSize());
     }
 
     let comparator = new comparators.ArrayElementComparator();
     
-    assertTrue(comparator.compare(array, ref) == 0);
+    assertEquals(0, comparator.compare(array, ref));
 }
 

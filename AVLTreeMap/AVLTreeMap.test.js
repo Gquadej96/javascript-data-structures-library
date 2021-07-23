@@ -4,37 +4,37 @@
  */
 
 
-import {assertTrue} from "../testUtils/testUtils.js";
+import {assertEquals, assertTrue} from "../testUtils/testUtils.js";
 import {AVLTreeMap} from "./AVLTreeMap.js";
 
 
 export function testOverallMethods1() {
     let map = new AVLTreeMap();
 
-    assertTrue(map.getSize() == 0);
+    assertEquals(0, map.getSize());
 
     map.set(1, 2);
 
     assertTrue(map.has(1));
-    assertTrue(map.get(1) == 2);
-    assertTrue(map.getSize() == 1);
+    assertEquals(2, map.get(1));
+    assertEquals(1, map.getSize());
 
     map.set(1, 3);
 
     assertTrue(map.has(1));
-    assertTrue(map.get(1) == 3);
-    assertTrue(map.getSize() == 1);
-    assertTrue(map.getRankOfKey(1) == 0);
+    assertEquals(3, map.get(1));
+    assertEquals(1, map.getSize());
+    assertEquals(0, map.getRankOfKey(1));
 
     map.set(2, 4);
 
     assertTrue(map.has(2));
-    assertTrue(map.get(2) == 4);
-    assertTrue(map.getSize() == 2);
-    assertTrue(map.getRankOfKey(2) == 1);
+    assertEquals(4, map.get(2));
+    assertEquals(2, map.getSize());
+    assertEquals(1, map.getRankOfKey(2));
 
-    assertTrue(map.getKeyByRank(0) == 1);
-    assertTrue(map.getKeyByRank(1) == 2);
+    assertEquals(1, map.getKeyByRank(0));
+    assertEquals(2, map.getKeyByRank(1));
 }
 
 
@@ -44,7 +44,7 @@ export function testOverallMethods2() {
 
     for (let i = 0; i < sizeOfTests; ++i) {
         map.set(i, i + 1);
-        assertTrue(map.getSize() == i + 1);
+        assertEquals(i + 1, map.getSize());
     }
 
     for (let i = 0; i < sizeOfTests; ++i) {
@@ -52,40 +52,40 @@ export function testOverallMethods2() {
     }
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        assertTrue(map.get(i) == i + 1);
+        assertEquals(i + 1, map.get(i));
     }
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        assertTrue(map.getKeyByRank(i) == i);
+        assertEquals(i, map.getKeyByRank(i));
     }
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        assertTrue(map.getRankOfKey(i) == i);
+        assertEquals(i, map.getRankOfKey(i));
     }
 
     for (let i = 0; i < sizeOfTests; ++i) {
         map.set(i, null);
         assertTrue(!map.has(i))
-        assertTrue(map.getSize() == sizeOfTests - i - 1);
+        assertEquals(sizeOfTests - i - 1, map.getSize());
     }
 
     for (let i = sizeOfTests - 1; i >= 0; --i) {
         map.set(i, i + 1);
-        assertTrue(map.getSize() == sizeOfTests - i);
+        assertEquals(sizeOfTests - i, map.getSize());
     }
 
     for (let i = 0; i < Math.floor(sizeOfTests / 2); ++i) {
         map.set(i, null);
-        assertTrue(map.getSize() == sizeOfTests - i - 1);
+        assertEquals(sizeOfTests - i - 1, map.getSize());
     }
 
     for (let i = Math.floor(sizeOfTests / 2) - 1; i >= 0; --i) {
         map.set(i, i + 1);
-        assertTrue(map.getSize() == sizeOfTests - i);
+        assertEquals(sizeOfTests - i, map.getSize());
     }
 
     for (let i = sizeOfTests - 1; i >= 0; --i) {
         map.set(i, null);
-        assertTrue(map.getSize() == i);
+        assertEquals(i, map.getSize());
     }
 }

@@ -4,7 +4,7 @@
  */
 
 
-import {assertTrue, assertThrows} from "../testUtils/testUtils.js";
+import {assertEquals, assertThrows} from "../testUtils/testUtils.js";
 import {LinkedList} from "./LinkedList.js";
 
 
@@ -12,7 +12,7 @@ export function testOverallMethods1() {
     let list = new LinkedList();
 
     list.debugVerifyIntegrity();
-    assertTrue(list.getSize() == 0);
+    assertEquals(0, list.getSize());
 
     list.rebalance();
     list.debugVerifyIntegrity();
@@ -20,9 +20,9 @@ export function testOverallMethods1() {
     list.add(0, 1);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 1);
+    assertEquals(1, list.getSize());
 
-    assertTrue(list.get(0) == 1);
+    assertEquals(1, list.get(0));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(1));
@@ -30,10 +30,10 @@ export function testOverallMethods1() {
     list.add(1, 2);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 2);
+    assertEquals(2, list.getSize());
 
-    assertTrue(list.get(0) == 1);
-    assertTrue(list.get(1) == 2);
+    assertEquals(1, list.get(0));
+    assertEquals(2, list.get(1));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(2));
@@ -41,11 +41,11 @@ export function testOverallMethods1() {
     list.add(1, 3);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 3);
+    assertEquals(3, list.getSize());
 
-    assertTrue(list.get(0) == 1);
-    assertTrue(list.get(1) == 3);
-    assertTrue(list.get(2) == 2);
+    assertEquals(1, list.get(0));
+    assertEquals(3, list.get(1));
+    assertEquals(2, list.get(2));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(3));
@@ -53,12 +53,12 @@ export function testOverallMethods1() {
     list.add(0, 4);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 4);
+    assertEquals(4, list.getSize());
 
-    assertTrue(list.get(0) == 4);
-    assertTrue(list.get(1) == 1);
-    assertTrue(list.get(2) == 3);
-    assertTrue(list.get(3) == 2);
+    assertEquals(4, list.get(0));
+    assertEquals(1, list.get(1));
+    assertEquals(3, list.get(2));
+    assertEquals(2, list.get(3));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(4));
@@ -66,13 +66,13 @@ export function testOverallMethods1() {
     list.add(2, 5);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 5);
+    assertEquals(5, list.getSize());
 
-    assertTrue(list.get(0) == 4);
-    assertTrue(list.get(1) == 1);
-    assertTrue(list.get(2) == 5);
-    assertTrue(list.get(3) == 3);
-    assertTrue(list.get(4) == 2);
+    assertEquals(4, list.get(0));
+    assertEquals(1, list.get(1));
+    assertEquals(5, list.get(2));
+    assertEquals(3, list.get(3));
+    assertEquals(2, list.get(4));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(5));
@@ -80,13 +80,13 @@ export function testOverallMethods1() {
     list.set(0, 1);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 5);
+    assertEquals(5, list.getSize());
 
-    assertTrue(list.get(0) == 1);
-    assertTrue(list.get(1) == 1);
-    assertTrue(list.get(2) == 5);
-    assertTrue(list.get(3) == 3);
-    assertTrue(list.get(4) == 2);
+    assertEquals(1, list.get(0));
+    assertEquals(1, list.get(1));
+    assertEquals(5, list.get(2));
+    assertEquals(3, list.get(3));
+    assertEquals(2, list.get(4));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(5));
@@ -94,13 +94,13 @@ export function testOverallMethods1() {
     list.set(1, 2);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 5);
+    assertEquals(5, list.getSize());
 
-    assertTrue(list.get(0) == 1);
-    assertTrue(list.get(1) == 2);
-    assertTrue(list.get(2) == 5);
-    assertTrue(list.get(3) == 3);
-    assertTrue(list.get(4) == 2);
+    assertEquals(1, list.get(0));
+    assertEquals(2, list.get(1));
+    assertEquals(5, list.get(2));
+    assertEquals(3, list.get(3));
+    assertEquals(2, list.get(4));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(5));
@@ -108,13 +108,13 @@ export function testOverallMethods1() {
     list.set(2, 3);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 5);
+    assertEquals(5, list.getSize());
 
-    assertTrue(list.get(0) == 1);
-    assertTrue(list.get(1) == 2);
-    assertTrue(list.get(2) == 3);
-    assertTrue(list.get(3) == 3);
-    assertTrue(list.get(4) == 2);
+    assertEquals(1, list.get(0));
+    assertEquals(2, list.get(1));
+    assertEquals(3, list.get(2));
+    assertEquals(3, list.get(3));
+    assertEquals(2, list.get(4));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(5));
@@ -122,13 +122,13 @@ export function testOverallMethods1() {
     list.set(3, 4);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 5);
+    assertEquals(5, list.getSize());
 
-    assertTrue(list.get(0) == 1);
-    assertTrue(list.get(1) == 2);
-    assertTrue(list.get(2) == 3);
-    assertTrue(list.get(3) == 4);
-    assertTrue(list.get(4) == 2);
+    assertEquals(1, list.get(0));
+    assertEquals(2, list.get(1));
+    assertEquals(3, list.get(2));
+    assertEquals(4, list.get(3));
+    assertEquals(2, list.get(4));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(5));
@@ -136,13 +136,13 @@ export function testOverallMethods1() {
     list.set(4, 5);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 5);
+    assertEquals(5, list.getSize());
 
-    assertTrue(list.get(0) == 1);
-    assertTrue(list.get(1) == 2);
-    assertTrue(list.get(2) == 3);
-    assertTrue(list.get(3) == 4);
-    assertTrue(list.get(4) == 5);
+    assertEquals(1, list.get(0));
+    assertEquals(2, list.get(1));
+    assertEquals(3, list.get(2));
+    assertEquals(4, list.get(3));
+    assertEquals(5, list.get(4));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(5));
@@ -156,21 +156,21 @@ export function testOverallMethods1() {
     list = list.clone();
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 5);
+    assertEquals(5, list.getSize());
 
-    assertTrue(list.get(0) == 1);
-    assertTrue(list.get(1) == 2);
-    assertTrue(list.get(2) == 3);
-    assertTrue(list.get(3) == 4);
-    assertTrue(list.get(4) == 5);
+    assertEquals(1, list.get(0));
+    assertEquals(2, list.get(1));
+    assertEquals(3, list.get(2));
+    assertEquals(4, list.get(3));
+    assertEquals(5, list.get(4));
 
     {
         let array = list.toArray();
 
-        assertTrue(array.length == 5);
+        assertEquals(5, array.length);
 
         for (let i = 0; i < array.length; ++i) {
-            assertTrue(array[i] == i + 1);
+            assertEquals(i + 1, array[i]);
         }
     }
 
@@ -179,22 +179,22 @@ export function testOverallMethods1() {
 
         list.doForEachItemInOrder(i => array.push(i));
 
-        assertTrue(array.length == 5);
+        assertEquals(5, array.length);
 
         for (let i = 0; i < array.length; ++i) {
-            assertTrue(array[i] == i + 1);
+            assertEquals(i + 1, array[i]);
         }
     }
 
     list.remove(1);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 4);
+    assertEquals(4, list.getSize());
 
-    assertTrue(list.get(0) == 1);
-    assertTrue(list.get(1) == 3);
-    assertTrue(list.get(2) == 4);
-    assertTrue(list.get(3) == 5);
+    assertEquals(1, list.get(0));
+    assertEquals(3, list.get(1));
+    assertEquals(4, list.get(2));
+    assertEquals(5, list.get(3));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(4));
@@ -202,11 +202,11 @@ export function testOverallMethods1() {
     list.remove(3);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 3);
+    assertEquals(3, list.getSize());
 
-    assertTrue(list.get(0) == 1);
-    assertTrue(list.get(1) == 3);
-    assertTrue(list.get(2) == 4);
+    assertEquals(1, list.get(0));
+    assertEquals(3, list.get(1));
+    assertEquals(4, list.get(2));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(3));
@@ -214,10 +214,10 @@ export function testOverallMethods1() {
     list.remove(2);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 2);
+    assertEquals(2, list.getSize());
 
-    assertTrue(list.get(0) == 1);
-    assertTrue(list.get(1) == 3);
+    assertEquals(1, list.get(0));
+    assertEquals(3, list.get(1));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(2));
@@ -225,9 +225,9 @@ export function testOverallMethods1() {
     list.remove(0);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 1);
+    assertEquals(1, list.getSize());
 
-    assertTrue(list.get(0) == 3);
+    assertEquals(3, list.get(0));
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(1));
@@ -235,7 +235,7 @@ export function testOverallMethods1() {
     list.remove(0);
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == 0);
+    assertEquals(0, list.getSize());
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(0));
@@ -249,7 +249,7 @@ export function testOverallMethods2() {
     for (let i = 0; i < sizeOfTests; ++i) {
         list.add(i, i);
         list.debugVerifyIntegrity();
-        assertTrue(list.getSize() == i + 1);
+        assertEquals(i + 1, list.getSize());
     }
 
     list = list.clone();
@@ -258,17 +258,17 @@ export function testOverallMethods2() {
     list.debugVerifyIntegrity();
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        assertTrue(list.get(i) == i);
+        assertEquals(i, list.get(i));
     }
 
     assertThrows(() => list.get(-1));
     assertThrows(() => list.get(sizeOfTests));
 
     for (let i = 0; i < sizeOfTests; ++i) {
-        assertTrue(list.get(0) == i);
+        assertEquals(i, list.get(0));
         list.remove(0);
         list.debugVerifyIntegrity();
-        assertTrue(list.getSize() == sizeOfTests - i - 1);
+        assertEquals(sizeOfTests - i - 1, list.getSize());
     }
 
     list.rebalance();
@@ -293,10 +293,10 @@ export function testOverallMethods3() {
     list.rebalance();
     list.debugVerifyIntegrity();
 
-    assertTrue(list.getSize() == ref.length);
+    assertEquals(ref.length, list.getSize());
 
     for (let i = 0; i < ref.length; ++i) {
-        assertTrue(list.get(i) == ref[i]);
+        assertEquals(ref[i], list.get(i));
     }
 
     for (let i = 0; i < sizeOfTests; ++i) {
@@ -306,10 +306,10 @@ export function testOverallMethods3() {
         ref.splice(index, 1);
     }
 
-    assertTrue(list.getSize() == ref.length);
+    assertEquals(ref.length, list.getSize());
 
     for (let i = 0; i < ref.length; ++i) {
-        assertTrue(list.get(i) == ref[i]);
+        assertEquals(ref[i], list.get(i));
     }
 }
 

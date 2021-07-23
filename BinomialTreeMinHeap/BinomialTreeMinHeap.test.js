@@ -4,7 +4,7 @@
  */
 
 
-import {assertTrue, assertThrows} from "../testUtils/testUtils.js";
+import {assertEquals, assertThrows} from "../testUtils/testUtils.js";
 import {BinomialTreeMinHeap} from "./BinomialTreeMinHeap.js";
 import * as arrayUtils from "../arrayUtils/arrayUtils.js";
 import * as comparators from "../comparators/comparators.js";
@@ -14,70 +14,70 @@ export function testOverallMethods1() {
     let heap = new BinomialTreeMinHeap();
 
     heap.debugVerifyIntegrity();
-    assertTrue(heap.getSize() == 0);
+    assertEquals(0, heap.getSize());
 
     assertThrows(() => heap.dequeue());
 
     heap.enqueue(1);
     heap.debugVerifyIntegrity();
 
-    assertTrue(heap.peek() == 1);
-    assertTrue(heap.getSize() == 1);
+    assertEquals(1, heap.peek());
+    assertEquals(1, heap.getSize());
 
     heap.enqueue(2);
     heap.debugVerifyIntegrity();
 
-    assertTrue(heap.peek() == 1);
-    assertTrue(heap.getSize() == 2);
+    assertEquals(1, heap.peek());
+    assertEquals(2, heap.getSize());
 
     heap.enqueue(3);
     heap.debugVerifyIntegrity();
 
-    assertTrue(heap.peek() == 1);
-    assertTrue(heap.getSize() == 3);
+    assertEquals(1, heap.peek());
+    assertEquals(3, heap.getSize());
 
     heap.enqueue(4);
     heap.debugVerifyIntegrity();
 
-    assertTrue(heap.peek() == 1);
-    assertTrue(heap.getSize() == 4);
+    assertEquals(1, heap.peek());
+    assertEquals(4, heap.getSize());
 
     heap = heap.clone();
     heap.debugVerifyIntegrity();
 
-    assertTrue(heap.dequeue() == 1);
+    assertEquals(1, heap.dequeue());
 
-    assertTrue(heap.peek() == 2);
-    assertTrue(heap.getSize() == 3);
+    assertEquals(2, heap.peek());
+    assertEquals(3, heap.getSize());
 
     heap.enqueue(1);
     heap.debugVerifyIntegrity();
 
-    assertTrue(heap.peek() == 1);
-    assertTrue(heap.getSize() == 4);
+    assertEquals(1, heap.peek());
+    assertEquals(4, heap.getSize());
 
-    assertTrue(heap.dequeue() == 1);
+    assertEquals(1, heap.dequeue());
     heap.debugVerifyIntegrity();
 
-    assertTrue(heap.peek() == 2);
-    assertTrue(heap.getSize() == 3);
+    assertEquals(2, heap.peek());
+    assertEquals(3, heap.getSize());
 
-    assertTrue(heap.dequeue() == 2);
+    assertEquals(2, heap.dequeue());
     heap.debugVerifyIntegrity();
 
-    assertTrue(heap.peek() == 3);
-    assertTrue(heap.getSize() == 2);
+    assertEquals(3, heap.peek());
+    assertEquals(2, heap.getSize());
 
-    assertTrue(heap.dequeue() == 3);
+    assertEquals(3, heap.dequeue());
     heap.debugVerifyIntegrity();
 
-    assertTrue(heap.peek() == 4);
-    assertTrue(heap.getSize() == 1);
+    assertEquals(4, heap.peek());
+    assertEquals(1, heap.getSize());
 
-    assertTrue(heap.dequeue() == 4);
+    assertEquals(4, heap.dequeue());
     heap.debugVerifyIntegrity();
 
-    assertTrue(heap.getSize() == 0);
+    assertEquals(0, heap.getSize());
 
     assertThrows(() => heap.dequeue());
     assertThrows(() => heap.peek());
@@ -95,7 +95,7 @@ export function testOverallMethods2() {
         heap.enqueue(item);
         heap.debugVerifyIntegrity();
         ref[i] = item;
-        assertTrue(heap.getSize() == i + 1);
+        assertEquals(i + 1, heap.getSize());
     }
 
     arrayUtils.heapSort(ref);
@@ -105,11 +105,11 @@ export function testOverallMethods2() {
     for (let i = 0; i < sizeOfTests; ++i) {
         array[i] = heap.dequeue();
         heap.debugVerifyIntegrity();
-        assertTrue(heap.getSize() == sizeOfTests - i - 1);
+        assertEquals(sizeOfTests - i - 1, heap.getSize());
     }
 
     let comparator = new comparators.ArrayElementComparator();
 
-    assertTrue(comparator.compare(array, ref) == 0);
+    assertEquals(0, comparator.compare(array, ref));
 }
 

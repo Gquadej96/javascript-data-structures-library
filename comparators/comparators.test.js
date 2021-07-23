@@ -4,7 +4,7 @@
  */
 
 
-import {assertTrue} from "../testUtils/testUtils.js";
+import {assertEquals, assertTrue} from "../testUtils/testUtils.js";
 import * as comparators from "./comparators.js";
 import {RBTreeSet} from "../RBTreeSet/RBTreeSet.js";
 
@@ -16,24 +16,24 @@ export function testObjectReferenceComparator() {
     let c0c2 = comparator.compare(objects[0], objects[2]);
     let c1c2 = comparator.compare(objects[1], objects[2]);
 
-    assertTrue(c0c1 == comparator.compare(objects[0], objects[1]));
-    assertTrue(c0c2 == comparator.compare(objects[0], objects[2]));
-    assertTrue(c1c2 == comparator.compare(objects[1], objects[2]));
+    assertEquals(comparator.compare(objects[0], objects[1]), c0c1);
+    assertEquals(comparator.compare(objects[0], objects[2]), c0c2);
+    assertEquals(comparator.compare(objects[1], objects[2]), c1c2);
     
-    assertTrue(c0c1 == -comparator.compare(objects[1], objects[0]));
-    assertTrue(c0c2 == -comparator.compare(objects[2], objects[0]));
-    assertTrue(c1c2 == -comparator.compare(objects[2], objects[1]));
+    assertEquals(-comparator.compare(objects[1], objects[0]), c0c1);
+    assertEquals(-comparator.compare(objects[2], objects[0]), c0c2);
+    assertEquals(-comparator.compare(objects[2], objects[1]), c1c2);
 }
 
 
 export function testArrayElementComparator1() {
     let comparator = new comparators.ArrayElementComparator();
 
-    assertTrue(comparator.compare([1], [1]) == 0);
+    assertEquals(0, comparator.compare([1], [1]));
     assertTrue(comparator.compare([1], [2]) < 0);
     assertTrue(comparator.compare([1], [0]) > 0);
 
-    assertTrue(comparator.compare([1, 1], [1, 1]) == 0);
+    assertEquals(0, comparator.compare([1, 1], [1, 1]));
     assertTrue(comparator.compare([1], [1, 1]) < 0);
     assertTrue(comparator.compare([1, 1], [1]) > 0);
 
@@ -68,12 +68,12 @@ export function testArrayElementComparator2() {
 export function testStringComparator() {
     let comparator = new comparators.StringComparator();
 
-    assertTrue(comparator.compare("a", "a") == 0);
+    assertEquals(0, comparator.compare("a", "a"));
     assertTrue(comparator.compare("a", "b") < 0);
     assertTrue(comparator.compare("b", "a") > 0);
 
     assertTrue(comparator.compare("aa", "a") > 0);
-    assertTrue(comparator.compare("aa", "aa") == 0);
+    assertEquals(0, comparator.compare("aa", "aa"));
     assertTrue(comparator.compare("aa", "b") < 0);
 
     assertTrue(comparator.compare("b", "ab") > 0);
@@ -85,7 +85,7 @@ export function testStringComparator() {
 export function testObjectFieldComparator1() {
     let comparator = new comparators.ObjectFieldComparator();
 
-    assertTrue(comparator.compare({a: 1, b: 2}, {a: 1, b: 2}) == 0);
+    assertEquals(0, comparator.compare({a: 1, b: 2}, {a: 1, b: 2}));
     assertTrue(comparator.compare({a: 1, b: 2}, {a: 1, b: 2, c: 3}) < 0);
     assertTrue(comparator.compare({a: 1, b: 2, c: 3}, {a: 1, b: 2}) > 0);
 
